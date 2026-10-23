@@ -1,5 +1,6 @@
 import { ChevronRight } from 'lucide-react'
 import { Page, PageCounter, PageFooter, Kicker } from './page-shell'
+import type { ProductConfig } from '@/lib/submittal'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -7,10 +8,10 @@ const MUTED = '#b9c4cb'
 const TOTAL = '26'
 
 /* PAGE 06 — AT SPORTS PLATFORM */
-export function AtSportsPlatformPage() {
+export function AtSportsPlatformPage({ product }: { product: ProductConfig }) {
   const platform = [
-    { name: 'Acrytech', d: 'Sports Surface Coatings', lead: true },
-    { name: 'CushionX', d: 'Cushion Sports Surfaces' },
+    { name: 'Acrytech', d: 'Sports Surface Coatings', lead: product.key === 'acrytech' },
+    { name: 'CushionX', d: 'Cushion Sports Surfaces', lead: product.key === 'cushionx' },
     { name: 'Faultline', d: 'Court Crack-Repair Systems' },
     { name: 'RollX', d: 'Portable Sports Surfaces' },
   ]
@@ -87,7 +88,7 @@ export function AtSportsPlatformPage() {
                 </span>
                 {p.lead && (
                   <span className="font-display text-[8px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>
-                    Proposed USTA System
+                    This Submittal
                   </span>
                 )}
               </div>
@@ -120,19 +121,19 @@ export function AtSportsPlatformPage() {
 }
 
 /* PAGE 07 — MANUFACTURER DIRECT (combined proof page) */
-export function ManufacturerDirectPage() {
+export function ManufacturerDirectPage({ product }: { product: ProductConfig }) {
   const steps = [
     { t: 'Formulate', d: 'Product and performance requirements' },
     { t: 'Manufacture', d: 'AT Sports production' },
     { t: 'Quality control', d: 'Production verification' },
-    { t: 'Allocate', d: 'USTA material requirements' },
-    { t: 'Deliver', d: 'National Campus' },
+    { t: 'Document', d: 'Batch and production records' },
+    { t: 'Deliver', d: 'Your project' },
     { t: 'Support', d: 'Technical guidance before, during and after installation' },
   ]
   const proof = [
     {
       t: 'Manufacturer Direct',
-      d: 'Direct access to the company responsible for the Acrytech system.',
+      d: `Direct access to the company responsible for the ${product.name} system.`,
     },
     {
       t: 'Performance Data',
@@ -171,7 +172,7 @@ export function ManufacturerDirectPage() {
           to field support.
         </h2>
         <p className="mt-4 font-sans text-[11.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)', maxWidth: '5.6in' }}>
-          AT Sports develops, manufactures and supports the Acrytech coatings systems directly, giving USTA access to the people
+          AT Sports develops, manufactures and supports the {product.name} system directly, giving you access to the people
           responsible for product formulation, production, technical documentation and surface performance.
         </p>
 
@@ -230,7 +231,7 @@ export function ManufacturerDirectPage() {
               />
             </div>
             <p className="font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
-              Acrytech Color is formulated and batched than tied to a documented production run before shipment.
+              Acrytech Color is formulated, batched and tied to a documented production run before shipment.
             </p>
           </div>
 

@@ -300,7 +300,7 @@ export function PartDivider({
         />
       )}
       <div className="absolute left-[0.5in] top-[0.5in] flex items-center gap-2 font-display text-[9.5px] font-medium uppercase tracking-[0.16em]">
-        <span style={{ color: BLUE_LIGHT }}>Part {index}</span>
+        <span style={{ color: BLUE_LIGHT }}>{index}</span>
         <span aria-hidden="true" className="inline-block h-[9px] w-px" style={{ backgroundColor: 'rgba(185,196,203,0.3)' }} />
         <span style={{ color: OFF }}>{section}</span>
       </div>
@@ -389,27 +389,60 @@ export function SectionBand({
   )
 }
 
-/** Thin footer rule shared across pages. */
+/**
+ * Thin footer rule shared across pages.
+ *
+ * Page numbers and the document label are generated automatically: every
+ * `.page` increments a CSS counter, and the document label / page total are
+ * CSS variables set on `.proposal-doc` by each product route. Pages can be
+ * added, removed or re-ordered without renumbering anything. The legacy
+ * `index`, `section` and `total` props are accepted but ignored.
+ */
 export function PageFooter({
-  index,
-  section,
-  total,
   bottom = '0.42in',
-  }: {
-  index: string
-  section: string
+}: {
+  index?: string
+  section?: string
   total?: string
   bottom?: string
-  }) {
+}) {
   return (
-  <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom, color: 'rgba(185,196,203,0.7)' }}>
+    <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom, color: 'rgba(185,196,203,0.7)' }}>
       <div className="mb-[6px] h-px w-full" style={{ backgroundColor: 'rgba(185,196,203,0.16)' }} />
       <div className="font-display flex items-center justify-between text-[8.5px] font-medium uppercase tracking-[0.2em]">
         <span style={{ color: OFF }}>AT Sports</span>
-        <span>{section}</span>
-        <span>{total ? `${index} / ${total}` : index}</span>
+        <span className="doc-label" />
+        <span className="page-num" />
       </div>
     </div>
+  )
+}
+
+/**
+ * Wraps a full submittal document: sets the footer label and page total
+ * used by every PageFooter, and the print canvas styling.
+ */
+export function SubmittalDocument({
+  label,
+  pageCount,
+  children,
+}: {
+  label: string
+  pageCount: number
+  children: ReactNode
+}) {
+  return (
+    <main
+      className="proposal-doc"
+      style={
+        {
+          '--doc-label': JSON.stringify(label),
+          '--doc-total': JSON.stringify(String(pageCount).padStart(2, '0')),
+        } as React.CSSProperties
+      }
+    >
+      {children}
+    </main>
   )
 }
 

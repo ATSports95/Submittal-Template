@@ -94,93 +94,6 @@ export function StanfordPage() {
   )
 }
 
-/* PAGE 20 — INTENNSE */
-export function IntennsePage() {
-  return (
-    <Page>
-      <PageCounter index="18" section="Case Study — INTENNSE" total={TOTAL} />
-
-      {/* Full-bleed hero */}
-      <div className="absolute left-0 right-0 top-0 overflow-hidden" style={{ height: '3.6in' }}>
-        <img src="/images/intennse-arena.jpg" alt="INTENNSE professional team tennis event in a packed arena on an Acrytech court" className="h-full w-full object-cover" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(24,28,31,0.5) 0%, rgba(24,28,31,0) 32%, rgba(24,28,31,0.2) 55%, rgba(24,28,31,0.97) 100%)' }} />
-        <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '0.26in' }}>
-          <Kicker className="mb-2">Case Study</Kicker>
-          <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '33px', lineHeight: 0.98, letterSpacing: '-0.02em', maxWidth: '6.2in' }}>
-            Supporting a new format of competitive tennis.
-          </h2>
-          <div className="mt-2.5 flex items-center gap-3">
-            <img src="/images/intennse-logo.png" alt="INTENNSE" className="w-auto object-contain" style={{ height: '0.26in' }} />
-            <span className="font-sans text-[10.5px]" style={{ color: BLUE_LIGHT }}>Acrytech Sports Coatings — Playing Surface</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Body */}
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '3.85in' }}>
-        <div className="grid grid-cols-[1fr_3.55in] gap-6">
-          {/* Left column */}
-          <div>
-            <p className="font-sans text-[11px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.82)' }}>
-              AT Sports supports INTENNSE&apos;s high-energy team tennis environment, where surface consistency and predictable play are essential.
-            </p>
-
-            <div className="mt-4 flex flex-col gap-1.5">
-              <div className="overflow-hidden" style={{ borderRadius: '11px', height: '2.8in', border: '1px solid rgba(185,196,203,0.16)' }}>
-                <img src="/images/intennse-acrytech.jpg" alt="Acrytech Sports Coatings court stencil on an INTENNSE match court" className="h-full w-full object-cover" style={{ objectPosition: 'center bottom' }} />
-              </div>
-              <span className="font-sans text-[8.5px] leading-snug" style={{ color: MUTED }}>
-                INTENNSE main stage court in a fast-paced competition environment
-              </span>
-            </div>
-
-            <div className="mt-4" style={{ borderRadius: '12px', padding: '0.2in 0.24in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.32)' }}>
-              <p className="font-sans text-[10.5px] leading-relaxed" style={{ color: OFF }}>
-                AT Sports is already supporting a modern tennis platform actively engaging with USTA organizations,
-                players and the broader tennis community.
-              </p>
-            </div>
-          </div>
-
-          {/* Right column — USTA connection */}
-          <div>
-            <div style={{ borderRadius: '12px', padding: '0.24in 0.26in', background: 'rgba(245,246,246,0.04)', border: '1px solid rgba(185,196,203,0.18)' }}>
-              <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>USTA Connection</div>
-
-              {/* × lockup */}
-              
-              <p className="mt-2.5 font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
-                INTENNSE works with USTA Georgia and USTA Atlanta to bring its team tennis format to the local
-                tennis community.
-              </p>
-            </div>
-
-            {/* Three proof points */}
-            <div className="mt-3 flex flex-col gap-2">
-              {[
-                { h: 'Tournament Platform', b: 'INTENNSE Challenge Series events run through the INTENNSE USTA Portal, giving qualifying local players a pathway to compete for INTENNSE Challenge Team positions.' },
-                { h: 'Local Leadership', b: 'USTA Atlanta leadership has participated directly in the ecosystem, including Executive Director Amy O\u2019Connell serving as a head coach for the Atlanta Outriders.' },
-                { h: 'Community Connection', b: 'USTA Georgia has supported promotion of INTENNSE events and programming, connecting the format with established players and fans.' },
-              ].map((p) => (
-                <div key={p.h} className="glass" style={{ borderRadius: '10px', padding: '0.16in 0.2in', borderLeft: '3px solid #5da3ca' }}>
-                  <div className="font-display text-[10.5px] font-bold uppercase tracking-[0.04em]" style={{ color: BLUE_LIGHT }}>{p.h}</div>
-                  <p className="mt-1 font-sans text-[9.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>{p.b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Source note */}
-<p className="mt-[168px] font-sans text-[8px] leading-snug" style={{ color: 'rgba(185,196,203,0.7)' }}>
-              Reference: INTENNSE collaborates with USTA Georgia and USTA Atlanta. This case study does not imply a direct AT Sports–USTA partnership
-        </p>
-      </div>
-      <PageFooter index="18" section="AT Sports Proposal" total={TOTAL} />
-    </Page>
-  )
-}
-
 /* PAGE 21 — COURT 16 */
 export function Court16Page() {
   return (
@@ -194,7 +107,7 @@ export function Court16Page() {
         <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '0.26in' }}>
           <Kicker className="mb-2">Case Study</Kicker>
           <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '33px', lineHeight: 0.98, letterSpacing: '-0.02em', textTransform: 'capitalize' }}>
-            Supporting a USTA Ventures Portfolio Company.
+            Indoor tennis, multi-site consistency.
           </h2>
           <div className="mt-2.5 flex items-center gap-3">
             <span className="inline-flex items-center" style={{ borderRadius: '9px', padding: '0.1in 0.16in', background: 'rgba(255,255,255,0.92)' }}>
@@ -229,7 +142,7 @@ export function Court16Page() {
           ))}
         </div>
 
-        {/* Lower grid — metric + player dev on left, USTA callout on right */}
+        {/* Lower grid — photo on left, callout on right */}
         <div className="mt-3 grid grid-cols-[1fr_3.2in] gap-4">
           <div className="flex flex-col gap-3">
             {/* Multi-site proof photo */}
@@ -243,12 +156,12 @@ export function Court16Page() {
             </div>
           </div>
 
-          {/* USTA connection callout */}
+          {/* Why it matters callout */}
           <div style={{ borderRadius: '12px', padding: '0.22in 0.26in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}>
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>USTA Connection</div>
+            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>Why It Matters</div>
             <p className="mt-2 font-sans text-[9.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.82)' }}>
-              USTA Ventures invested in Court 16 as part of its strategy to support companies expanding access to
-              tennis and growing year-round participation.
+              A specified cushion and coating system can be repeated facility to facility, giving operators the same
+              surface response and appearance across every location.
             </p>
             <p className="mt-2 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>
               AT Sports surface technology is deployed across Court 16 facilities in multiple markets.
@@ -617,11 +530,11 @@ export function NationalPartnershipsPage() {
           ))}
         </div>
 
-        {/* Relevance to USTA */}
+        {/* Why it matters */}
         <div className="mt-7">
           <div className="flex items-center gap-3">
             <div className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap" style={{ color: BLUE_LIGHT }}>
-              Relevance to USTA
+              Why It Matters
             </div>
             <div className="h-px flex-1" style={{ background: 'rgba(93,163,202,0.32)' }} />
           </div>

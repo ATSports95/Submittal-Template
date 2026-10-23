@@ -1,81 +1,43 @@
-import { CoverPage, LetterPage, ExecutivePage } from '@/components/proposal/part1-front'
-import { UnderstandingCampusPage } from '@/components/proposal/part1-campus'
-import { AtSportsPlatformPage, ManufacturerDirectPage } from '@/components/proposal/part1-why'
-import { SurfaceSystemPage, CourtPacePage, PaceEngineeredPage } from '@/components/proposal/part1-system'
-import { PerformanceVerificationPage, SubstrateEvaluationPage } from '@/components/proposal/part1-verification'
-import { LabTestedPage, ProductResponsibilityPage, InnovationPage } from '@/components/proposal/part1-material'
-import {
-  StanfordPage,
-  IntennsePage,
-  Court16Page,
-  KingstonOpenPage,
-  AdditionalExperiencePage,
-  NationalPartnershipsPage,
-} from '@/components/proposal/part1-experience'
-import { SupplyPlanPage, ManufacturingSchedulePage } from '@/components/proposal/part1-supply'
-import { AccountStructurePage, WarrantyPage } from '@/components/proposal/part1-team'
-import { PartnershipInvestmentPage, ClosingPage } from '@/components/proposal/part1-partnership'
-import {
-  RfpDividerPage,
-  RfpGeneralCompanyPage,
-  RfpExperiencePage,
-  RfpStaffingPage,
-  RfpWarrantyProjectPage,
-  RfpFeesPage,
-  RfpCompliancePage,
-} from '@/components/proposal/part2-rfp'
-import { AppendixDividerPage, AppendixIndexPage } from '@/components/proposal/part3-appendix'
-import { AddendumMaterialPage, AddendumEngineeringPage } from '@/components/proposal/addendum'
+import { ProjectForm } from '@/components/submittal/project-form'
+import { parseProjectInfo, type ProductKey } from '@/lib/submittal'
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
+  const params = await searchParams
+  const info = parseProjectInfo(params)
+  const product: ProductKey = params.product === 'cushionx' ? 'cushionx' : 'acrytech'
+
   return (
-    <main className="proposal-doc">
-      {/* PART I — AT SPORTS PROPOSAL */}
-      <CoverPage />
-      <LetterPage />
-      <ExecutivePage />
-      <UnderstandingCampusPage />
-      <AtSportsPlatformPage />
-      <ManufacturerDirectPage />
-      <SurfaceSystemPage />
-      <CourtPacePage />
-      <PaceEngineeredPage />
-      <PerformanceVerificationPage />
-      <SubstrateEvaluationPage />
-      <LabTestedPage />
-      <ProductResponsibilityPage />
-      <InnovationPage />
-      <StanfordPage />
-      <Court16Page />
-      <KingstonOpenPage />
-      <IntennsePage />
-      <AdditionalExperiencePage />
-      <NationalPartnershipsPage />
-      <SupplyPlanPage />
-      <ManufacturingSchedulePage />
-      <AccountStructurePage />
-      <WarrantyPage />
-      <PartnershipInvestmentPage />
-      <ClosingPage />
+    <main className="min-h-screen bg-[#202528] px-4 py-10 font-sans text-[#f5f6f6] sm:py-16">
+      <div className="mx-auto max-w-[760px]">
+        <img src="/images/atsports-logo.png" alt="AT Sports" style={{ height: 34 }} />
+        <div className="mt-10 flex items-center gap-2">
+          <span className="inline-block h-px w-7 bg-[#5da3ca]" />
+          <span className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#5da3ca]">
+            Sales Rep Tool
+          </span>
+        </div>
+        <h1 className="mt-3 font-display text-[40px] font-bold leading-[1.02] tracking-[-0.02em] sm:text-[48px]">
+          Product submittal builder.
+        </h1>
+        <p className="mt-4 max-w-[560px] text-[15px] leading-relaxed text-[#b9c4cb]">
+          Pick a product, add the project and your contact details, then download a personalized PDF to send with the
+          technical attachments.
+        </p>
 
-      {/* PART II — FORMAL RFP RESPONSE */}
-      <RfpDividerPage />
-      <RfpGeneralCompanyPage />
-      <RfpExperiencePage />
-      <RfpStaffingPage />
-      <RfpWarrantyProjectPage />
-      <RfpFeesPage />
-      <RfpCompliancePage />
+        <div className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] p-5 sm:p-8">
+          <ProjectForm initial={info} initialProduct={product} />
+        </div>
 
-      {/* PART III — TECHNICAL APPENDICES */}
-      <AppendixDividerPage />
-      <AppendixIndexPage />
-
-      {/* ADDENDUM A — MATERIAL COMMITMENT */}
-      <AddendumMaterialPage />
-
-      {/* ADDENDUM B — PROFESSIONAL ENGINEERING & TECHNICAL SUPPORT */}
-      <AddendumEngineeringPage />
+        <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-[#b9c4cb]">
+          <span>Preview a blank template:</span>
+          <a href="/acrytech" className="text-[#5da3ca] underline underline-offset-4">Acrytech</a>
+          <a href="/cushionx" className="text-[#5da3ca] underline underline-offset-4">CushionX</a>
+        </div>
+      </div>
     </main>
   )
 }

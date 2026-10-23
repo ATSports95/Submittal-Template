@@ -177,6 +177,7 @@
    --------------------------------------------------------------------------- */
 
 .proposal-doc {
+  counter-reset: pg;
   --page-w: 8.5in;
   --page-h: 11in;
   --margin: 0.5in;
@@ -203,8 +204,32 @@
   page-break-inside: avoid;
 }
 
+.proposal-doc > .page {
+  counter-increment: pg;
+}
+.page-num::before {
+  content: counter(pg, decimal-leading-zero) ' / ' var(--doc-total, '');
+}
+.doc-label::before {
+  content: var(--doc-label, 'Product Submittal');
+}
+
 .font-display {
   font-family: var(--font-display), sans-serif;
+}
+
+/* Fields a rep has not filled in yet — visible on screen, blank in print. */
+.field-empty {
+  color: rgba(217, 164, 65, 0.85) !important;
+  font-style: italic;
+}
+@media print {
+  .field-empty {
+    color: transparent !important;
+  }
+  .no-print {
+    display: none !important;
+  }
 }
 
 /* Glassy card fills, matching the AT Sports web system. */

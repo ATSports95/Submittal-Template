@@ -8,26 +8,25 @@ const TOTAL = '26'
 /* PAGE 09 — PROPOSED SURFACE SYSTEM */
 export function SurfaceSystemPage() {
   const layers = [
-    { t: 'Finished Playing Surface', d: '', head: true },
-    { t: 'Acrytech Top Coat', d: 'Clear Coat', usta: true },
-    { t: 'Acrytech Color', d: 'Texture Coating #2', usta: true },
-    { t: 'Acrytech Color', d: 'Texture Coating #1', usta: true },
+    { t: 'Finished Playing Surface', d: 'Line paint per court layout', head: true },
+    { t: 'Acrytech Color', d: 'Concentrate finish coat', usta: true },
+    { t: 'Acrytech Color', d: 'Textured color coats', usta: true },
     { t: 'Acrytech Resurfacer', d: 'Surface preparation / leveling layer' },
     { t: 'Primer / Sealer', d: 'Where required by substrate conditions' },
-    { t: 'Repairs + Substrate', d: 'Existing asphalt or concrete', base: true },
+    { t: 'Repairs + Substrate', d: 'Faultline crack repair where required · asphalt or concrete', base: true },
   ]
   return (
     <Page>
       <PageCounter index="07" section="Proposed Surface System" total={TOTAL} />
       <div className="absolute left-[0.5in]" style={{ top: '1.2in', width: '3.5in' }}>
-        <Kicker className="mb-4">PROPOSED USTA SYSTEM BUILD</Kicker>
+        <Kicker className="mb-4">System Build</Kicker>
         <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '31px', lineHeight: 1.0, letterSpacing: '-0.02em' }}>
           The Acrytech
           <br />
           Coatings system.
         </h2>
         <p className="mt-4 font-sans text-[11.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
-          A documented acrylic surface system configured for the performance requirements of the National Campus.
+          A documented acrylic surface system configured to the performance requirements of each project.
         </p>
         <div className="mt-5 flex flex-col gap-3">
           <p className="font-sans text-[10.5px] leading-relaxed" style={{ color: MUTED }}>
@@ -40,21 +39,15 @@ export function SurfaceSystemPage() {
           </p>
         </div>
 
-        {/* USTA build callout */}
-        <div className="mt-6" style={{ borderRadius: '13px', padding: '0.26in 0.26in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}>
+        {/* Typical build callout */}
+        <div className="mt-6" style={{ borderRadius: '13px', padding: '0.22in 0.26in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}>
           <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
-            Requested USTA Build
+            Build Per Specification
           </div>
-          <div className="mt-2 flex items-baseline gap-4">
-            <div>
-              <span className="font-display text-[30px] font-bold tabular-nums" style={{ color: OFF }}>02</span>
-              <span className="ml-2 font-display text-[11px] font-semibold uppercase" style={{ color: MUTED }}>Texture Coats</span>
-            </div>
-            <div>
-              <span className="font-display text-[30px] font-bold tabular-nums" style={{ color: OFF }}>01</span>
-              <span className="ml-2 font-display text-[11px] font-semibold uppercase" style={{ color: MUTED }}>Top Coat</span>
-            </div>
-          </div>
+          <p className="mt-2 font-sans text-[10.5px] leading-relaxed" style={{ color: OFF }}>
+            The number of resurfacer and color coats, the color selections and the court-pace profile are confirmed for
+            each project in the system specification (Appendix A).
+          </p>
         </div>
 
         {/* Finished-surface reference image */}
@@ -100,7 +93,7 @@ export function SurfaceSystemPage() {
               </div>
               {l.usta && (
                 <span className="font-display text-[8px] font-semibold uppercase tracking-[0.14em]" style={{ color: BLUE_LIGHT }}>
-                  USTA
+                  Acrytech
                 </span>
               )}
             </div>
@@ -125,18 +118,18 @@ export function CourtPacePage() {
         <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '30px', lineHeight: 1.02, letterSpacing: '-0.02em' }}>
           Two profiles.
           <br />
-          Built around the campus.
+          Matched to the court.
         </h2>
 
         <div className="mt-8 grid grid-cols-2 gap-5">
           {[
-            { cpr: '~38', level: 'Level 3', label: 'Medium', range: '35–39 CPR classification range', apps: 'Team USA court banks / pickleball', badge: '/images/itf-level-3-medium.png', badgeAlt: 'ITF Classified Court Pace badge — Category 3, Medium' },
-            { cpr: '~40', level: 'Level 4', label: 'Medium-Fast', range: '40–44 CPR classification range', apps: 'Championship / Player Development / Indoor / Collegiate', badge: '/images/itf-level-4-medium-fast.png', badgeAlt: 'ITF Classified Court Pace badge — Category 4, Medium-Fast' },
+            { cpr: '35–39', level: 'Level 3', label: 'Medium', range: 'ITF Category 3 classification range', apps: 'Recreational and club tennis · pickleball · multi-sport courts', badge: '/images/itf-level-3-medium.png', badgeAlt: 'ITF Classified Court Pace badge — Category 3, Medium' },
+            { cpr: '40–44', level: 'Level 4', label: 'Medium-Fast', range: 'ITF Category 4 classification range', apps: 'Competition, collegiate, player-development and indoor tennis', badge: '/images/itf-level-4-medium-fast.png', badgeAlt: 'ITF Classified Court Pace badge — Category 4, Medium-Fast' },
           ].map((p) => (
             <div key={p.level} className="glass" style={{ borderRadius: '14px', padding: '0.42in 0.4in' }}>
               <div className="flex items-start justify-between">
                 <div className="flex items-baseline gap-3">
-                  <span className="font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '62px', lineHeight: 0.85, letterSpacing: '-0.03em' }}>
+                  <span className="font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '52px', lineHeight: 0.85, letterSpacing: '-0.03em' }}>
                     {p.cpr}
                   </span>
                   <span className="font-display text-[15px] font-light" style={{ color: BLUE_LIGHT }}>CPR</span>
@@ -155,7 +148,7 @@ export function CourtPacePage() {
               <div className="mt-1 font-sans text-[10px]" style={{ color: MUTED }}>{p.range}</div>
               <div className="mt-4 border-t pt-3" style={{ borderColor: 'rgba(185,196,203,0.16)' }}>
                 <div className="font-display text-[8px] font-semibold uppercase tracking-[0.16em]" style={{ color: MUTED }}>
-                  Targeted USTA Applications
+                  Typical Applications
                 </div>
                 <div className="mt-1 flex items-start gap-2">
                   <span className="font-sans text-[10px] leading-snug" style={{ color: OFF }}>{p.apps}</span>
@@ -200,7 +193,7 @@ export function CourtPacePage() {
         {/* Bottom statement */}
         <div className="mt-7 text-center" style={{ borderRadius: '13px', padding: '0.3in 0.36in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.32)' }}>
           <p className="font-display text-[16px] font-bold text-balance" style={{ color: OFF }}>
-            Two targeted performance profiles.{' '}
+            Two performance profiles.{' '}
             <span style={{ color: BLUE_LIGHT }}>One Acrytech surface platform.</span>
           </p>
         </div>
@@ -290,8 +283,8 @@ export function PaceEngineeredPage() {
         </div>
 
         <p className="mt-5 font-sans text-[11px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
-          For the National Campus, the final written surface profiles will be developed around USTA&apos;s requested
-approximately CPR 38 and CPR 40 targets and the specified two-texture coats / one-top coat application. 
+          The court-pace profile for each project is set in the system specification. Where a project calls for a
+          specific CPR target, AT Sports confirms the aggregate profile and application before production.
         </p>
 
         {/* Supporting image — controlled aggregate loading during batching */}
@@ -306,7 +299,7 @@ approximately CPR 38 and CPR 40 targets and the specified two-texture coats / on
             />
           </div>
           <p className="mt-2 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
-            Aggregate selection and loading are controlled during batching 
+            Aggregate selection and loading are controlled during batching.
           </p>
         </div>
       </div>
