@@ -190,20 +190,19 @@ export function TransmittalPage({
 }
 
 /* INTRODUCTION LETTER */
-export function LetterPage({ product }: { product: ProductConfig }) {
+export function LetterPage({ product, info }: { product: ProductConfig; info: ProjectInfo }) {
+  const section = info.specSection ? `Section ${info.specSection}` : 'the athletic surfacing section'
   const paragraphs =
     product.key === 'cushionx'
       ? [
-          'Thank you for considering AT Sports for your project. This submittal documents the CushionX cushioned surface system, a recycled-rubber cushion layer finished with Acrytech acrylic color coatings.',
-          'AT Sports formulates, manufactures and supports its surfacing systems from our facility in Canton, Georgia. You work directly with the manufacturer responsible for the products — from specification and production through installation support.',
-          'The pages that follow describe the system build, the cushion options and finish, performance data, and the technical documentation, warranty and installation guidance that support it.',
-          'Our commitment is simple: a documented surface system, backed by the people who make it.',
+          `AT Sports submits the CushionX Cushion Surface System for review under ${section}. CushionX is a recycled-rubber cushion layer finished with Acrytech acrylic color coatings, for tennis, pickleball and multi-sport courts.`,
+          'This package contains the product data, system build, test data, installation guidance and warranty documentation needed to evaluate the system against the project specification. Technical and safety data sheets are attached in the Technical Appendices.',
+          'AT Sports formulates, manufactures and supports its surfacing systems in Canton, Georgia, so questions on product data, substrate conditions or substitutions go directly to the manufacturer.',
         ]
       : [
-          'Thank you for considering AT Sports for your project. This submittal documents the Acrytech Coatings System, a colored and textured acrylic surfacing system for tennis, pickleball and multi-sport courts.',
-          'AT Sports formulates, manufactures and supports Acrytech from our facility in Canton, Georgia. You work directly with the manufacturer responsible for the system — from specification and production through installation support.',
-          'The pages that follow describe the system build, court-pace profiles, performance testing and product chemistry, and the technical documentation, warranty and installation guidance that support it.',
-          'Our commitment is simple: a documented surface system, backed by the people who make it.',
+          `AT Sports submits the Acrytech Coatings System for review under ${section}. Acrytech is a colored and textured 100% acrylic surfacing system for asphalt, concrete and existing tennis, pickleball and multi-sport courts.`,
+          'This package contains the product data, guide specification, test data, installation requirements and warranty documentation needed to evaluate Acrytech against the project specification. Technical and safety data sheets are attached in the Technical Appendices.',
+          'AT Sports formulates, manufactures and supports Acrytech in Canton, Georgia, so questions on product data, substrate conditions or substitutions go directly to the manufacturer.',
         ]
   return (
     <Page>
@@ -213,29 +212,18 @@ export function LetterPage({ product }: { product: ProductConfig }) {
           className="font-display font-bold text-balance"
           style={{ color: OFF, fontSize: '40px', lineHeight: 1.0, letterSpacing: '-0.02em', maxWidth: '6in' }}
         >
-          Built by the people
+          Submitted for
           <br />
-          who make the surface.
+          specification review.
         </h2>
 
         <div className="mt-8 grid grid-cols-[1fr_2.3in] gap-10">
           <div className="flex flex-col gap-4">
-            {paragraphs.map((p, i) => {
-              const emphasized = i === paragraphs.length - 1
-              return (
-                <p
-                  key={i}
-                  className="font-sans leading-relaxed"
-                  style={{
-                    color: emphasized ? OFF : 'rgba(245,246,246,0.82)',
-                    fontSize: emphasized ? '15px' : '13px',
-                    fontWeight: emphasized ? 600 : 400,
-                  }}
-                >
-                  {p}
-                </p>
-              )
-            })}
+            {paragraphs.map((p, i) => (
+              <p key={i} className="font-sans text-[13px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.82)' }}>
+                {p}
+              </p>
+            ))}
 
             <div className="mt-6">
               <img
@@ -259,25 +247,95 @@ export function LetterPage({ product }: { product: ProductConfig }) {
             style={{ height: '300px', borderRadius: '14px', padding: '18px 0.34in 22px', borderTop: '2px solid #5da3ca' }}
           >
             <div className="font-display text-[10px] font-semibold uppercase tracking-[0.22em]" style={{ color: BLUE_LIGHT }}>
-              Manufacturer Direct
+              Requested Action
             </div>
             <p className="mt-4 font-sans text-[13px] leading-relaxed text-pretty" style={{ color: 'rgba(245,246,246,0.82)' }}>
-              Formulated, manufactured and supported by AT Sports in Canton, Georgia since 1995.
+              List {product.name} by AT Sports, Inc. as an approved manufacturer, or accept it as an approved equal to the
+              basis-of-design product.
             </p>
           </div>
         </div>
+      </div>
+      <PageFooter />
+    </Page>
+  )
+}
 
-        <div className="mt-7">
-          <div className="overflow-hidden" style={{ borderRadius: '14px', height: '1.95in', border: '1px solid rgba(185,196,203,0.16)' }}>
-            <img
-              src="/images/at-sports-facility-exterior.jpg"
-              alt="AT Sports manufacturing headquarters and campus"
-              className="h-full w-full object-cover"
-              style={{ objectPosition: 'center 60%' }}
-            />
+/* MANUFACTURER QUALIFICATIONS — replaces the earlier About / Manufacturer Direct pages */
+export function ManufacturerPage({ product }: { product: ProductConfig }) {
+  const facts = [
+    { n: '1995', l: 'Founded' },
+    { n: 'Canton, GA', l: 'Manufacturing' },
+    { n: 'U.S. + Intl', l: 'Markets served' },
+  ]
+  const lines = [
+    { name: 'Acrytech', d: 'Acrylic sports surface coatings' },
+    { name: 'CushionX', d: 'Cushioned sports surfaces' },
+    { name: 'Faultline', d: 'Court crack-repair systems' },
+    { name: 'RollX', d: 'Portable sports surfaces' },
+  ]
+  const quals = [
+    { t: 'Single-source responsibility', d: `${product.name} products are formulated, manufactured and quality-controlled by AT Sports, so one company is responsible for the product from formulation through field support.` },
+    { t: 'Batch traceability', d: 'Every batch is tied to a documented production run and color-matched against a controlled reference standard before release, supporting batch-number recording on site.' },
+    { t: 'Published documentation', d: 'Three-part guide specification, technical and safety data sheets, substrate and concrete guidance, mixing and coverage data, maintenance guide and limited warranty.' },
+    { t: 'Certified installation', d: `Warranty coverage requires installation by AT Sports-certified installers to published guidelines. A certified installer letter is issued per project on request.` },
+  ]
+  return (
+    <Page>
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.15in' }}>
+        <Kicker className="mb-3">Manufacturer Qualifications</Kicker>
+        <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
+          One manufacturer,
+          <br />
+          responsible for the system.
+        </h2>
+        <p className="mt-3 max-w-[6.2in] font-sans text-[11.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
+          AT Sports, Inc. has manufactured sports-surface coatings and materials since 1995 and supports projects
+          throughout the United States and internationally from its manufacturing facility in Canton, Georgia.
+        </p>
+
+        <div className="mt-6 grid grid-cols-3 gap-3">
+          {facts.map((f) => (
+            <div key={f.l} style={{ borderTop: '2px solid rgba(50,126,168,0.5)', paddingTop: '0.12in' }}>
+              <div className="font-display text-[20px] font-bold" style={{ color: OFF, letterSpacing: '-0.01em' }}>{f.n}</div>
+              <div className="mt-1 font-display text-[8.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: MUTED }}>{f.l}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-3">
+          {quals.map((q) => (
+            <div key={q.t} className="glass" style={{ borderRadius: '12px', padding: '0.2in 0.24in', minHeight: '1.2in' }}>
+              <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{q.t}</div>
+              <p className="mt-1.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>{q.d}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
+          <div>
+            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
+              AT Sports Product Lines
+            </div>
+            <div className="mt-2.5 flex flex-col">
+              {lines.map((l) => (
+                <div key={l.name} className="flex items-baseline justify-between gap-3" style={{ padding: '0.07in 0', borderBottom: '1px solid rgba(185,196,203,0.12)' }}>
+                  <span className="font-display text-[12px] font-bold" style={{ color: l.name === product.name ? BLUE_LIGHT : OFF }}>{l.name}</span>
+                  <span className="font-sans text-[9px]" style={{ color: MUTED }}>{l.d}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mt-2 font-sans text-[9.5px]" style={{ color: MUTED }}>
-            AT Sports manufacturing headquarters, Canton, Georgia
+          <div>
+            <div className="overflow-hidden" style={{ borderRadius: '13px', height: '1.9in', border: '1px solid rgba(185,196,203,0.16)' }}>
+              <img
+                src="/images/at-sports-facility-exterior.jpg"
+                alt="AT Sports manufacturing facility in Canton, Georgia"
+                className="h-full w-full object-cover"
+                style={{ objectPosition: 'center 60%' }}
+              />
+            </div>
+            <div className="mt-2 font-sans text-[9px]" style={{ color: MUTED }}>AT Sports manufacturing facility, Canton, Georgia</div>
           </div>
         </div>
       </div>

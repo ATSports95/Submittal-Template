@@ -64,7 +64,42 @@ export function WarrantyPage({ product }: { product: ProductConfig }) {
         </div>
       </div>
 
+      {!cx && (
+        <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '5.2in' }}>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              {
+                t: 'Registration',
+                d: 'Valid when the installer completes the Acrytech Warranty Record Form, or the application date can be verified by the installer. The form may be emailed to warranty@atsports.com within 90 days of completion for record keeping.',
+              },
+              {
+                t: 'Voided if',
+                d: 'Acrytech products are covered with, or installed with, non-Acrytech products without prior written approval from AT Sports.',
+              },
+              {
+                t: 'Not covered',
+                d: 'Improper preparation or application, structural (substrate) changes or defects, previously applied products, weather conditions, or failure to follow installation instructions and industry practice.',
+              },
+              {
+                t: 'Excluded abuse',
+                d: 'Non-pedestrian traffic, burns, corrosive chemicals, sharp or abrasive objects, excessive weights, roots and planters left on the surface, constant submersion, or long-standing dirt and debris.',
+              },
+            ].map((b) => (
+              <div key={b.t} className="glass" style={{ borderRadius: '12px', padding: '0.22in 0.26in', minHeight: '1.45in' }}>
+                <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: BLUE_LIGHT }}>{b.t}</div>
+                <p className="mt-2 font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.8)' }}>{b.d}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-3 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
+            Summary only. The Acrytech Limited Warranty (effective on purchases on or after November 1, 2024) governs and is
+            included in the Technical Appendices.
+          </p>
+        </div>
+      )}
+
       {/* Full-width completed-court image band */}
+      {cx && (
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '5.2in' }}>
         <div className="overflow-hidden" style={{ borderRadius: '14px', height: '3.6in', border: '1px solid rgba(185,196,203,0.16)' }}>
           <img
@@ -79,6 +114,7 @@ export function WarrantyPage({ product }: { product: ProductConfig }) {
           Warranty coverage applies when {product.name} products are installed by AT Sports-certified crews to published guidelines.
         </p>
       </div>
+      )}
       <PageFooter />
     </Page>
   )

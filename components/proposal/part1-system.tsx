@@ -33,10 +33,6 @@ export function SurfaceSystemPage() {
             Acrytech is a colored and textured acrylic surfacing system designed for asphalt, concrete and existing
             sports surfaces.
           </p>
-          <p className="font-sans text-[10.5px] leading-relaxed" style={{ color: MUTED }}>
-            The system specification requires work to conform to ASBA guidelines and requires tennis surfaces to be ITF
-            court-pace classified.
-          </p>
         </div>
 
         {/* Typical build callout */}
@@ -159,9 +155,8 @@ export function CourtPacePage() {
         </div>
 
         <p className="mt-7 font-sans text-[11px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.76)' }}>
-          Acrytech Color can be configured across Medium and Medium-Fast court-pace profiles through controlled
-          aggregate selection and loading. AT Sports&apos; published Acrytech Color specification includes separate
-          Medium and Medium-Fast aggregate profiles.
+          Acrytech Color is configured to the Medium or Medium-Fast profile through controlled aggregate selection and
+          loading during batching.
         </p>
 
         {/* Independent proof — single Level 3 result, asymmetric editorial layout */}
@@ -190,120 +185,33 @@ export function CourtPacePage() {
           </div>
         </div>
 
-        {/* Bottom statement */}
-        <div className="mt-7 text-center" style={{ borderRadius: '13px', padding: '0.3in 0.36in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.32)' }}>
-          <p className="font-display text-[16px] font-bold text-balance" style={{ color: OFF }}>
-            Two performance profiles.{' '}
-            <span style={{ color: BLUE_LIGHT }}>One Acrytech surface platform.</span>
-          </p>
+        {/* Published aggregate profiles (formerly a separate Pace Profiles page) */}
+        <div className="mt-7 font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: MUTED }}>
+          Published Acrytech Color Profiles · Aggregate + Loading
         </div>
+        <div className="mt-3 grid grid-cols-2 gap-5">
+          {[
+            { level: 'Level 3', label: 'Medium', a: 'AFS-55', w: '200 lbs' },
+            { level: 'Level 4', label: 'Medium-Fast', a: 'AFS-60', w: '150 lbs' },
+          ].map((p) => (
+            <div key={p.level} className="glass-strong flex items-center justify-between gap-4" style={{ borderRadius: '13px', padding: '0.22in 0.26in', borderTop: '2px solid #5da3ca' }}>
+              <span className="font-display text-[12px] font-bold uppercase tracking-[0.04em]" style={{ color: BLUE_LIGHT }}>
+                {p.level} <span style={{ color: OFF }}>/ {p.label}</span>
+              </span>
+              <span className="text-right">
+                <span className="font-display text-[16px] font-bold" style={{ color: OFF }}>{p.a}</span>
+                <span className="ml-2 font-display text-[16px] font-bold tabular-nums" style={{ color: OFF }}>· {p.w}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-3 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
+          The court-pace profile for each project is set in the system specification. Where a project calls for a specific
+          CPR target, AT Sports confirms the aggregate profile and application before production. Additional published
+          profiles are available.
+        </p>
       </div>
       <PageFooter index="08" section="AT Sports Proposal" total={TOTAL} />
-    </Page>
-  )
-}
-
-/* PAGE 11 — PACE ENGINEERED */
-export function PaceEngineeredPage() {
-  const profiles = [
-    { level: 'Level 3', label: 'Medium', a: 'AFS-55', w: '200 lbs' },
-    { level: 'Level 4', label: 'Medium-Fast', a: 'AFS-60', w: '150 lbs' },
-  ]
-  return (
-    <Page>
-      <PageHead
-        index="09"
-        section="Court Pace"
-        kicker="Pace Is Engineered Into the System"
-        title={
-          <>
-            Pace is not
-            <br />
-            an afterthought.
-          </>
-        }
-        titleSize={32}
-      />
-
-      {/* Equation */}
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.55in' }}>
-        <div className="flex items-center justify-center gap-4" style={{ borderRadius: '14px', padding: '0.34in', background: 'rgba(245,246,246,0.03)', border: '1px solid rgba(185,196,203,0.16)' }}>
-          {[
-            { t: 'Aggregate', op: '+' },
-            { t: 'Loading', op: '+' },
-            { t: 'Application Profile', op: '=' },
-            { t: 'Court Pace', accent: true },
-          ].map((e, i) => (
-            <div key={i} className="flex items-center gap-4">
-              <span className="font-display text-[15px] font-bold uppercase tracking-[0.04em]" style={{ color: e.accent ? BLUE_LIGHT : OFF }}>
-                {e.t}
-              </span>
-              {e.op && <span className="font-display text-[20px] font-light" style={{ color: MUTED }}>{e.op}</span>}
-            </div>
-          ))}
-        </div>
-
-        {/* Published profiles */}
-        <div className="mt-6 font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: MUTED }}>
-          Published Acrytech Color Profiles
-        </div>
-        <div className="mt-3 grid grid-cols-2 gap-4">
-          {profiles.map((p) => (
-            <div
-              key={p.level}
-              className="glass-strong"
-              style={{ borderRadius: '14px', padding: '0.42in 0.4in', borderTop: '2px solid #5da3ca' }}
-            >
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-[16px] font-bold uppercase tracking-[0.04em]" style={{ color: BLUE_LIGHT }}>
-                  {p.level}
-                </span>
-                <span className="font-display text-[16px] font-semibold uppercase tracking-[0.04em]" style={{ color: OFF }}>
-                  / {p.label}
-                </span>
-              </div>
-              <div className="mt-6 flex items-end justify-between">
-                <div>
-                  <div className="font-display text-[31px] font-bold" style={{ color: OFF, lineHeight: 1 }}>{p.a}</div>
-                  <div className="mt-1.5 font-sans text-[10px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>Aggregate</div>
-                </div>
-                <div className="text-right">
-                  <div className="font-display text-[31px] font-bold tabular-nums" style={{ color: OFF, lineHeight: 1 }}>{p.w}</div>
-                  <div className="mt-1.5 font-sans text-[10px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>Loading</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-3 flex items-center gap-2">
-          <span className="inline-block h-[5px] w-[5px] rounded-full" style={{ backgroundColor: MUTED }} />
-          <p className="font-sans text-[10px]" style={{ color: MUTED }}>
-            Additional published Acrytech profiles available.
-          </p>
-        </div>
-
-        <p className="mt-5 font-sans text-[11px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
-          The court-pace profile for each project is set in the system specification. Where a project calls for a
-          specific CPR target, AT Sports confirms the aggregate profile and application before production.
-        </p>
-
-        {/* Supporting image — controlled aggregate loading during batching */}
-        <div className="mt-6">
-          <div className="overflow-hidden" style={{ borderRadius: '13px', height: '2.6in', border: '1px solid rgba(185,196,203,0.16)' }}>
-            <img
-              src="/images/plant-mixing-drum.png"
-              alt="Controlled aggregate blending during Acrytech color batching at the AT Sports plant"
-              crossOrigin="anonymous"
-              className="h-full w-full object-cover"
-              style={{ objectPosition: 'center 45%' }}
-            />
-          </div>
-          <p className="mt-2 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
-            Aggregate selection and loading are controlled during batching.
-          </p>
-        </div>
-      </div>
-      <PageFooter index="09" section="AT Sports Proposal" total={TOTAL} />
     </Page>
   )
 }

@@ -39,6 +39,79 @@ function GroupLabel({ children, right }: { children: ReactNode; right?: ReactNod
 }
 
 /* ---------------------------------------------------------------------------
+   ACRYTECH — SPECIFICATION COMPLIANCE SUMMARY
+   One-page summary for the reviewing architect / engineer. Each row points to
+   the supporting document in the Technical Appendices.
+   --------------------------------------------------------------------------- */
+const COMPLIANCE = [
+  { req: 'System type', val: 'Colored, textured 100% acrylic latex surfacing system, self-crosslinking, for asphalt, concrete and existing sports surfaces', doc: 'System Specification 1.1 · TDS' },
+  { req: 'Industry standard', val: 'All work conforms to American Sports Builders Association (ASBA) guidelines', doc: 'System Specification 1.2' },
+  { req: 'Court pace', val: 'ITF classified: Category 3 (Medium) and Category 4 (Medium-Fast)', doc: 'ITF Classification Certificates' },
+  { req: 'Accelerated weathering', val: '5,555 hours, ASTM G154 Cycle 1, with no cracking, chalking, checking, peeling or flaking observed', doc: 'H.B. Fuller test report' },
+  { req: 'Scrub resistance', val: 'ASTM D2486: 536 cycles to failure vs. 266 in the reported comparison (≈2×)', doc: 'H.B. Fuller test report' },
+  { req: 'Finished-surface testing', val: 'Surface friction (dry and wet), ball rebound and trajectory, force reduction, vertical deformation, energy restitution', doc: 'Firefly Sports testing' },
+  { req: 'VOC', val: 'Acrytech Color 42 g/L · Acrytech Resurfacer 43 g/L', doc: 'Color and Resurfacer TDS' },
+  { req: 'Restricted substances', val: 'Acrytech Color contains no asbestos, lead, mercury, heavy metals, PCB or formaldehyde', doc: 'Color TDS' },
+  { req: 'Warranty', val: '2-year limited product warranty (specification minimum: one year)', doc: 'Acrytech Limited Warranty' },
+  { req: 'Installer', val: 'AT Sports-certified installer, applying to published installation guidelines', doc: 'Certified Installer Letter' },
+  { req: 'Traceability', val: 'Batch number of each product recorded on site and kept for the warranty period', doc: 'System Specification 1.2' },
+]
+
+export function SpecCompliancePage() {
+  return (
+    <Page>
+      <Head
+        kicker="Specification Compliance"
+        title="Acrytech at a glance."
+        intro="A summary of how the Acrytech Coatings System meets typical acrylic sports-surfacing requirements, with the document in the Technical Appendices that supports each item."
+      />
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.4in' }}>
+        <div className="glass overflow-hidden" style={{ borderRadius: '12px' }}>
+          <div
+            className="grid items-end font-display text-[7.5px] font-semibold uppercase tracking-[0.14em]"
+            style={{ gridTemplateColumns: '1.45in 1fr 1.55in', columnGap: '0.16in', padding: '0.1in 0.22in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
+          >
+            <span>Requirement</span>
+            <span>Acrytech</span>
+            <span>Supporting document</span>
+          </div>
+          {COMPLIANCE.map((c, i) => (
+            <div
+              key={c.req}
+              className="grid items-baseline"
+              style={{ gridTemplateColumns: '1.45in 1fr 1.55in', columnGap: '0.16in', padding: '0.09in 0.22in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+            >
+              <span className="font-display text-[9.5px] font-bold uppercase tracking-[0.04em]" style={{ color: OFF }}>{c.req}</span>
+              <span className="font-sans text-[9.5px] leading-snug" style={{ color: 'rgba(245,246,246,0.86)' }}>{c.val}</span>
+              <span className="font-sans text-[8.5px] leading-snug" style={{ color: BLUE_LIGHT }}>{c.doc}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5" style={{ borderRadius: '13px', padding: '0.24in 0.3in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
+          <div className="font-display text-[9px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>
+            Suggested Specification Language · Part 2 – Products
+          </div>
+          <div className="mt-2.5 font-mono text-[9.5px] leading-relaxed" style={{ color: OFF }}>
+            2.1 MANUFACTURERS
+            <br />
+            A. Acceptable manufacturer: AT Sports, Inc., 189 Etowah Industrial Court, Canton, GA 30114.
+            <br />
+            &nbsp;&nbsp;&nbsp;770-734-3000 · www.atsports.com
+            <br />
+            &nbsp;&nbsp;&nbsp;1. Product: Acrytech Coatings System (Acrytech Resurfacer, Acrytech Color, Acrytech Line Paint).
+          </div>
+          <p className="mt-2.5 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>
+            The full three-part Acrytech System Specification is included as Appendix A and may be used as a basis of design.
+          </p>
+        </div>
+      </div>
+      <PageFooter />
+    </Page>
+  )
+}
+
+/* ---------------------------------------------------------------------------
    ACRYTECH PRODUCT LINE
    Source: AT Sports Product Catalog 2026, Acrytech section. Coverage is
    gallons per square yard per coat unless noted. "Conc." is the concentrate,
@@ -264,6 +337,7 @@ const MATERIALS = [
   { t: 'Acrytech White Line Paint', d: 'Textured bright white acrylic line paint. 20–25% may be added to Color to make the lighter colors used for QuickStart lines.', solids: '≈71%*', wt: '12.4 lb/gal (1.49 kg/L)' },
 ]
 
+/* Source: AT Sports Mixing Chart. Shown on the Application & Coverage page. */
 const MIX = [
   { pure: '1 gal', sand: '7.27 lb', water: '0.58 gal', yld: '2 gal', cov: '20 SY' },
   { pure: '5 gal', sand: '36.36 lb', water: '2.91 gal', yld: '10 gal', cov: '100 SY' },
@@ -271,15 +345,50 @@ const MIX = [
   { pure: '30 (27.5) gal', sand: '200 lb', water: '16 gal', yld: '55 gal', cov: '550 SY' },
 ]
 
+export function MixingChart() {
+  const mixCol = '1.4fr repeat(4, 1fr)'
+  return (
+    <div>
+      <GroupLabel right="Concentrate + sand + water">Mixing Chart</GroupLabel>
+      <div className="mt-3 glass overflow-hidden" style={{ borderRadius: '13px' }}>
+        <div
+          className="grid font-display text-[8.5px] font-semibold uppercase tracking-[0.14em]"
+          style={{ gridTemplateColumns: mixCol, padding: '0.14in 0.28in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
+        >
+          <span>Pure (concentrate)</span>
+          <span className="text-right">Sand</span>
+          <span className="text-right">Water</span>
+          <span className="text-right">Yield</span>
+          <span className="text-right">Coverage</span>
+        </div>
+        {MIX.map((m, i) => (
+          <div
+            key={m.pure}
+            className="grid font-display text-[12px] tabular-nums"
+            style={{ gridTemplateColumns: mixCol, padding: '0.11in 0.28in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}`, color: OFF }}
+          >
+            <span className="font-bold">{m.pure}</span>
+            <span className="text-right">{m.sand}</span>
+            <span className="text-right">{m.water}</span>
+            <span className="text-right">{m.yld}</span>
+            <span className="text-right font-bold">{m.cov}</span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-2">
+        <ContentRequired>Confirm which concentrates this chart covers</ContentRequired>
+      </div>
+    </div>
+  )
+}
+
 export function MaterialSpecsPage() {
   const qa = [
-    'All work conforms to American Sports Builders Association (ASBA) guidelines.',
-    'All coatings, patching and resurfacing compounds are Acrytech by AT Sports, or an approved equal documented to the owner.',
-    'Tennis surfaces must be International Tennis Federation (ITF) court pace classified.',
-    'The contractor records the batch number of each product used and keeps it for the warranty period.',
+    'Coatings, patching and resurfacing compounds are Acrytech by AT Sports, or an approved equal documented to the owner.',
     'On request, the contractor gives the inspector a volume estimate for each product (AT Sports Paint Estimator).',
+    'Submit Technical Data Sheets for system components and a color chart.',
+    'Submit Safety Data Sheets for system components, and the manufacturer’s warranty (minimum one year).',
   ]
-  const mixCol = '1.4fr repeat(4, 1fr)'
   return (
     <Page>
       <Head
@@ -315,49 +424,16 @@ export function MaterialSpecsPage() {
         </div>
         <TableNote>*Solids and pigments by weight. Values are approximate; see each product’s TDS.</TableNote>
 
-        <div className="mt-4 grid gap-4" style={{ gridTemplateColumns: '3.45in 1fr' }}>
-          <div>
-            <GroupLabel right="Section 1.2">Quality Assurance</GroupLabel>
-            <ul className="mt-2.5 flex flex-col gap-1.5">
-              {qa.map((q) => (
-                <li key={q} className="flex gap-2 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>
-                  <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
-                  {q}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <GroupLabel>Mixing Chart</GroupLabel>
-            <div className="mt-2.5 glass overflow-hidden" style={{ borderRadius: '12px' }}>
-              <div
-                className="grid font-display text-[7px] font-semibold uppercase tracking-[0.12em]"
-                style={{ gridTemplateColumns: mixCol, padding: '0.08in 0.16in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
-              >
-                <span>Pure</span>
-                <span className="text-right">Sand</span>
-                <span className="text-right">Water</span>
-                <span className="text-right">Yield</span>
-                <span className="text-right">Coverage</span>
-              </div>
-              {MIX.map((m, i) => (
-                <div
-                  key={m.pure}
-                  className="grid font-sans text-[8.5px] tabular-nums"
-                  style={{ gridTemplateColumns: mixCol, padding: '0.06in 0.16in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}`, color: OFF }}
-                >
-                  <span className="font-display font-bold">{m.pure}</span>
-                  <span className="text-right">{m.sand}</span>
-                  <span className="text-right">{m.water}</span>
-                  <span className="text-right">{m.yld}</span>
-                  <span className="text-right">{m.cov}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-1.5">
-              <ContentRequired>Confirm which concentrates this chart covers</ContentRequired>
-            </div>
-          </div>
+        <div className="mt-4">
+          <GroupLabel right="Sections 1.2 – 1.3">Quality Assurance &amp; Submittals</GroupLabel>
+          <ul className="mt-2.5 grid grid-cols-2 gap-x-5 gap-y-1.5">
+            {qa.map((q) => (
+              <li key={q} className="flex gap-2 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>
+                <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
+                {q}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <PageFooter />
@@ -483,13 +559,6 @@ export function InstallationPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-3" style={{ borderRadius: '12px', padding: '0.14in 0.18in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}>
-              <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>Submittals · Section 1.3</div>
-              <p className="mt-1 font-sans text-[8.5px] leading-snug" style={{ color: OFF }}>
-                TDS for system components and a color chart, SDS for system components, and the manufacturer’s warranty
-                (minimum one year).
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -581,7 +650,7 @@ export function ConcretePrepPage() {
 
 /* ---------------------------------------------------------------------------
    ACRYTECH — NEW SURFACE MAINTENANCE
-   Source: New Court Surface Maintenance v. 21.3 and Acrytech Limited Warranty.
+   Source: New Court Surface Maintenance v. 21.3.
    --------------------------------------------------------------------------- */
 export function MaintenancePage() {
   const care = [
@@ -629,22 +698,6 @@ export function MaintenancePage() {
                 {p}
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="mt-6 flex items-stretch gap-6" style={{ borderRadius: '13px', padding: '0.26in 0.32in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
-          <div className="flex flex-col justify-center pr-6" style={{ flex: '0 0 2.4in' }}>
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>Warranty Registration</div>
-            <div className="mt-1 font-display text-[22px] font-bold" style={{ color: OFF, lineHeight: 1 }}>Within 90 days</div>
-            <div className="mt-1.5 font-sans text-[9px]" style={{ color: MUTED }}>warranty@atsports.com</div>
-          </div>
-          <div className="flex flex-col justify-center border-l pl-6" style={{ borderColor: 'rgba(93,163,202,0.4)' }}>
-            <p className="font-sans text-[9.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.82)' }}>
-              The installer completes the Acrytech Warranty Record Form, or the application date must be verifiable. The
-              form may be emailed to AT Sports within 90 days of completion for record keeping. Abuse such as vehicle
-              traffic, burns, corrosive chemicals, sharp objects, planters left on the surface, constant submersion or
-              long-standing debris is excluded.
-            </p>
           </div>
         </div>
       </div>
