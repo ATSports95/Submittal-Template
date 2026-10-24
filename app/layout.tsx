@@ -16,9 +16,8 @@ const figtree = Figtree({
 })
 
 export const metadata: Metadata = {
-  title: 'AT Sports — USTA National Campus Submittal',
-  description:
-    'Hard Court Surface Systems — Response to Request for Proposals, USTA National Campus. Submitted by AT Sports.',
+  title: 'AT Sports — Product Submittals',
+  description: 'Product submittal packages for AT Sports surfacing systems.',
   generator: 'v0.app',
   icons: {
     icon: [

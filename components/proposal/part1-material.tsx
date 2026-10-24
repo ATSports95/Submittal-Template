@@ -304,21 +304,16 @@ export function InnovationPage() {
           ))}
         </div>
 
-        {/* For the National Campus */}
+        {/* Specialty technologies */}
         <div className="mt-7" style={{ borderRadius: '13px', padding: '0.38in 0.4in', background: 'rgba(245,246,246,0.03)', border: '1px solid rgba(185,196,203,0.16)' }}>
           <h3 className="font-display text-[10px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>
-            For the National Campus
+            Project-Specific Requirements
           </h3>
           <p className="mt-3 font-sans text-[11px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.82)' }}>
-            AT Sports proposes making this development platform available to USTA for evaluation of relevant emerging
-            surface technologies throughout the relationship.
-          </p>
-          <p className="mt-2 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
-            Testing can be used to compare new formulations, specialty technologies and performance profiles before
-            broader implementation.
+            Specialty technologies, alternate pace profiles and project-specific performance requirements can be
+            evaluated with AT Sports technical and product-development resources before installation.
           </p>
         </div>
-
       </div>
       <PageFooter index="14" section="AT Sports Proposal" total={TOTAL} />
     </Page>
