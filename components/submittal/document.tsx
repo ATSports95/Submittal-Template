@@ -16,6 +16,15 @@ import { TechnicalSupportPage } from '@/components/proposal/addendum'
 import { AppendixDividerPage, AppendixIndexPage } from '@/components/proposal/part3-appendix'
 import { CoverPage, TransmittalPage, LetterPage, WhyPage, ClosingPage } from './front'
 import { CoveragePage, CushionXSystemPage, CushionXPerformancePage } from './product-pages'
+import {
+  ProductLineColorPage,
+  ProductLinePrepPage,
+  ProductLineFinishPage,
+  MaterialSpecsPage,
+  InstallationPage,
+  ConcretePrepPage,
+  MaintenancePage,
+} from './acrytech-pages'
 import { SubmittalToolbar } from './toolbar'
 import { PRODUCTS, type ProductKey, type ProjectInfo } from '@/lib/submittal'
 
@@ -37,10 +46,16 @@ export function SubmittalDoc({ productKey, info }: { productKey: ProductKey; inf
           { key: 'platform', node: <AtSportsPlatformPage product={product} />, toc: 'About AT Sports' },
           { key: 'direct', node: <ManufacturerDirectPage product={product} />, toc: 'Manufacturer Direct' },
           { key: 'system', node: <SurfaceSystemPage />, toc: 'System Build' },
+          { key: 'line-color', node: <ProductLineColorPage />, toc: 'Product Line — Color Coatings' },
+          { key: 'line-prep', node: <ProductLinePrepPage />, toc: 'Product Line — Primers & Resurfacers' },
+          { key: 'line-finish', node: <ProductLineFinishPage />, toc: 'Product Line — Lines, Additives & Color' },
+          { key: 'materials', node: <MaterialSpecsPage />, toc: 'Material Specifications' },
           { key: 'pace', node: <CourtPacePage />, toc: 'Court Pace & ITF Classification' },
           { key: 'pace2', node: <PaceEngineeredPage />, toc: 'Pace Profiles' },
           { key: 'coverage', node: <CoveragePage />, toc: 'Application & Coverage' },
+          { key: 'install', node: <InstallationPage />, toc: 'Installation Requirements' },
           { key: 'substrate', node: <SubstrateEvaluationPage />, toc: 'Substrate Evaluation' },
+          { key: 'concrete', node: <ConcretePrepPage />, toc: 'Concrete Design & Preparation' },
           { key: 'testing', node: <LabTestedPage />, toc: 'Performance Testing' },
           { key: 'chem', node: <ProductResponsibilityPage />, toc: 'Product Chemistry & VOC' },
           { key: 'innovation', node: <InnovationPage />, toc: 'Product Development' },
@@ -50,6 +65,7 @@ export function SubmittalDoc({ productKey, info }: { productKey: ProductKey; inf
           { key: 'facilities', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
           { key: 'partners', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
           { key: 'support', node: <TechnicalSupportPage />, toc: 'Technical Support' },
+          { key: 'maintenance', node: <MaintenancePage />, toc: 'New Surface Maintenance' },
           { key: 'warranty', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'closing', node: <ClosingPage product={product} info={info} />, toc: 'Contact' },
           { key: 'appx', node: <AppendixDividerPage product={product} />, toc: 'Technical Appendices' },

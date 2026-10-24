@@ -114,7 +114,7 @@ export function TransmittalPage({
               className="grid items-baseline"
               style={{
                 gridTemplateColumns: '1.9in 1fr',
-                padding: '0.1in 0',
+                padding: '0.08in 0',
                 borderBottom: i === rows.length - 1 ? 'none' : '1px solid rgba(185,196,203,0.12)',
               }}
             >
@@ -152,7 +152,7 @@ export function TransmittalPage({
         </div>
 
         {/* Contents */}
-        <div className="mt-7 flex items-center gap-3">
+        <div className="mt-5 flex items-center gap-3">
           <span className="font-display text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
             Contents
           </span>
@@ -165,7 +165,7 @@ export function TransmittalPage({
                 <div
                   key={c.label}
                   className="flex items-baseline gap-2"
-                  style={{ padding: '0.065in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
+                  style={{ padding: '0.045in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
                 >
                   <span className="font-sans text-[10.5px]" style={{ color: 'rgba(245,246,246,0.86)' }}>
                     {c.label}

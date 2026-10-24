@@ -96,7 +96,8 @@ export const PRODUCTS: Record<ProductKey, ProductConfig> = {
       { k: 'M', t: 'Concrete Design & Preparation Guidance' },
       { k: 'N', t: 'New Surface Maintenance Guide' },
       { k: 'O', t: 'Acrytech Limited Warranty' },
-      { k: 'P', t: 'Certified Installer Letter', sub: 'Issued per project on request' },
+      { k: 'P', t: 'AT Sports Product Catalog', sub: 'Full Acrytech product line' },
+      { k: 'Q', t: 'Certified Installer Letter', sub: 'Issued per project on request' },
     ],
   },
   cushionx: {
