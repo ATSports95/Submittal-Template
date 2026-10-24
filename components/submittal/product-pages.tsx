@@ -1,4 +1,5 @@
 import { Page, PageFooter, Kicker, ContentRequired } from '@/components/proposal/page-shell'
+import { MixingChart } from './acrytech-pages'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -23,42 +24,20 @@ const AREAS = [
 const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
 export function CoveragePage() {
-  const steps = [
-    { t: 'Evaluate', d: 'Substrate condition, cure, moisture and drainage reviewed before coating.' },
-    { t: 'Repair', d: 'Cracks, depressions and damaged areas corrected; primer or sealer where required.' },
-    { t: 'Resurface', d: 'Acrytech Resurfacer fills and levels the surface texture.' },
-    { t: 'Color', d: 'Textured Acrytech Color coats build color, texture and court pace.' },
-    { t: 'Finish', d: 'Concentrate finish coat, then lines painted to the court layout.' },
-  ]
   return (
     <Page>
       <div className="absolute left-[0.5in]" style={{ top: '1.15in', width: '6.6in' }}>
-        <Kicker className="mb-3">Application &amp; Coverage</Kicker>
+        <Kicker className="mb-3">Coverage &amp; Mixing</Kicker>
         <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
-          Applied in sequence.
+          Material quantities,
           <br />
-          Estimated by the court.
+          estimated by the court.
         </h2>
       </div>
 
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.75in' }}>
-        {/* Application sequence */}
-        <div className="grid grid-cols-5 gap-2.5">
-          {steps.map((s, i) => (
-            <div key={s.t} className="glass flex flex-col" style={{ borderRadius: '12px', padding: '0.2in 0.18in', minHeight: '1.35in', borderTop: i === steps.length - 1 ? '2px solid #5da3ca' : undefined }}>
-              <span className="font-display text-[9px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>0{i + 1}</span>
-              <span className="mt-1.5 font-display text-[12px] font-bold uppercase tracking-[0.04em]" style={{ color: OFF }}>{s.t}</span>
-              <span className="mt-1.5 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>{s.d}</span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-3 font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.74)' }}>
-          Substrate cure and moisture limits, minimum air and surface temperatures, weather conditions, mixing, dilution
-          and cure time between coats are defined in the Acrytech Application Instructions and Technical Data Sheets.
-        </p>
-
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.5in' }}>
         {/* Coverage table */}
-        <div className="mt-6 flex items-center gap-3">
+        <div className="flex items-center gap-3">
           <span className="font-display text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
             Estimated Material Quantities
           </span>
@@ -120,6 +99,14 @@ export function CoveragePage() {
           color coats and one concentrate finish coat. Areas shown are playing area plus standard run-out. Final quantities
           depend on substrate texture, porosity, application method and the number of coats specified. Line paint,
           primer, sealer and crack-repair materials are estimated separately.
+        </p>
+
+        <div className="mt-8">
+          <MixingChart />
+        </div>
+        <p className="mt-3 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>
+          Mixing, dilution, application temperatures and cure time between coats are defined in each product’s Technical
+          Data Sheet.
         </p>
       </div>
 
