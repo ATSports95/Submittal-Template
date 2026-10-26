@@ -1,5 +1,6 @@
 import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule } from '@/components/proposal/page-shell'
 import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
+import { Body, FillPhoto } from './acrytech-pages'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -15,13 +16,17 @@ function Field({ value, placeholder }: { value: string; placeholder: string }) {
 export function CoverPage({ product, info, generic = false }: { product: ProductConfig; info: ProjectInfo; generic?: boolean }) {
   return (
     <Page>
-      <PhotoBackdrop
-        src={product.key === 'cushionx' ? '/images/indoor-courts.png' : '/images/cover-courts.png'}
-        alt="Tennis courts finished with an AT Sports surface system"
-        overlay={0.72}
-        position="center"
-        showPlaceholder={false}
-      />
+      {product.key === 'cushionx' ? (
+        <PhotoBackdrop src="/images/indoor-courts.png" alt="Indoor courts finished with an AT Sports surface system" overlay={0.72} position="center" showPlaceholder={false} />
+      ) : (
+        <div className="absolute inset-0 overflow-hidden">
+          <img src="/images/pour-blue.jpg" alt="Acrytech color coating poured onto a finished court surface" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: 'center 70%' }} />
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(180deg, rgba(24,28,31,0.94) 0%, rgba(24,28,31,0.82) 30%, rgba(24,28,31,0.2) 58%, rgba(24,28,31,0.15) 78%, rgba(24,28,31,0.85) 100%)' }}
+          />
+        </div>
+      )}
 
       <div className="absolute left-[0.5in] right-[0.5in] top-[0.5in] flex items-center justify-between">
         <img src="/images/atsports-logo.png" alt="AT Sports" className="w-auto" style={{ height: '0.5in' }} />
@@ -217,52 +222,40 @@ export function ProductInfoPage({
   ]
   return (
     <Page>
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '0.75in' }}>
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '0.85in' }}>
         <Kicker className="mb-3">Product Submittal Package</Kicker>
         <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '30px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
           Product submittal information.
         </h2>
 
-        <div className="mt-6 glass" style={{ borderRadius: '13px', padding: '0.08in 0.32in' }}>
+      </div>
+      <Body top="1.75in" gap="0.24in">
+        <div className="glass" style={{ borderRadius: '13px', padding: '0.06in 0.32in' }}>
           {rows.map((r, i) => (
             <div
               key={r.k}
               className="grid items-baseline"
               style={{
                 gridTemplateColumns: '1.9in 1fr',
-                padding: '0.08in 0',
+                padding: '0.11in 0',
                 borderBottom: i === rows.length - 1 ? 'none' : '1px solid rgba(185,196,203,0.12)',
               }}
             >
-              <span className="font-display text-[8.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: MUTED }}>
+              <span className="font-display text-[9px] font-semibold uppercase tracking-[0.16em]" style={{ color: MUTED }}>
                 {r.k}
               </span>
-              <span className="font-sans text-[11.5px]" style={{ color: OFF }}>
+              <span className="font-sans text-[12px]" style={{ color: OFF }}>
                 {r.v}
               </span>
             </div>
           ))}
         </div>
 
-        <div
-          className="mt-4 grid grid-cols-[1.9in_1fr] items-center"
-          style={{ borderRadius: '13px', padding: '0.2in 0.32in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}
-        >
-          <span className="font-display text-[8.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>
-            AT Sports Contact
-          </span>
-          <div>
-            <div className="font-display text-[13px] font-bold" style={{ color: OFF }}>
-              AT Sports, Inc.
-            </div>
-            <div className="mt-0.5 font-sans text-[10.5px]" style={{ color: MUTED }}>
-              {COMPANY.phone}  ·  {COMPANY.web}
-            </div>
-          </div>
+        <div>
+          <ContentsList contents={contents} />
         </div>
-
-        <ContentsList contents={contents} />
-      </div>
+        <FillPhoto src="/images/warehouse-drums.jpg" alt="Acrytech drums and silica sand staged in the AT Sports warehouse, Canton, Georgia" position="center 55%" caption="Acrytech products staged for shipment at the AT Sports facility in Canton, Georgia." />
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -272,8 +265,8 @@ function ContentsList({ contents }: { contents: { label: string; page: number }[
   const half = Math.ceil(contents.length / 2)
   return (
     <>
-      <div className="mt-5 flex items-center gap-3">
-        <span className="font-display text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
+      <div className="flex items-center gap-3">
+        <span className="font-display text-[10.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
           Contents
         </span>
         <div className="h-px flex-1" style={{ backgroundColor: 'rgba(185,196,203,0.2)' }} />
@@ -285,9 +278,9 @@ function ContentsList({ contents }: { contents: { label: string; page: number }[
               <div
                 key={c.label}
                 className="flex items-baseline gap-2"
-                style={{ padding: '0.045in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
+                style={{ padding: '0.06in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
               >
-                <span className="font-sans text-[10.5px]" style={{ color: 'rgba(245,246,246,0.86)' }}>
+                <span className="font-sans text-[11px]" style={{ color: 'rgba(245,246,246,0.86)' }}>
                   {c.label}
                 </span>
                 <span className="flex-1" />
@@ -299,7 +292,7 @@ function ContentsList({ contents }: { contents: { label: string; page: number }[
           </div>
         ))}
       </div>
-      <p className="mt-4 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>
+      <p className="mt-3 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
         Technical data sheets, safety data sheets, warranty and supporting documents are listed in the Technical
         Appendices and attached to this submittal.
       </p>
@@ -325,7 +318,7 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
         ]
   return (
     <Page>
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.3in' }}>
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.0in' }}>
         <Kicker className="mb-4">Introduction</Kicker>
         <h2
           className="font-display font-bold text-balance"
@@ -336,15 +329,15 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
           specification review.
         </h2>
 
-        <div className="mt-8 grid grid-cols-[1fr_2.3in] gap-10">
-          <div className="flex flex-col gap-4">
+        <div className="mt-7 grid grid-cols-[1fr_2.3in] gap-10">
+          <div className="flex flex-col gap-3.5">
             {paragraphs.map((p, i) => (
-              <p key={i} className="font-sans text-[13px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.82)' }}>
+              <p key={i} className="font-sans text-[12.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.82)' }}>
                 {p}
               </p>
             ))}
 
-            <div className="mt-6">
+            <div className="mt-3">
               <img
                 src="/images/brad-carroll-signature.png"
                 alt="Signature of Brad Carroll"
@@ -363,7 +356,7 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
 
           <div
             className="glass-strong flex flex-col justify-center"
-            style={{ height: '300px', borderRadius: '14px', padding: '18px 0.34in 22px', borderTop: '2px solid #5da3ca' }}
+            style={{ borderRadius: '14px', padding: '18px 0.34in 22px', borderTop: '2px solid #5da3ca' }}
           >
             <div className="font-display text-[10px] font-semibold uppercase tracking-[0.22em]" style={{ color: BLUE_LIGHT }}>
               Requested Action
@@ -375,6 +368,9 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
           </div>
         </div>
       </div>
+      <Body top="7.35in">
+        <FillPhoto src="/images/lab-pour.jpg" alt="AT Sports technician drawing down an Acrytech color sample in the lab" position="center 45%" caption="Color drawdown in the AT Sports lab, Canton, Georgia." />
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -431,7 +427,9 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
           ))}
         </div>
 
-        <div className="mt-6 grid gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
+      </div>
+      <Body top="6.55in">
+        <div className="grid min-h-0 flex-1 gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
           <div>
             <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
               AT Sports Product Lines
@@ -445,19 +443,11 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
               ))}
             </div>
           </div>
-          <div>
-            <div className="overflow-hidden" style={{ borderRadius: '13px', height: '1.9in', border: '1px solid rgba(185,196,203,0.16)' }}>
-              <img
-                src="/images/at-sports-facility-exterior.jpg"
-                alt="AT Sports manufacturing facility in Canton, Georgia"
-                className="h-full w-full object-cover"
-                style={{ objectPosition: 'center 60%' }}
-              />
-            </div>
-            <div className="mt-2 font-sans text-[9px]" style={{ color: MUTED }}>AT Sports manufacturing facility, Canton, Georgia</div>
+          <div className="flex min-h-0 flex-col">
+            <FillPhoto src="/images/at-sports-facility-exterior.jpg" alt="AT Sports manufacturing facility in Canton, Georgia" position="center 60%" caption="AT Sports manufacturing facility, Canton, Georgia" />
           </div>
         </div>
-      </div>
+      </Body>
       <PageFooter />
     </Page>
   )
