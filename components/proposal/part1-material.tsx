@@ -216,11 +216,11 @@ export function ProductResponsibilityPage() {
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '6.5in' }}>
         <div className="overflow-hidden" style={{ borderRadius: '14px', height: '3.2in', border: '1px solid rgba(185,196,203,0.16)' }}>
           <img
-            src="/images/color-match-lab.jpg"
-            alt="AT Sports technician verifying a coating batch against a controlled reference standard in the lab"
+            src="/images/mixing-drum.jpg"
+            alt="AT Sports technician mixing a drum of blue Acrytech acrylic coating during production"
             crossOrigin="anonymous"
             className="h-full w-full object-cover"
-            style={{ objectPosition: 'center 40%' }}
+            style={{ objectPosition: 'center 45%' }}
           />
         </div>
         <div className="mt-2 font-sans text-[9.5px]" style={{ color: MUTED }}>
