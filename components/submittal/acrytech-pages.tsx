@@ -432,17 +432,17 @@ export function ProductLineColorsPage() {
         title="Acrytech colors."
         intro="Every Acrytech color coat is available in 32 standard colors, with custom colors made to order."
       />
-      <Body top="2.3in" gap="0.2in">
+      <Body top="2.3in" gap="0.28in">
         {[
           { t: 'Player’s Choice Colors', list: PLAYERS_CHOICE },
           { t: 'Specialty Colors', sub: 'Priced by pigment', list: SPECIALTY_COLORS },
         ].map((g) => (
-          <section key={g.t} className="glass" style={{ borderRadius: '12px', padding: '0.18in 0.22in' }}>
+          <section key={g.t} className="glass flex flex-1 flex-col" style={{ borderRadius: '12px', padding: '0.24in 0.26in' }}>
             <div className="flex items-baseline justify-between">
               <h3 className="font-display text-[12px] font-bold uppercase tracking-[0.08em]" style={{ color: OFF }}>{g.t}</h3>
               {g.sub && <span className="font-sans text-[8px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>{g.sub}</span>}
             </div>
-            <ul className="mt-3.5 grid grid-cols-8 gap-x-3 gap-y-3.5" aria-label={g.t}>
+            <ul className="mt-4 grid flex-1 grid-cols-8 content-evenly gap-x-3.5 gap-y-4" aria-label={g.t}>
               {g.list.flatMap((f) => f.colors).map((c) => (
                 <li key={c.name} className="flex flex-col gap-[5px]">
                   <span
@@ -799,7 +799,7 @@ export function InstallationApplyPage() {
 }
 
 /* ---------------------------------------------------------------------------
-   ACRYTECH — CONCRETE DESIGN & PREPARATION (2 pages)
+   ACRYTECH ��� CONCRETE DESIGN & PREPARATION (2 pages)
    Source: Acrytech Concrete Design and Preparation v. TA25.1.
    --------------------------------------------------------------------------- */
 const CONCRETE_DESIGN = [
