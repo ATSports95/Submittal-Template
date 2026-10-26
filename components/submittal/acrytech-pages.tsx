@@ -220,43 +220,84 @@ const ADDITIVES: Product[] = [
   { name: 'Drying Accelerant', d: '99% isopropyl alcohol. Replace up to half of the mixing water to speed drying as needed.', coverage: 'N/A', temp: '—', dry: '—', cure: '—', pack: '55 gal' },
 ]
 
-type CourtColor = { name: string; pms: string; hex: string }
+type CourtColor = { name: string; hex: string }
+type ColorFamily = { family: string; colors: CourtColor[] }
 
-const PLAYERS_CHOICE: CourtColor[] = [
-  { name: 'Competition Green', pms: '7735 C', hex: '#36573B' },
-  { name: 'Performance Green', pms: '2465 C', hex: '#1E6F30' },
-  { name: 'Field Green', pms: '7743 C', hex: '#44693D' },
-  { name: 'Forest Green', pms: '4209 C', hex: '#38584B' },
-  { name: 'Sandstone', pms: '404 C', hex: '#776E64' },
-  { name: 'Slate', pms: 'Cool Gray 11 C', hex: '#53565A' },
-  { name: 'Gray', pms: 'Cool Gray 9 C', hex: '#75787B' },
-  { name: 'Black', pms: 'Black 2 C', hex: '#332F21' },
-  { name: 'Classic Red', pms: '181 C', hex: '#81312F' },
-  { name: 'Beige', pms: '4048 C', hex: '#A18269' },
-  { name: 'Light Blue', pms: '4152 C', hex: '#135193' },
-  { name: 'Standard Blue', pms: '294 C', hex: '#002F6C' },
-  { name: 'Competition Blue', pms: '4154 C', hex: '#0E4174' },
-  { name: 'Standard Orange', pms: '7619 C', hex: '#C04C36' },
-  { name: 'Terracotta', pms: '7525 C', hex: '#9A6A4F' },
-  { name: 'Frost Blue', pms: '4150 C', hex: '#517DB9' },
+const PLAYERS_CHOICE: ColorFamily[] = [
+  {
+    family: 'Greens',
+    colors: [
+      { name: 'Performance Green', hex: '#1E6F30' },
+      { name: 'Competition Green', hex: '#36573B' },
+      { name: 'Forest Green', hex: '#38584B' },
+      { name: 'Field Green', hex: '#44693D' },
+    ],
+  },
+  {
+    family: 'Blues',
+    colors: [
+      { name: 'Frost Blue', hex: '#517DB9' },
+      { name: 'Light Blue', hex: '#135193' },
+      { name: 'Competition Blue', hex: '#0E4174' },
+      { name: 'Standard Blue', hex: '#002F6C' },
+    ],
+  },
+  {
+    family: 'Warm',
+    colors: [
+      { name: 'Terracotta', hex: '#9A6A4F' },
+      { name: 'Standard Orange', hex: '#C04C36' },
+      { name: 'Classic Red', hex: '#81312F' },
+    ],
+  },
+  {
+    family: 'Neutrals',
+    colors: [
+      { name: 'Slate', hex: '#53565A' },
+      { name: 'Sandstone', hex: '#776E64' },
+      { name: 'Gray', hex: '#75787B' },
+      { name: 'Beige', hex: '#A18269' },
+      { name: 'Black', hex: '#332F21' },
+    ],
+  },
 ]
-const SPECIALTY_COLORS: CourtColor[] = [
-  { name: 'Pro Purple', pms: '4132 C', hex: '#3B3A4A' },
-  { name: 'Bright Red', pms: '704 C', hex: '#9E2B2F' },
-  { name: 'Sky Blue', pms: '292 C', hex: '#69B3E7' },
-  { name: 'Caribbean Blue', pms: '2390 C', hex: '#077CAB' },
-  { name: 'Nautical Navy', pms: '2189 C', hex: '#003349' },
-  { name: 'Crimson', pms: '188 C', hex: '#76232F' },
-  { name: 'Irish Green', pms: '3522 C', hex: '#00892F' },
-  { name: 'Passion Pink', pms: '4073 C', hex: '#C64771' },
-  { name: 'Sea Green', pms: '3557 C', hex: '#007C80' },
-  { name: 'Coral', pms: '710 C', hex: '#E03E52' },
-  { name: 'Kiwi', pms: '2301 C', hex: '#8FAD15' },
-  { name: 'Ultra Violet', pms: '7678 C', hex: '#68478D' },
-  { name: 'Viva Violet', pms: '7662 C', hex: '#7A4282' },
-  { name: 'Bright Orange', pms: '2026 C', hex: '#F4633A' },
-  { name: 'Bright Yellow', pms: '7409 C', hex: '#F0B323' },
-  { name: 'Lime', pms: '2257 C', hex: '#00AD50' },
+const SPECIALTY_COLORS: ColorFamily[] = [
+  {
+    family: 'Blues',
+    colors: [
+      { name: 'Nautical Navy', hex: '#003349' },
+      { name: 'Sky Blue', hex: '#69B3E7' },
+      { name: 'Caribbean Blue', hex: '#077CAB' },
+    ],
+  },
+  {
+    family: 'Greens',
+    colors: [
+      { name: 'Irish Green', hex: '#00892F' },
+      { name: 'Sea Green', hex: '#007C80' },
+      { name: 'Kiwi', hex: '#8FAD15' },
+      { name: 'Lime', hex: '#00AD50' },
+    ],
+  },
+  {
+    family: 'Warm',
+    colors: [
+      { name: 'Crimson', hex: '#76232F' },
+      { name: 'Bright Red', hex: '#9E2B2F' },
+      { name: 'Coral', hex: '#E03E52' },
+      { name: 'Passion Pink', hex: '#C64771' },
+      { name: 'Bright Orange', hex: '#F4633A' },
+      { name: 'Bright Yellow', hex: '#F0B323' },
+    ],
+  },
+  {
+    family: 'Purples',
+    colors: [
+      { name: 'Pro Purple', hex: '#3B3A4A' },
+      { name: 'Ultra Violet', hex: '#68478D' },
+      { name: 'Viva Violet', hex: '#7A4282' },
+    ],
+  },
 ]
 
 function TableNote({ children }: { children: ReactNode }) {
@@ -341,21 +382,30 @@ export function ProductLineFinishPage() {
                   <span className="font-display text-[10px] font-bold uppercase tracking-[0.08em]" style={{ color: OFF }}>{g.t}</span>
                   {g.sub && <span className="font-sans text-[8px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>{g.sub}</span>}
                 </div>
-                <ul className="mt-[6px] grid grid-cols-2 gap-x-3 gap-y-[2px]">
-                  {g.list.map((c) => (
-                    <li key={c.name} className="flex items-center gap-[6px]">
+                <div className="mt-[6px] flex flex-col gap-[5px]">
+                  {g.list.map((f) => (
+                    <div key={f.family} className="flex items-start gap-2">
                       <span
-                        aria-hidden="true"
-                        className="shrink-0"
-                        style={{ width: '0.2in', height: '0.2in', borderRadius: '4px', background: c.hex, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.18)' }}
-                      />
-                      <span className="flex min-w-0 flex-col leading-tight">
-                        <span className="font-sans text-[8.5px] font-semibold" style={{ color: 'rgba(245,246,246,0.9)' }}>{c.name}</span>
-                        <span className="font-sans text-[7px] tracking-[0.02em]" style={{ color: MUTED }}>PMS {c.pms} · {c.hex}</span>
+                        className="shrink-0 pt-[2px] font-sans text-[7px] font-semibold uppercase tracking-[0.1em]"
+                        style={{ width: '0.5in', color: MUTED }}
+                      >
+                        {f.family}
                       </span>
-                    </li>
+                      <ul className="grid flex-1 grid-cols-2 gap-x-3 gap-y-[3px]" aria-label={`${g.t} ${f.family}`}>
+                        {f.colors.map((c) => (
+                          <li key={c.name} className="flex items-center gap-[6px]">
+                            <span
+                              aria-hidden="true"
+                              className="shrink-0"
+                              style={{ width: '0.15in', height: '0.15in', borderRadius: '3px', background: c.hex, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.18)' }}
+                            />
+                            <span className="font-sans text-[8.5px] font-semibold leading-tight" style={{ color: 'rgba(245,246,246,0.9)' }}>{c.name}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             ))}
           </div>
