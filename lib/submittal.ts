@@ -131,3 +131,11 @@ export const COMPANY = {
   phone: '770-734-3000',
   web: 'atsports.com',
 }
+
+/** Edition shown on the cover of the generic (non-personalized) packages. */
+export const GENERIC_EDITION = '2026'
+
+/** Appendices that only make sense for a specific project are left out of the generic packages. */
+export function genericProduct(product: ProductConfig): ProductConfig {
+  return { ...product, appendices: product.appendices.filter((a) => a.t !== 'Certified Installer Letter') }
+}

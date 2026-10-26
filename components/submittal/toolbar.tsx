@@ -10,7 +10,15 @@ function toQuery(info: ProjectInfo, extra: Record<string, string> = {}) {
 }
 
 /** On-screen controls above the document. Hidden when printing. */
-export function SubmittalToolbar({ productKey, info }: { productKey: ProductKey; info: ProjectInfo }) {
+export function SubmittalToolbar({
+  productKey,
+  info,
+  generic = false,
+}: {
+  productKey: ProductKey
+  info: ProjectInfo
+  generic?: boolean
+}) {
   const [showTip, setShowTip] = useState(false)
   const product = PRODUCTS[productKey]
   const filled = Boolean(info.project)
@@ -23,19 +31,27 @@ export function SubmittalToolbar({ productKey, info }: { productKey: ProductKey;
             <img src="/images/atsports-logo.png" alt="AT Sports" style={{ height: 22 }} />
           </a>
           <div className="min-w-0">
-            <div className="truncate text-[13px] font-semibold text-[#f5f6f6]">{product.footerLabel}</div>
+            <div className="truncate text-[13px] font-semibold text-[#f5f6f6]">
+              {generic ? `${product.footerLabel} — Generic Package` : product.footerLabel}
+            </div>
             <div className="truncate text-[11px] text-[#b9c4cb]">
-              {filled ? `${info.project}${info.location ? ` · ${info.location}` : ''}` : 'Blank template — add project details before sending'}
+              {generic
+                ? 'Ready to send — no project details'
+                : filled
+                  ? `${info.project}${info.location ? ` · ${info.location}` : ''}`
+                  : 'Blank template — add project details before sending'}
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <a
-            href={`/?${toQuery(info, { product: productKey })}`}
-            className="rounded-md border border-white/20 px-3 py-1.5 text-[12px] font-medium text-[#f5f6f6] hover:bg-white/10"
-          >
-            {filled ? 'Edit details' : 'Add project details'}
-          </a>
+          {!generic && (
+            <a
+              href={`/?${toQuery(info, { product: productKey })}`}
+              className="rounded-md border border-white/20 px-3 py-1.5 text-[12px] font-medium text-[#f5f6f6] hover:bg-white/10"
+            >
+              {filled ? 'Edit details' : 'Add project details'}
+            </a>
+          )}
           <div className="relative">
             <button
               type="button"

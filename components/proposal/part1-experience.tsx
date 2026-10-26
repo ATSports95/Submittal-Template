@@ -306,7 +306,7 @@ Selected Tennis&nbsp;Facilities
         width="6.6in"
       />
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '3.05in' }}>
-        <div className="grid grid-cols-3 gap-x-6 gap-y-12">
+        <div className="grid grid-cols-3 gap-x-6 gap-y-20">
           {projects.map((p) => (
             <TennisCell key={p.id} p={p} />
           ))}
@@ -370,7 +370,7 @@ export function NationalPartnershipsPage() {
               style={{ borderRadius: '14px', border: '1px solid rgba(185,196,203,0.16)' }}
             >
               {/* Event image with logo + designation overlaid */}
-              <div className="relative overflow-hidden" style={{ height: '2.75in' }}>
+              <div className="relative overflow-hidden" style={{ height: '3.45in' }}>
                 <img
                   src={b.photo || '/placeholder.svg'}
                   alt={b.photoAlt}

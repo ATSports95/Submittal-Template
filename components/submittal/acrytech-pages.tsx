@@ -29,12 +29,53 @@ function Head({ kicker, title, intro }: { kicker: string; title: ReactNode; intr
 function GroupLabel({ children, right }: { children: ReactNode; right?: ReactNode }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="font-display text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
+      <span className="font-display text-[10.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
         {children}
       </span>
       <div className="h-px flex-1" style={{ backgroundColor: 'rgba(185,196,203,0.2)' }} />
-      {right && <span className="font-sans text-[8.5px] uppercase tracking-[0.12em]" style={{ color: MUTED }}>{right}</span>}
+      {right && <span className="font-sans text-[9px] uppercase tracking-[0.12em]" style={{ color: MUTED }}>{right}</span>}
     </div>
+  )
+}
+
+/**
+ * Page body that runs from below the header to just above the footer rule.
+ * Children stack in a column; a FillPhoto (or any `flex-1` child) absorbs the
+ * remaining height so pages end at the footer instead of leaving dead space.
+ */
+export function Body({ top = '2.5in', gap = '0.22in', children }: { top?: string; gap?: string; children: ReactNode }) {
+  return (
+    <div className="absolute left-[0.5in] right-[0.5in] flex flex-col" style={{ top, bottom: '0.82in', gap }}>
+      {children}
+    </div>
+  )
+}
+
+/** Photo that fills whatever vertical space is left in a Body. */
+export function FillPhoto({
+  src,
+  alt,
+  caption,
+  position = 'center',
+  minHeight = '1.3in',
+}: {
+  src: string
+  alt: string
+  caption?: string
+  position?: string
+  minHeight?: string
+}) {
+  return (
+    <figure className="flex min-h-0 flex-1 flex-col gap-1.5" style={{ minHeight }}>
+      <div className="relative min-h-0 flex-1 overflow-hidden" style={{ borderRadius: '13px', border: '1px solid rgba(185,196,203,0.16)' }}>
+        <img src={src} alt={alt} className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: position }} />
+      </div>
+      {caption && (
+        <figcaption className="font-sans text-[9px]" style={{ color: MUTED }}>
+          {caption}
+        </figcaption>
+      )}
+    </figure>
   )
 }
 
@@ -57,7 +98,9 @@ const COMPLIANCE = [
   { req: 'Traceability', val: 'Batch number of each product recorded on site and kept for the warranty period', doc: 'System Specification 1.2' },
 ]
 
-export function SpecCompliancePage() {
+const COMPLIANCE_GENERIC = COMPLIANCE.map((c) => (c.req === 'Installer' ? { ...c, doc: 'Acrytech Limited Warranty' } : c))
+
+export function SpecCompliancePage({ generic = false }: { generic?: boolean }) {
   return (
     <Page>
       <Head
@@ -65,34 +108,34 @@ export function SpecCompliancePage() {
         title="Acrytech at a glance."
         intro="A summary of how the Acrytech Coatings System meets typical acrylic sports-surfacing requirements, with the document in the Technical Appendices that supports each item."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.4in' }}>
-        <div className="glass overflow-hidden" style={{ borderRadius: '12px' }}>
+      <Body top="2.45in">
+        <div className="glass flex min-h-0 flex-1 flex-col overflow-hidden" style={{ borderRadius: '12px' }}>
           <div
-            className="grid items-end font-display text-[7.5px] font-semibold uppercase tracking-[0.14em]"
-            style={{ gridTemplateColumns: '1.45in 1fr 1.55in', columnGap: '0.16in', padding: '0.1in 0.22in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
+            className="grid items-end font-display text-[8.5px] font-semibold uppercase tracking-[0.14em]"
+            style={{ gridTemplateColumns: '1.5in 1fr 1.6in', columnGap: '0.18in', padding: '0.13in 0.24in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
           >
             <span>Requirement</span>
             <span>Acrytech</span>
             <span>Supporting document</span>
           </div>
-          {COMPLIANCE.map((c, i) => (
+          {(generic ? COMPLIANCE_GENERIC : COMPLIANCE).map((c, i) => (
             <div
               key={c.req}
-              className="grid items-baseline"
-              style={{ gridTemplateColumns: '1.45in 1fr 1.55in', columnGap: '0.16in', padding: '0.09in 0.22in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+              className="grid flex-1 items-center"
+              style={{ gridTemplateColumns: '1.5in 1fr 1.6in', columnGap: '0.18in', padding: '0.06in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
             >
-              <span className="font-display text-[9.5px] font-bold uppercase tracking-[0.04em]" style={{ color: OFF }}>{c.req}</span>
-              <span className="font-sans text-[9.5px] leading-snug" style={{ color: 'rgba(245,246,246,0.86)' }}>{c.val}</span>
-              <span className="font-sans text-[8.5px] leading-snug" style={{ color: BLUE_LIGHT }}>{c.doc}</span>
+              <span className="font-display text-[10px] font-bold uppercase tracking-[0.04em]" style={{ color: OFF }}>{c.req}</span>
+              <span className="font-sans text-[10.5px] leading-snug" style={{ color: 'rgba(245,246,246,0.88)' }}>{c.val}</span>
+              <span className="font-sans text-[9.5px] leading-snug" style={{ color: BLUE_LIGHT }}>{c.doc}</span>
             </div>
           ))}
         </div>
 
-        <div className="mt-5" style={{ borderRadius: '13px', padding: '0.24in 0.3in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
-          <div className="font-display text-[9px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>
+        <div style={{ borderRadius: '13px', padding: '0.24in 0.3in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
+          <div className="font-display text-[9.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>
             Suggested Specification Language · Part 2 – Products
           </div>
-          <div className="mt-2.5 font-mono text-[9.5px] leading-relaxed" style={{ color: OFF }}>
+          <div className="mt-2.5 font-mono text-[10px] leading-relaxed" style={{ color: OFF }}>
             2.1 MANUFACTURERS
             <br />
             A. Acceptable manufacturer: AT Sports, Inc., 189 Etowah Industrial Court, Canton, GA 30114.
@@ -101,11 +144,11 @@ export function SpecCompliancePage() {
             <br />
             &nbsp;&nbsp;&nbsp;1. Product: Acrytech Coatings System (Acrytech Resurfacer, Acrytech Color, Acrytech Line Paint).
           </div>
-          <p className="mt-2.5 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>
+          <p className="mt-2.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
             The full three-part Acrytech System Specification is included as Appendix A and may be used as a basis of design.
           </p>
         </div>
-      </div>
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -128,14 +171,14 @@ type Product = {
   flag?: string
 }
 
-const COL = '2.6in 1.15in 0.68in 0.66in 0.42in 1fr'
+const COL = '2.55in 1.12in 0.72in 0.62in 0.46in 1fr'
 
-function ProductTable({ rows }: { rows: Product[] }) {
+function ProductTable({ rows, dense = false }: { rows: Product[]; dense?: boolean }) {
   return (
     <div className="mt-2.5 glass overflow-hidden" style={{ borderRadius: '12px' }}>
       <div
-        className="grid items-end font-display text-[7.5px] font-semibold uppercase tracking-[0.14em]"
-        style={{ gridTemplateColumns: COL, columnGap: '0.1in', padding: '0.1in 0.18in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
+        className="grid items-end font-display text-[8.5px] font-semibold uppercase tracking-[0.12em]"
+        style={{ gridTemplateColumns: COL, columnGap: '0.1in', padding: '0.12in 0.2in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
       >
         <span>Product</span>
         <span>Coverage</span>
@@ -148,13 +191,13 @@ function ProductTable({ rows }: { rows: Product[] }) {
         <div
           key={r.name}
           className="grid items-start"
-          style={{ gridTemplateColumns: COL, columnGap: '0.1in', padding: '0.075in 0.18in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+          style={{ gridTemplateColumns: COL, columnGap: '0.1in', padding: `${dense ? '0.06in' : '0.12in'} 0.2in`, borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
         >
           <span>
-            <span className="block font-display text-[10.5px] font-bold" style={{ color: OFF }}>{r.name}</span>
-            <span className="mt-0.5 block font-sans text-[8px] leading-snug" style={{ color: MUTED }}>{r.d}</span>
+            <span className="block font-display text-[11.5px] font-bold" style={{ color: OFF }}>{r.name}</span>
+            <span className={`mt-0.5 block font-sans leading-snug ${dense ? 'text-[8.5px]' : 'text-[9px]'}`} style={{ color: MUTED }}>{r.d}</span>
           </span>
-          <span className="font-sans text-[8.5px] leading-snug tabular-nums" style={{ color: OFF }}>
+          <span className="font-sans text-[9.5px] leading-snug tabular-nums" style={{ color: OFF }}>
             {r.coverage}
             {r.flag && (
               <span className="mt-1 block">
@@ -162,10 +205,10 @@ function ProductTable({ rows }: { rows: Product[] }) {
               </span>
             )}
           </span>
-          <span className="font-sans text-[8.5px] tabular-nums" style={{ color: OFF }}>{r.temp}</span>
-          <span className="font-sans text-[8.5px] tabular-nums" style={{ color: OFF }}>{r.dry}</span>
-          <span className="font-sans text-[8.5px] tabular-nums" style={{ color: OFF }}>{r.cure}</span>
-          <span className="font-sans text-[8px] leading-snug" style={{ color: MUTED }}>
+          <span className="font-sans text-[9.5px] tabular-nums" style={{ color: OFF }}>{r.temp}</span>
+          <span className="font-sans text-[9.5px] tabular-nums" style={{ color: OFF }}>{r.dry}</span>
+          <span className="font-sans text-[9.5px] tabular-nums" style={{ color: OFF }}>{r.cure}</span>
+          <span className="font-sans text-[9px] leading-snug" style={{ color: MUTED }}>
             {r.pack.split(' · ').map((p) => (
               <span key={p} className="block">{p}</span>
             ))}
@@ -187,7 +230,7 @@ const COLOR_COATS: Product[] = [
 
 const SPECIALTY: Product[] = [
   { name: 'Roller Sports', d: 'Fiber-reinforced, highly abrasion-resistant surface for roller sports. Player’s Choice colors only.', coverage: '.04–.045', temp: '36–130°F', dry: '1–3 hr', cure: '72 hr', pack: '55 / 30 gal' },
-  { name: 'Shuffle Board', d: 'Formulated with select slip agents for an ideal puck slide. Player’s Choice colors only.', coverage: '.06–.07', temp: '50–130°F', dry: '1–3 hr', cure: '48 hr', pack: '55 / 30 gal' },
+  { name: 'Shuffleboard', d: 'Formulated with select slip agents for an ideal puck slide. Player’s Choice colors only.', coverage: '.06–.07', temp: '50–130°F', dry: '1–3 hr', cure: '48 hr', pack: '55 / 30 gal' },
 ]
 
 const PRIMERS: Product[] = [
@@ -218,33 +261,112 @@ const ADDITIVES: Product[] = [
   { name: 'Drying Accelerant', d: '99% isopropyl alcohol. Replace up to half of the mixing water to speed drying as needed.', coverage: 'N/A', temp: '—', dry: '—', cure: '—', pack: '55 gal' },
 ]
 
-const PLAYERS_CHOICE = ['Competition Green', 'Performance Green', 'Field Green', 'Forest Green', 'Sandstone', 'Slate', 'Gray', 'Black', 'Classic Red', 'Beige', 'Light Blue', 'Standard Blue', 'Competition Blue', 'Orange', 'Terracotta', 'Frost Blue']
-const SPECIALTY_COLORS = ['Pro Purple', 'Bright Red', 'Sky Blue', 'Caribbean Blue', 'Nautical Navy', 'Crimson', 'Irish Green', 'Passion Pink', 'Sea Green', 'Coral', 'Kiwi', 'Ultra Violet', 'Viva Violet', 'Bright Orange', 'Bright Yellow', 'Lime']
+type CourtColor = { name: string; hex: string }
+type ColorFamily = { family: string; colors: CourtColor[] }
+
+const PLAYERS_CHOICE: ColorFamily[] = [
+  {
+    family: 'Greens',
+    colors: [
+      { name: 'Performance Green', hex: '#1E6F30' },
+      { name: 'Competition Green', hex: '#36573B' },
+      { name: 'Forest Green', hex: '#38584B' },
+      { name: 'Field Green', hex: '#44693D' },
+    ],
+  },
+  {
+    family: 'Blues',
+    colors: [
+      { name: 'Frost Blue', hex: '#517DB9' },
+      { name: 'Light Blue', hex: '#135193' },
+      { name: 'Competition Blue', hex: '#0E4174' },
+      { name: 'Standard Blue', hex: '#002F6C' },
+    ],
+  },
+  {
+    family: 'Warm',
+    colors: [
+      { name: 'Terracotta', hex: '#9A6A4F' },
+      { name: 'Standard Orange', hex: '#C04C36' },
+      { name: 'Classic Red', hex: '#81312F' },
+    ],
+  },
+  {
+    family: 'Neutrals',
+    colors: [
+      { name: 'Slate', hex: '#53565A' },
+      { name: 'Sandstone', hex: '#776E64' },
+      { name: 'Gray', hex: '#75787B' },
+      { name: 'Beige', hex: '#A18269' },
+      { name: 'Black', hex: '#332F21' },
+    ],
+  },
+]
+const SPECIALTY_COLORS: ColorFamily[] = [
+  {
+    family: 'Blues',
+    colors: [
+      { name: 'Nautical Navy', hex: '#003349' },
+      { name: 'Sky Blue', hex: '#69B3E7' },
+      { name: 'Caribbean Blue', hex: '#077CAB' },
+    ],
+  },
+  {
+    family: 'Greens',
+    colors: [
+      { name: 'Irish Green', hex: '#00892F' },
+      { name: 'Sea Green', hex: '#007C80' },
+      { name: 'Kiwi', hex: '#8FAD15' },
+      { name: 'Lime', hex: '#00AD50' },
+    ],
+  },
+  {
+    family: 'Warm',
+    colors: [
+      { name: 'Crimson', hex: '#76232F' },
+      { name: 'Bright Red', hex: '#9E2B2F' },
+      { name: 'Coral', hex: '#E03E52' },
+      { name: 'Passion Pink', hex: '#C64771' },
+      { name: 'Bright Orange', hex: '#F4633A' },
+      { name: 'Bright Yellow', hex: '#F0B323' },
+    ],
+  },
+  {
+    family: 'Purples',
+    colors: [
+      { name: 'Pro Purple', hex: '#3B3A4A' },
+      { name: 'Ultra Violet', hex: '#68478D' },
+      { name: 'Viva Violet', hex: '#7A4282' },
+    ],
+  },
+]
 
 function TableNote({ children }: { children: ReactNode }) {
-  return <p className="mt-2 font-sans text-[8px] leading-relaxed" style={{ color: MUTED }}>{children}</p>
+  return <p className="font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>{children}</p>
 }
 
 export function ProductLineColorPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 1 of 3"
+        kicker="Acrytech Product Line · 1 of 4"
         title="Color coatings."
         intro="Every Acrytech color coat is a 100% acrylic latex, self-crosslinking formulation. The line is engineered so each product can be matched to the substrate, the level of use and the sport."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.55in' }}>
-        <GroupLabel right="Gal / SY / coat">Color &amp; Finish Coats</GroupLabel>
-        <ProductTable rows={COLOR_COATS} />
-        <div className="mt-6">
+      <Body top="2.5in" gap="0.2in">
+        <div>
+          <GroupLabel right="Gal / SY / coat">Color &amp; Finish Coats</GroupLabel>
+          <ProductTable rows={COLOR_COATS} dense />
+        </div>
+        <div>
           <GroupLabel right="Gal / SY / coat">Specialty Sport Coatings</GroupLabel>
-          <ProductTable rows={SPECIALTY} />
+          <ProductTable rows={SPECIALTY} dense />
         </div>
         <TableNote>
           All products carry a 2-year limited warranty. *55-gal drums of textured product contain 39 gal. Source: AT Sports
           Product Catalog 2026. Full values are given in each product’s Technical Data Sheet (Technical Appendices).
         </TableNote>
-      </div>
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -254,22 +376,24 @@ export function ProductLinePrepPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 2 of 3"
+        kicker="Acrytech Product Line · 2 of 4"
         title="Primers, sealers & resurfacers."
         intro="Preparation products are selected for the substrate: primers and sealers bond to and protect asphalt and concrete, and resurfacers fill, level and build the base the color coats are applied to."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.55in' }}>
-        <GroupLabel right="Gal / SY / coat unless noted">Primers, Sealers &amp; Clear Coats</GroupLabel>
-        <ProductTable rows={PRIMERS} />
-        <div className="mt-5">
+      <Body top="2.38in" gap="0.16in">
+        <div>
+          <GroupLabel right="Gal / SY / coat unless noted">Primers, Sealers &amp; Clear Coats</GroupLabel>
+          <ProductTable rows={PRIMERS} dense />
+        </div>
+        <div>
           <GroupLabel right="Gal / SY / coat">Resurfacers &amp; Patch</GroupLabel>
-          <ProductTable rows={RESURFACERS} />
+          <ProductTable rows={RESURFACERS} dense />
         </div>
         <TableNote>
           2-year limited warranty on all products except Faultline Sport Patch (see TDS). *55-gal textured drums contain
           39 gal. Urethane Primer and Clear Coat coverage is as printed in the catalog (“Gal per sq yd”).
         </TableNote>
-      </div>
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -279,44 +403,64 @@ export function ProductLineFinishPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 3 of 3"
-        title="Lines, additives & color."
-        intro="Line products finish the court layout, and additives let the installer tune texture and drying on site. Every color coat is available in 32 standard colors, with custom colors made to order."
+        kicker="Acrytech Product Line · 3 of 4"
+        title="Lines & additives."
+        intro="Line products finish the court layout, and additives let the installer tune texture and drying on site."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.55in' }}>
-        <GroupLabel>Line Marking</GroupLabel>
-        <ProductTable rows={LINES} />
-        <div className="mt-5">
+      <Body top="2.3in" gap="0.24in">
+        <div>
+          <GroupLabel>Line Marking</GroupLabel>
+          <ProductTable rows={LINES} />
+        </div>
+        <div>
           <GroupLabel right="Gal / SY">Sand &amp; Additives</GroupLabel>
           <ProductTable rows={ADDITIVES} />
         </div>
+        <FillPhoto src="/images/line-roller.jpg" alt="White line paint rolled between taped edges on a blue Acrytech court" position="center 60%" />
+      </Body>
+      <PageFooter />
+    </Page>
+  )
+}
 
-        <div className="mt-6">
-          <GroupLabel>Acrytech Colors</GroupLabel>
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            {[
-              { t: 'Player’s Choice Colors', list: PLAYERS_CHOICE },
-              { t: 'Specialty Colors', sub: 'Priced by pigment', list: SPECIALTY_COLORS },
-            ].map((g) => (
-              <div key={g.t} className="glass" style={{ borderRadius: '12px', padding: '0.16in 0.2in' }}>
-                <div className="flex items-baseline justify-between">
-                  <span className="font-display text-[10px] font-bold uppercase tracking-[0.08em]" style={{ color: OFF }}>{g.t}</span>
-                  {g.sub && <span className="font-sans text-[8px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>{g.sub}</span>}
-                </div>
-                <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-[3px]">
-                  {g.list.map((c) => (
-                    <span key={c} className="font-sans text-[8.5px]" style={{ color: 'rgba(245,246,246,0.82)' }}>{c}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <TableNote>
-            Custom colors are available. Screens alter how colors appear, so request a drawdown from your installer or AT
-            Sports account manager for true color. Samples are free; only shipping applies.
-          </TableNote>
-        </div>
-      </div>
+export function ProductLineColorsPage() {
+  return (
+    <Page>
+      <Head
+        kicker="Acrytech Product Line · 4 of 4"
+        title="Acrytech colors."
+        intro="Every Acrytech color coat is available in 32 standard colors, with custom colors made to order."
+      />
+      <Body top="2.3in" gap="0.2in">
+        {[
+          { t: 'Player’s Choice Colors', list: PLAYERS_CHOICE },
+          { t: 'Specialty Colors', sub: 'Priced by pigment', list: SPECIALTY_COLORS },
+        ].map((g) => (
+          <section key={g.t} className="glass" style={{ borderRadius: '12px', padding: '0.18in 0.22in' }}>
+            <div className="flex items-baseline justify-between">
+              <h3 className="font-display text-[12px] font-bold uppercase tracking-[0.08em]" style={{ color: OFF }}>{g.t}</h3>
+              {g.sub && <span className="font-sans text-[8px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>{g.sub}</span>}
+            </div>
+            <ul className="mt-3.5 grid grid-cols-8 gap-x-3 gap-y-3.5" aria-label={g.t}>
+              {g.list.flatMap((f) => f.colors).map((c) => (
+                <li key={c.name} className="flex flex-col gap-[5px]">
+                  <span
+                    aria-hidden="true"
+                    className="block aspect-square w-full"
+                    style={{ borderRadius: '6px', background: c.hex, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.18)' }}
+                  />
+                  <span className="font-sans text-[9px] font-semibold leading-tight" style={{ color: 'rgba(245,246,246,0.9)' }}>{c.name}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+        <TableNote>
+          Custom colors are available. Screens alter how colors appear, so request a drawdown from your installer or AT
+          Sports account manager for true color. Samples are free; only shipping applies.
+        </TableNote>
+        <FillPhoto src="/images/sample-jars.jpg" alt="Batch-numbered Acrytech color samples on the quality-control shelf" position="center 45%" caption="Every batch is retained as a numbered sample and color-matched before release." />
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -396,12 +540,13 @@ export function MaterialSpecsPage() {
         title="System components."
         intro="Components and quality requirements from the Acrytech System Specification for colored and textured acrylic surfacing over asphalt, concrete and existing sports surfaces (Appendix A)."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.4in' }}>
+      <Body top="2.45in" gap="0.2in">
+        <div>
         <GroupLabel right="Section 2.2">Materials</GroupLabel>
         <div className="mt-2.5 glass overflow-hidden" style={{ borderRadius: '12px' }}>
           <div
-            className="grid items-end font-display text-[7.5px] font-semibold uppercase tracking-[0.14em]"
-            style={{ gridTemplateColumns: '1fr 0.75in 1.3in', columnGap: '0.16in', padding: '0.1in 0.22in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
+            className="grid items-end font-display text-[8.5px] font-semibold uppercase tracking-[0.12em]"
+            style={{ gridTemplateColumns: '1fr 0.8in 1.35in', columnGap: '0.16in', padding: '0.12in 0.24in', background: 'rgba(50,126,168,0.14)', color: MUTED }}
           >
             <span>Component</span>
             <span className="text-right">Solids by wt.</span>
@@ -411,31 +556,32 @@ export function MaterialSpecsPage() {
             <div
               key={m.t}
               className="grid items-start"
-              style={{ gridTemplateColumns: '1fr 0.75in 1.3in', columnGap: '0.16in', padding: '0.08in 0.22in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+              style={{ gridTemplateColumns: '1fr 0.8in 1.35in', columnGap: '0.16in', padding: '0.15in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
             >
               <span>
-                <span className="block font-display text-[10.5px] font-bold" style={{ color: OFF }}>{m.t}</span>
-                <span className="mt-0.5 block font-sans text-[8px] leading-snug" style={{ color: MUTED }}>{m.d}</span>
+                <span className="block font-display text-[11.5px] font-bold" style={{ color: OFF }}>{m.t}</span>
+                <span className="mt-0.5 block font-sans text-[9px] leading-snug" style={{ color: MUTED }}>{m.d}</span>
               </span>
-              <span className="text-right font-display text-[11px] font-bold tabular-nums" style={{ color: OFF }}>{m.solids}</span>
-              <span className="text-right font-sans text-[9px] tabular-nums" style={{ color: OFF }}>{m.wt}</span>
+              <span className="text-right font-display text-[12px] font-bold tabular-nums" style={{ color: OFF }}>{m.solids}</span>
+              <span className="text-right font-sans text-[10px] tabular-nums" style={{ color: OFF }}>{m.wt}</span>
             </div>
           ))}
         </div>
-        <TableNote>*Solids and pigments by weight. Values are approximate; see each product’s TDS.</TableNote>
+        <div className="mt-2"><TableNote>*Solids and pigments by weight. Values are approximate; see each product’s TDS.</TableNote></div>
+        </div>
 
-        <div className="mt-4">
+        <div>
           <GroupLabel right="Sections 1.2 – 1.3">Quality Assurance &amp; Submittals</GroupLabel>
-          <ul className="mt-2.5 grid grid-cols-2 gap-x-5 gap-y-1.5">
+          <ul className="mt-2.5 grid grid-cols-2 gap-x-6 gap-y-2">
             {qa.map((q) => (
-              <li key={q} className="flex gap-2 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>
+              <li key={q} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
                 <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
                 {q}
               </li>
             ))}
           </ul>
         </div>
-      </div>
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -460,8 +606,8 @@ export function InstallationPage() {
       t: 'New Concrete',
       items: [
         'Broom finish and installed vapor barrier for proper bonding.',
-        'Cure a minimum of 28 days.',
-        'Acid-bath with muriatic acid, then pressure wash and rinse.',
+              'Cure a minimum of 28 days (Latex-Based Primer & Sealer may be applied to green concrete 3–7 days after the pour; see Concrete Design & Preparation).',
+              'Acid-etch, grind or shot-blast, then pressure wash and rinse.',
         'Flood test and patch depressions of 1/16" or more.',
         'Prime with Acrytech Latex-Based Primer & Sealer.',
       ],
@@ -487,15 +633,16 @@ export function InstallationPage() {
         title="Prepared, applied and finished to specification."
         intro="Execution requirements from Part 3 of the Acrytech System Specification. Application limits are product specific; see each product’s TDS."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.45in' }}>
+      <Body top="2.45in" gap="0.36in">
+        <div>
         <GroupLabel right="Sections 3.2 – 3.4">Surface Preparation</GroupLabel>
         <div className="mt-3 grid grid-cols-3 gap-3">
           {prep.map((p) => (
-            <div key={p.t} className="glass" style={{ borderRadius: '12px', padding: '0.18in 0.2in' }}>
-              <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{p.t}</div>
-              <ul className="mt-2 flex flex-col gap-1.5">
+            <div key={p.t} className="glass" style={{ borderRadius: '12px', padding: '0.2in 0.2in' }}>
+              <div className="font-display text-[11.5px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{p.t}</div>
+              <ul className="mt-2.5 flex flex-col gap-2">
                 {p.items.map((it) => (
-                  <li key={it} className="flex gap-2 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>
+                  <li key={it} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
                     <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
                     {it}
                   </li>
@@ -504,10 +651,11 @@ export function InstallationPage() {
             </div>
           ))}
         </div>
+        </div>
 
-        <div className="mt-5">
+        <div>
           <GroupLabel right="Section 3.5">Application</GroupLabel>
-          <p className="mt-2.5 font-sans text-[9.5px] leading-relaxed" style={{ color: BODY }}>
+          <p className="mt-2.5 font-sans text-[10px] leading-relaxed" style={{ color: BODY }}>
             No coatings are applied until the inspector approves the surface. All coatings are applied with a soft rubber
             squeegee, and each coat dries completely (usually 1–3 hours) before the next. Resurfacer and Color are mixed
             according to each product’s TDS.
@@ -520,17 +668,17 @@ export function InstallationPage() {
                   <span className="block font-display text-[10px] font-bold uppercase tracking-[0.08em]" style={{ color: BLUE_LIGHT }}>
                     {c.t} coats
                   </span>
-                  <span className="mt-0.5 block font-sans text-[8.5px] leading-snug" style={{ color: MUTED }}>{c.d}</span>
+                  <span className="mt-0.5 block font-sans text-[9px] leading-snug" style={{ color: MUTED }}>{c.d}</span>
                 </span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-6">
           <div>
             <GroupLabel right="Section 3.6">Line Markings</GroupLabel>
-            <ul className="mt-2.5 flex flex-col gap-1.5">
+            <ul className="mt-2.5 flex flex-col gap-2">
               {[
                 'Applied only after Color is thoroughly dry, up to 24 hours after the final coat.',
                 'Laid out to USTA and USA Pickleball guidelines.',
@@ -538,7 +686,7 @@ export function InstallationPage() {
                 'One coat of Line Primer for precise edges, then one coat of Textured White Line Paint (a second may be needed).',
                 'Work up to 20 ft at a time above 86°F (30°C), or up to 40 ft at a time below.',
               ].map((it) => (
-                <li key={it} className="flex gap-2 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>
+                <li key={it} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
                   <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
                   {it}
                 </li>
@@ -547,13 +695,13 @@ export function InstallationPage() {
           </div>
           <div>
             <GroupLabel right="Section 3.7">Completion</GroupLabel>
-            <ul className="mt-2.5 flex flex-col gap-1.5">
+            <ul className="mt-2.5 flex flex-col gap-2">
               {[
                 'All equipment, leftover materials and waste removed from site.',
                 'No traffic of any kind for 24 hours, then confirm the surface has dried.',
                 'Lack of sun, high humidity, cool substrates or temperatures below 70°F (21°C) can extend drying time.',
               ].map((it) => (
-                <li key={it} className="flex gap-2 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>
+                <li key={it} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
                   <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
                   {it}
                 </li>
@@ -561,7 +709,7 @@ export function InstallationPage() {
             </ul>
           </div>
         </div>
-      </div>
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -597,52 +745,54 @@ export function ConcretePrepPage() {
         title="Designed for coatings from the pour."
         intro="Concrete contains salts and moisture that migrate to the surface. Coatings on concrete that was not designed and prepared for them can bubble, blister and delaminate. AT Sports recommends the following, in addition to ASBA guidelines for grade and mix design."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.65in' }}>
+      <Body top="2.7in" gap="0.2in">
+        <div>
         <GroupLabel>Design &amp; Construction</GroupLabel>
-        <div className="mt-3 grid grid-cols-2 gap-2.5">
+        <div className="mt-3 grid grid-cols-2 gap-2.5" style={{ gridAutoRows: '1fr' }}>
           {design.map(([t, d], i) => (
-            <div key={t} className="glass flex gap-3" style={{ borderRadius: '11px', padding: '0.13in 0.18in' }}>
-              <span className="font-display text-[9px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>{String(i + 1).padStart(2, '0')}</span>
+            <div key={t} className="glass flex gap-3" style={{ borderRadius: '11px', padding: '0.12in 0.2in' }}>
+              <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>{String(i + 1).padStart(2, '0')}</span>
               <span>
-                <span className="block font-display text-[10px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{t}</span>
-                <span className="mt-0.5 block font-sans text-[8.5px] leading-snug" style={{ color: MUTED }}>{d}</span>
+                <span className="block font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{t}</span>
+                <span className="mt-1 block font-sans text-[9.5px] leading-snug" style={{ color: MUTED }}>{d}</span>
               </span>
             </div>
           ))}
         </div>
+        </div>
 
-        <div className="mt-5">
+        <div>
           <GroupLabel>Primer Selection</GroupLabel>
           <div className="mt-3 grid grid-cols-2 gap-3">
             {[
               { t: 'Latex-Based Primer & Sealer', d: 'Uniquely applied to green concrete 3–7 days after the pour, or after 28-day cure and acid-etching, grinding or shot-blasting and cleaning.' },
               { t: 'Solvent Primer & Sealer', d: 'Applied after cure. Suited to mixes with fly ash or added limestone (Type IL), and after pressure washing without etching, grinding or blasting.' },
             ].map((p) => (
-              <div key={p.t} style={{ borderRadius: '12px', padding: '0.16in 0.2in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}>
-                <div className="font-display text-[10.5px] font-bold" style={{ color: OFF }}>{p.t}</div>
-                <p className="mt-1 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>{p.d}</p>
+              <div key={p.t} style={{ borderRadius: '12px', padding: '0.18in 0.22in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}>
+                <div className="font-display text-[11.5px] font-bold" style={{ color: OFF }}>{p.t}</div>
+                <p className="mt-1 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>{p.d}</p>
               </div>
             ))}
           </div>
-          <p className="mt-2.5 font-sans text-[8.5px] leading-relaxed" style={{ color: BODY }}>
+          <p className="mt-3 font-sans text-[9.5px] leading-relaxed" style={{ color: BODY }}>
             On 28+ day concrete, prime within moisture and RH limits while the slab is cooling (late afternoon, early
             evening, or morning once dew has evaporated), never as it heats up, to limit outgassing. A hot slab may be
             misted, not soaked, to bring it below the maximum application temperature.
           </p>
         </div>
 
-        <div className="mt-4">
+        <div>
           <GroupLabel>Field Notes</GroupLabel>
-          <div className="mt-2.5 grid grid-cols-2 gap-x-5 gap-y-1.5">
+          <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2">
             {hints.map((h) => (
-              <div key={h} className="flex gap-2 font-sans text-[8.5px] leading-snug" style={{ color: BODY }}>
+              <div key={h} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
                 <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
                 {h}
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </Body>
       <PageFooter />
     </Page>
   )
@@ -676,31 +826,32 @@ export function MaintenancePage() {
         title="Years of play, with simple care."
         intro="With proper maintenance, Acrytech surfaces provide many years of service. The full New Court Surface Maintenance guide is included in the Technical Appendices for the owner."
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.45in' }}>
+      <Body top="2.45in" gap="0.26in">
         <div className="grid grid-cols-2 gap-3">
           {care.map((c, i) => (
-            <div key={c.t} className="glass" style={{ borderRadius: '12px', padding: '0.18in 0.22in', minHeight: '1.05in' }}>
+            <div key={c.t} className="glass" style={{ borderRadius: '12px', padding: '0.2in 0.24in', minHeight: '1.1in' }}>
               <div className="flex items-baseline gap-2">
-                <span className="font-display text-[9px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>0{i + 1}</span>
-                <span className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{c.t}</span>
+                <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>0{i + 1}</span>
+                <span className="font-display text-[12px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{c.t}</span>
               </div>
-              <p className="mt-1.5 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>{c.d}</p>
+              <p className="mt-1.5 font-sans text-[10px] leading-relaxed" style={{ color: MUTED }}>{c.d}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-5">
+        <div>
           <GroupLabel>Damage Prevention</GroupLabel>
-          <div className="mt-3 grid grid-cols-3 gap-x-4 gap-y-2">
+          <div className="mt-3 grid grid-cols-3 gap-x-5 gap-y-2.5">
             {prevent.map((p) => (
-              <div key={p} className="flex gap-2 font-sans text-[9px] leading-snug" style={{ color: BODY }}>
+              <div key={p} className="flex gap-2 font-sans text-[10px] leading-snug" style={{ color: BODY }}>
                 <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
                 {p}
               </div>
             ))}
           </div>
         </div>
-      </div>
+        <FillPhoto src="/images/line-closeup.jpg" alt="Finished Acrytech textured surface and white line at sunset" position="center 55%" />
+      </Body>
       <PageFooter />
     </Page>
   )

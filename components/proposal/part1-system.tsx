@@ -123,8 +123,8 @@ export function CourtPacePage() {
             { cpr: '40–44', level: 'Level 4', label: 'Medium-Fast', range: 'ITF Category 4 classification range', apps: 'Competition, collegiate, player-development and indoor tennis', badge: '/images/itf-level-4-medium-fast.png', badgeAlt: 'ITF Classified Court Pace badge — Category 4, Medium-Fast' },
           ].map((p) => (
             <div key={p.level} className="glass" style={{ borderRadius: '14px', padding: '0.42in 0.4in' }}>
-              <div className="flex items-start justify-between">
-                <div className="flex items-baseline gap-3">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex shrink-0 items-baseline gap-3 whitespace-nowrap">
                   <span className="font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '52px', lineHeight: 0.85, letterSpacing: '-0.03em' }}>
                     {p.cpr}
                   </span>
@@ -134,7 +134,7 @@ export function CourtPacePage() {
                   src={p.badge || "/placeholder.svg"}
                   alt={p.badgeAlt}
                   className="shrink-0"
-                  style={{ width: '0.82in', height: 'auto' }}
+                  style={{ width: '0.64in', height: 'auto' }}
                 />
               </div>
               <div className="mt-3 flex items-center gap-2">

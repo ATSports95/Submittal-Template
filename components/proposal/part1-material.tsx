@@ -207,8 +207,8 @@ export function ProductResponsibilityPage() {
             ))}
           </div>
         </div>
-        <p className="mt-[6px] font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.74)', textTransform: 'lowercase' }}>
-          PRODUCT INFORMATION FROM PUBLISHED ACRYTECH Color TECHNICAL data sheet
+        <p className="mt-[6px] font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.74)' }}>
+          Product information from the published Acrytech Color Technical Data Sheet.
         </p>
       </div>
 

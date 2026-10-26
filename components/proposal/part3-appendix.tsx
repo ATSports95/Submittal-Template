@@ -19,7 +19,7 @@ export function AppendixDividerPage({ product }: { product: ProductConfig }) {
   )
 }
 
-export function AppendixIndexPage({ product }: { product: ProductConfig }) {
+export function AppendixIndexPage({ product, generic = false }: { product: ProductConfig; generic?: boolean }) {
   const items = product.appendices
   const half = Math.ceil(items.length / 2)
   const col = (list: typeof items) => (
@@ -28,7 +28,7 @@ export function AppendixIndexPage({ product }: { product: ProductConfig }) {
         <div
           key={a.k}
           className="grid grid-cols-[0.44in_1fr] items-start gap-3"
-          style={{ padding: '0.13in 0', borderTop: i === 0 ? '1px solid rgba(185,196,203,0.16)' : '1px solid rgba(185,196,203,0.1)' }}
+          style={{ padding: '0.2in 0', borderTop: i === 0 ? '1px solid rgba(185,196,203,0.16)' : '1px solid rgba(185,196,203,0.1)' }}
         >
           <span className="font-display text-[16px] font-bold" style={{ color: BLUE_LIGHT, lineHeight: 1 }}>{a.k}</span>
           <div>
@@ -51,7 +51,7 @@ export function AppendixIndexPage({ product }: { product: ProductConfig }) {
         </h2>
         <p className="mt-3 max-w-[6in] font-sans text-[11px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
           The following documents are attached to this submittal. Current versions are maintained by AT Sports and are
-          available from your representative.
+          available from {generic ? 'AT Sports' : 'your representative'}.
         </p>
         <div className="mt-6 grid grid-cols-2 gap-x-8">
           {col(items.slice(0, half))}
