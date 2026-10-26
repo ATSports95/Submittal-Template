@@ -187,7 +187,7 @@ const COLOR_COATS: Product[] = [
 
 const SPECIALTY: Product[] = [
   { name: 'Roller Sports', d: 'Fiber-reinforced, highly abrasion-resistant surface for roller sports. Player’s Choice colors only.', coverage: '.04–.045', temp: '36–130°F', dry: '1–3 hr', cure: '72 hr', pack: '55 / 30 gal' },
-  { name: 'Shuffle Board', d: 'Formulated with select slip agents for an ideal puck slide. Player’s Choice colors only.', coverage: '.06–.07', temp: '50–130°F', dry: '1–3 hr', cure: '48 hr', pack: '55 / 30 gal' },
+  { name: 'Shuffleboard', d: 'Formulated with select slip agents for an ideal puck slide. Player’s Choice colors only.', coverage: '.06–.07', temp: '50–130°F', dry: '1–3 hr', cure: '48 hr', pack: '55 / 30 gal' },
 ]
 
 const PRIMERS: Product[] = [
@@ -460,8 +460,8 @@ export function InstallationPage() {
       t: 'New Concrete',
       items: [
         'Broom finish and installed vapor barrier for proper bonding.',
-        'Cure a minimum of 28 days.',
-        'Acid-bath with muriatic acid, then pressure wash and rinse.',
+              'Cure a minimum of 28 days (Latex-Based Primer & Sealer may be applied to green concrete 3–7 days after the pour; see Concrete Design & Preparation).',
+              'Acid-etch, grind or shot-blast, then pressure wash and rinse.',
         'Flood test and patch depressions of 1/16" or more.',
         'Prime with Acrytech Latex-Based Primer & Sealer.',
       ],
