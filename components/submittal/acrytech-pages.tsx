@@ -308,7 +308,7 @@ export function ProductLineColorPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 1 of 3"
+        kicker="Acrytech Product Line · 1 of 4"
         title="Color coatings."
         intro="Every Acrytech color coat is a 100% acrylic latex, self-crosslinking formulation. The line is engineered so each product can be matched to the substrate, the level of use and the sport."
       />
@@ -333,7 +333,7 @@ export function ProductLinePrepPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 2 of 3"
+        kicker="Acrytech Product Line · 2 of 4"
         title="Primers, sealers & resurfacers."
         intro="Preparation products are selected for the substrate: primers and sealers bond to and protect asphalt and concrete, and resurfacers fill, level and build the base the color coats are applied to."
       />
@@ -358,9 +358,9 @@ export function ProductLineFinishPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 3 of 3"
-        title="Lines, additives & color."
-        intro="Line products finish the court layout, and additives let the installer tune texture and drying on site. Every color coat is available in 32 standard colors, with custom colors made to order."
+        kicker="Acrytech Product Line · 3 of 4"
+        title="Lines & additives."
+        intro="Line products finish the court layout, and additives let the installer tune texture and drying on site."
       />
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.55in' }}>
         <GroupLabel>Line Marking</GroupLabel>
@@ -369,51 +369,48 @@ export function ProductLineFinishPage() {
           <GroupLabel right="Gal / SY">Sand &amp; Additives</GroupLabel>
           <ProductTable rows={ADDITIVES} />
         </div>
+      </div>
+      <PageFooter />
+    </Page>
+  )
+}
 
-        <div className="mt-4">
-          <GroupLabel>Acrytech Colors</GroupLabel>
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            {[
-              { t: 'Player’s Choice Colors', list: PLAYERS_CHOICE },
-              { t: 'Specialty Colors', sub: 'Priced by pigment', list: SPECIALTY_COLORS },
-            ].map((g) => (
-              <div key={g.t} className="glass" style={{ borderRadius: '12px', padding: '0.12in 0.2in' }}>
-                <div className="flex items-baseline justify-between">
-                  <span className="font-display text-[10px] font-bold uppercase tracking-[0.08em]" style={{ color: OFF }}>{g.t}</span>
-                  {g.sub && <span className="font-sans text-[8px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>{g.sub}</span>}
-                </div>
-                <div className="mt-[6px] flex flex-col gap-[5px]">
-                  {g.list.map((f) => (
-                    <div key={f.family} className="flex items-start gap-2">
-                      <span
-                        className="shrink-0 pt-[2px] font-sans text-[7px] font-semibold uppercase tracking-[0.1em]"
-                        style={{ width: '0.5in', color: MUTED }}
-                      >
-                        {f.family}
-                      </span>
-                      <ul className="grid flex-1 grid-cols-2 gap-x-3 gap-y-[3px]" aria-label={`${g.t} ${f.family}`}>
-                        {f.colors.map((c) => (
-                          <li key={c.name} className="flex items-center gap-[6px]">
-                            <span
-                              aria-hidden="true"
-                              className="shrink-0"
-                              style={{ width: '0.15in', height: '0.15in', borderRadius: '3px', background: c.hex, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.18)' }}
-                            />
-                            <span className="font-sans text-[8.5px] font-semibold leading-tight" style={{ color: 'rgba(245,246,246,0.9)' }}>{c.name}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <TableNote>
-            Custom colors are available. Screens alter how colors appear, so request a drawdown from your installer or AT
-            Sports account manager for true color. Samples are free; only shipping applies.
-          </TableNote>
-        </div>
+export function ProductLineColorsPage() {
+  return (
+    <Page>
+      <Head
+        kicker="Acrytech Product Line · 4 of 4"
+        title="Acrytech colors."
+        intro="Every Acrytech color coat is available in 32 standard colors, with custom colors made to order."
+      />
+      <div className="absolute left-[0.5in] right-[0.5in] flex flex-col gap-4" style={{ top: '2.55in' }}>
+        {[
+          { t: 'Player’s Choice Colors', list: PLAYERS_CHOICE },
+          { t: 'Specialty Colors', sub: 'Priced by pigment', list: SPECIALTY_COLORS },
+        ].map((g) => (
+          <section key={g.t} className="glass" style={{ borderRadius: '12px', padding: '0.18in 0.22in' }}>
+            <div className="flex items-baseline justify-between">
+              <h3 className="font-display text-[12px] font-bold uppercase tracking-[0.08em]" style={{ color: OFF }}>{g.t}</h3>
+              {g.sub && <span className="font-sans text-[8px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>{g.sub}</span>}
+            </div>
+            <ul className="mt-3 grid grid-cols-8 gap-x-3 gap-y-3" aria-label={g.t}>
+              {g.list.flatMap((f) => f.colors).map((c) => (
+                <li key={c.name} className="flex flex-col gap-[5px]">
+                  <span
+                    aria-hidden="true"
+                    className="block aspect-square w-full"
+                    style={{ borderRadius: '6px', background: c.hex, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.18)' }}
+                  />
+                  <span className="font-sans text-[8.5px] font-semibold leading-tight" style={{ color: 'rgba(245,246,246,0.9)' }}>{c.name}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+        <TableNote>
+          Custom colors are available. Screens alter how colors appear, so request a drawdown from your installer or AT
+          Sports account manager for true color. Samples are free; only shipping applies.
+        </TableNote>
       </div>
       <PageFooter />
     </Page>
