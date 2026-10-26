@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode } from 'react'
 import { SubmittalDocument } from '@/components/proposal/page-shell'
-import { SurfaceSystemPage, CourtPacePage } from '@/components/proposal/part1-system'
+import { CourtPacePage } from '@/components/proposal/part1-system'
 import { SubstrateEvaluationPage } from '@/components/proposal/part1-verification'
 import { LabTestedPage, ProductResponsibilityPage } from '@/components/proposal/part1-material'
 import {
@@ -52,7 +52,6 @@ export function SubmittalDoc({
           { key: 'letter', node: <LetterPage product={product} info={info} generic={generic} />, toc: 'Introduction' },
           { key: 'compliance', node: <SpecCompliancePage generic={generic} />, toc: 'Specification Compliance' },
           { key: 'manufacturer', node: <ManufacturerPage product={product} generic={generic} />, toc: 'Manufacturer Qualifications' },
-          { key: 'system', node: <SurfaceSystemPage />, toc: 'System Build' },
           { key: 'line-color', node: <ProductLineColorPage />, toc: 'Product Line — Color Coatings' },
           { key: 'line-prep', node: <ProductLinePrepPage />, toc: 'Product Line — Primers & Resurfacers' },
           { key: 'line-finish', node: <ProductLineFinishPage />, toc: 'Product Line — Lines, Additives & Color' },
@@ -66,7 +65,6 @@ export function SubmittalDoc({
           { key: 'stanford', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
           { key: 'facilities', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
           { key: 'partners', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
-          { key: 'support', node: <TechnicalSupportPage />, toc: 'Technical Support' },
           { key: 'warranty', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'maintenance', node: <MaintenancePage />, toc: 'New Surface Maintenance' },
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },
