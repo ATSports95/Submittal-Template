@@ -459,8 +459,8 @@ export function ProductLineColorsPage() {
         <TableNote>
           Custom colors are available. Screens alter how colors appear, so request a drawdown from your installer or AT
           Sports account manager for true color. Samples are free; only shipping applies.
-        </TableNote>
-        <FillPhoto src="/images/sample-jars.jpg" alt="Batch-numbered Acrytech color samples on the quality-control shelf" position="center 45%" caption="Every batch is retained as a numbered sample and color-matched before release." />
+  </TableNote>
+
       </Body>
       <PageFooter />
     </Page>
@@ -940,7 +940,7 @@ export function ConcretePrimersPage() {
           </div>
         </div>
 
-        <FillPhoto src="/images/coating-spread.jpg" alt="Acrytech coating being spread across a concrete court" minHeight="1in" />
+        <FillPhoto src="/images/concrete-primer-prep.png" alt="Installer performing a masking-tape adhesion test on freshly primed concrete" position="center 55%" minHeight="1in" />
       </Body>
       <PageFooter />
     </Page>
