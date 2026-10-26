@@ -57,7 +57,9 @@ const COMPLIANCE = [
   { req: 'Traceability', val: 'Batch number of each product recorded on site and kept for the warranty period', doc: 'System Specification 1.2' },
 ]
 
-export function SpecCompliancePage() {
+const COMPLIANCE_GENERIC = COMPLIANCE.map((c) => (c.req === 'Installer' ? { ...c, doc: 'Acrytech Limited Warranty' } : c))
+
+export function SpecCompliancePage({ generic = false }: { generic?: boolean }) {
   return (
     <Page>
       <Head
@@ -75,7 +77,7 @@ export function SpecCompliancePage() {
             <span>Acrytech</span>
             <span>Supporting document</span>
           </div>
-          {COMPLIANCE.map((c, i) => (
+          {(generic ? COMPLIANCE_GENERIC : COMPLIANCE).map((c, i) => (
             <div
               key={c.req}
               className="grid items-baseline"

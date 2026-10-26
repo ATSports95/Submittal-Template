@@ -19,7 +19,7 @@ export function AppendixDividerPage({ product }: { product: ProductConfig }) {
   )
 }
 
-export function AppendixIndexPage({ product }: { product: ProductConfig }) {
+export function AppendixIndexPage({ product, generic = false }: { product: ProductConfig; generic?: boolean }) {
   const items = product.appendices
   const half = Math.ceil(items.length / 2)
   const col = (list: typeof items) => (
@@ -51,7 +51,7 @@ export function AppendixIndexPage({ product }: { product: ProductConfig }) {
         </h2>
         <p className="mt-3 max-w-[6in] font-sans text-[11px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
           The following documents are attached to this submittal. Current versions are maintained by AT Sports and are
-          available from your representative.
+          available from {generic ? 'AT Sports' : 'your representative'}.
         </p>
         <div className="mt-6 grid grid-cols-2 gap-x-8">
           {col(items.slice(0, half))}
