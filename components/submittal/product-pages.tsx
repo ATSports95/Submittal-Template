@@ -1,5 +1,5 @@
 import { Page, PageFooter, Kicker, ContentRequired } from '@/components/proposal/page-shell'
-import { MixingChart } from './acrytech-pages'
+import { MixingChart, Body, FillPhoto } from './acrytech-pages'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -164,25 +164,21 @@ export function CushionXSystemPage() {
           <ContentRequired>Typical use by thickness</ContentRequired>
         </div>
 
-        <div className="mt-6">
-          <div className="overflow-hidden" style={{ borderRadius: '13px', height: '2.3in', border: '1px solid rgba(185,196,203,0.16)' }}>
-            <img src="/images/indoor-courts.png" alt="Indoor courts finished with a cushioned acrylic surface" className="h-full w-full object-cover" />
-          </div>
-          <p className="mt-2 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
-            Cushion system finished with Acrytech color coatings.
-          </p>
-        </div>
+      </div>
+      <div className="absolute left-[0.5in] flex flex-col" style={{ top: '6.05in', bottom: '0.82in', width: '3.5in' }}>
+        <FillPhoto src="/images/indoor-courts.png" alt="Indoor courts finished with a cushioned acrylic surface" caption="Cushion system finished with Acrytech color coatings." />
       </div>
 
-      <div className="absolute right-[0.5in]" style={{ top: '1.2in', width: '3.7in' }}>
-        <div className="flex flex-col gap-2.5">
+      <div className="absolute right-[0.5in] flex flex-col" style={{ top: '1.2in', bottom: '0.82in', width: '3.7in' }}>
+        <div className="flex flex-1 flex-col gap-2.5">
           {layers.map((l) => (
             <div
               key={l.t}
               className="flex items-center justify-between gap-3"
               style={{
+                flex: l.kind === 'cush' ? '2 1 0' : '1 1 0',
                 borderRadius: '11px',
-                padding: l.kind === 'cush' ? '0.5in 0.3in' : l.kind === 'head' || l.kind === 'base' ? '0.24in 0.3in' : '0.3in 0.3in',
+                padding: '0.16in 0.3in',
                 background:
                   l.kind === 'head'
                     ? 'rgba(50,126,168,0.2)'
@@ -247,10 +243,10 @@ export function CushionXPerformancePage() {
         </p>
       </div>
 
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.85in' }}>
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.5in' }}>
         <div className="grid grid-cols-2 gap-3.5">
           {metrics.map((m) => (
-            <div key={m.t} className="glass flex flex-col" style={{ borderRadius: '13px', padding: '0.3in 0.32in', minHeight: '1.75in' }}>
+            <div key={m.t} className="glass flex flex-col" style={{ borderRadius: '13px', padding: '0.22in 0.3in', minHeight: '1.3in' }}>
               <span className="font-display text-[11px] font-bold uppercase tracking-[0.08em]" style={{ color: BLUE_LIGHT }}>{m.t}</span>
               <div className="mt-3 flex items-baseline gap-2">
                 <span className="font-display font-bold" style={{ color: 'rgba(245,246,246,0.35)', fontSize: '40px', lineHeight: 0.9 }}>—</span>
@@ -285,6 +281,9 @@ export function CushionXPerformancePage() {
         </div>
 
       </div>
+      <Body top="8.15in">
+        <FillPhoto src="/images/court16-brooklyn.jpg" alt="Court 16 indoor tennis facility with a CushionX and Acrytech surface" position="center 55%" caption="8mm CushionX with an Acrytech finish, Court 16 Brooklyn." />
+      </Body>
       <PageFooter />
     </Page>
   )
