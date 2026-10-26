@@ -100,8 +100,8 @@ export function WarrantyPage({ product }: { product: ProductConfig }) {
 
       {/* Full-width completed-court image band */}
       {cx && (
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '5.2in' }}>
-        <div className="overflow-hidden" style={{ borderRadius: '14px', height: '3.6in', border: '1px solid rgba(185,196,203,0.16)' }}>
+      <div className="absolute left-[0.5in] right-[0.5in] flex flex-col" style={{ top: '4.6in', bottom: '0.82in' }}>
+        <div className="min-h-0 flex-1 overflow-hidden" style={{ borderRadius: '14px', border: '1px solid rgba(185,196,203,0.16)' }}>
           <img
             src="/images/court-resurfacing-application.jpg"
             alt="AT Sports certified crew applying an Acrytech surface system on a tennis court"

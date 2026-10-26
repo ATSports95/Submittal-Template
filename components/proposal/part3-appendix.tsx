@@ -28,7 +28,7 @@ export function AppendixIndexPage({ product, generic = false }: { product: Produ
         <div
           key={a.k}
           className="grid grid-cols-[0.44in_1fr] items-start gap-3"
-          style={{ padding: '0.2in 0', borderTop: i === 0 ? '1px solid rgba(185,196,203,0.16)' : '1px solid rgba(185,196,203,0.1)' }}
+          style={{ padding: items.length <= 14 ? '0.26in 0' : '0.2in 0', borderTop: i === 0 ? '1px solid rgba(185,196,203,0.16)' : '1px solid rgba(185,196,203,0.1)' }}
         >
           <span className="font-display text-[16px] font-bold" style={{ color: BLUE_LIGHT, lineHeight: 1 }}>{a.k}</span>
           <div>
