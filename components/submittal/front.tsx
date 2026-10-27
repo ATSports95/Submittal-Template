@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs'
 import path from 'node:path'
+import { BadgeCheck, Factory, FlaskConical, ScanBarcode } from 'lucide-react'
 import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule } from '@/components/proposal/page-shell'
 import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
 import { PART_HEADING, type SpecPart } from '@/lib/spec-part'
@@ -394,11 +395,18 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
 }
 
 /* MANUFACTURER QUALIFICATIONS — replaces the earlier About / Manufacturer Direct pages */
-export function ManufacturerPage({ product, generic = false }: { product: ProductConfig; generic?: boolean }) {
-  const facts = [
-    { n: '1995', l: 'Founded' },
-    { n: 'Canton, GA', l: 'Manufacturing' },
-    { n: 'U.S. + Intl', l: 'Markets served' },
+export function ManufacturerPage({ product }: { product: ProductConfig; generic?: boolean }) {
+  const stats = [
+    { n: '30+', l: 'Years manufacturing' },
+    { n: 'Cat. 3 & 4', l: 'ITF court pace classification' },
+    { n: 'PPA Tour & MLP', l: 'Official surface' },
+    { n: 'Hundreds', l: 'Facilities across North America and internationally' },
+  ]
+  const proofs = [
+    { Icon: Factory, t: 'In-house manufacturing', d: 'Formulated, produced and quality-controlled in Canton, GA.' },
+    { Icon: ScanBarcode, t: 'Batch traceability', d: 'Every batch color-matched to a reference standard and recorded.' },
+    { Icon: FlaskConical, t: 'Direct technical support', d: 'In-house product development and chemistry team.' },
+    { Icon: BadgeCheck, t: 'Certified installation', d: 'Installed by AT Sports-certified crews to published guidelines.' },
   ]
   const lines = [
     { name: 'Acrytech', d: 'Acrylic sports surface coatings' },
@@ -406,73 +414,87 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
     { name: 'Faultline', d: 'Court crack-repair systems' },
     { name: 'RollX', d: 'Portable sports surfaces' },
   ]
-  const quals = [
-    { t: 'Single-source responsibility', d: `${product.name} products are formulated, manufactured and quality-controlled by AT Sports, so one company is responsible for the product from formulation through field support.` },
-    { t: 'Batch traceability', d: 'Every batch is tied to a documented production run and color-matched against a controlled reference standard before release, supporting batch-number recording on site.' },
-    { t: 'Published documentation', d: 'Three-part guide specification, technical and safety data sheets, substrate and concrete guidance, mixing and coverage data, maintenance guide and limited warranty.' },
-    { t: 'Certified installation', d: `Warranty coverage requires installation by AT Sports-certified installers to published guidelines.${generic ? '' : ' A certified installer letter is issued per project on request.'}` },
+  const LOGO_H = '0.46in'
+  const credentials: { label: string; dark?: boolean; logos: { src: string; alt: string; h?: string }[] }[] = [
+    // ASBA source has ~16% transparent margin top and bottom, so it renders taller to match the other marks
+    { label: 'ASBA member since 2015', logos: [{ src: '/images/asba-member-logo.png', alt: 'Member, American Sports Builders Association', h: '0.68in' }] },
+    {
+      label: 'ITF classified',
+      logos: [
+        { src: '/images/itf-level-3-medium.png', alt: 'ITF Classified Court Pace, Category 3 Medium' },
+        { src: '/images/itf-level-4-medium-fast.png', alt: 'ITF Classified Court Pace, Category 4 Medium-Fast' },
+      ],
+    },
+    { label: 'Official Surface, PPA Tour', dark: true, logos: [{ src: '/images/ppa-logo-white.png', alt: 'PPA Tour' }] },
+    { label: 'Official Surface, Major League Pickleball', dark: true, logos: [{ src: '/images/mlp-logo-white.png', alt: 'Major League Pickleball' }] },
   ]
   return (
     <Page>
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '0.95in' }}>
-        <Kicker className="mb-3">{product.key === 'acrytech' ? 'About AT Sports' : 'Manufacturer Qualifications'}</Kicker>
-        <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
-          One manufacturer,
-          <br />
-          responsible for the system.
-        </h2>
-        <p className="mt-3 max-w-[6.2in] font-sans text-[11.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
-          AT Sports, Inc. has manufactured sports-surface coatings and materials since 1995 and supports projects
-          throughout the United States and internationally from its manufacturing facility in Canton, Georgia.
-        </p>
+      <Body top="0.95in" gap="0.26in">
+        <header>
+          <Kicker className="mb-3">About AT Sports</Kicker>
+          <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
+            Manufacturer-direct since 1995.
+          </h2>
+          <p className="mt-3 max-w-[6.6in] font-sans text-[11.5px] leading-relaxed text-pretty" style={{ color: 'rgba(245,246,246,0.78)' }}>
+            AT Sports formulates, manufactures and supports its sports-surface systems in Canton, Georgia, with one
+            company responsible from raw material to finished court.
+          </p>
+        </header>
 
-        <div className="mt-5 grid grid-cols-3 gap-3">
-          {facts.map((f) => (
-            <div key={f.l} style={{ borderTop: '2px solid rgba(50,126,168,0.5)', paddingTop: '0.1in' }}>
-              <div className="font-display text-[20px] font-bold" style={{ color: OFF, letterSpacing: '-0.01em' }}>{f.n}</div>
-              <div className="mt-1 font-display text-[8.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: MUTED }}>{f.l}</div>
+        <div className="grid grid-cols-4 gap-4">
+          {stats.map((s) => (
+            <div key={s.l} style={{ borderTop: '2px solid #327ea8', paddingTop: '0.12in' }}>
+              <div className="whitespace-nowrap font-display text-[21px] font-bold leading-none" style={{ color: OFF, letterSpacing: '-0.015em' }}>
+                {s.n}
+              </div>
+              <div className="mt-2 font-display text-[8px] font-semibold uppercase leading-snug tracking-[0.12em]" style={{ color: MUTED }}>
+                {s.l}
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-3">
-          {quals.map((q) => (
-            <div key={q.t} className="glass" style={{ borderRadius: '12px', padding: '0.13in 0.2in' }}>
-              <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{q.t}</div>
-              <p className="mt-1.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>{q.d}</p>
+        <div className="grid grid-cols-4 gap-3">
+          {credentials.map((c) => (
+            <figure key={c.label} className="flex flex-col gap-2">
+              <div
+                className="flex items-center justify-center gap-2 overflow-hidden"
+                style={{
+                  height: '0.78in',
+                  borderRadius: '10px',
+                  background: c.dark ? '#14181b' : '#ffffff',
+                  border: c.dark ? '1px solid rgba(185,196,203,0.18)' : 'none',
+                }}
+              >
+                {c.logos.map((l) => (
+                  <img key={l.src} src={l.src} alt={l.alt} className="w-auto shrink-0 object-contain" style={{ height: l.h ?? LOGO_H }} />
+                ))}
+              </div>
+              <figcaption className="text-center font-display text-[8px] font-semibold uppercase leading-snug tracking-[0.12em]" style={{ color: MUTED }}>
+                {c.label}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+          {proofs.map(({ Icon, t, d }) => (
+            <div key={t} className="flex items-start gap-3">
+              <div
+                className="flex shrink-0 items-center justify-center"
+                style={{ width: '0.36in', height: '0.36in', borderRadius: '9px', background: 'rgba(50,126,168,0.16)', border: '1px solid rgba(50,126,168,0.4)' }}
+              >
+                <Icon className="h-4 w-4" style={{ color: BLUE_LIGHT }} aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{t}</div>
+                <p className="mt-0.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>{d}</p>
+              </div>
             </div>
           ))}
         </div>
 
-        <div
-          className="mt-3 flex items-center gap-5"
-          style={{ borderRadius: '12px', padding: '0.1in 0.22in 0.1in 0.1in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.32)' }}
-        >
-          <div
-            className="shrink-0 overflow-hidden"
-            style={{ width: '1.55in', height: '0.72in', borderRadius: '8px', background: '#ffffff' }}
-          >
-            {/* Source PNG has ~14% white margin top/bottom; object-cover trims it so the mark fills the plate */}
-            <img
-              src="/images/asba-member-logo.png"
-              alt="Member, American Sports Builders Association"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="min-w-0">
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
-              Industry Membership
-            </div>
-            <p className="mt-1 font-sans text-[10.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.86)' }}>
-              Member of the American Sports Builders Association (ASBA) since 2015.{' '}
-              {product.key === 'acrytech'
-                ? 'Acrytech installations conform to ASBA guidelines.'
-                : 'CushionX and Acrytech installations conform to ASBA guidelines.'}
-            </p>
-          </div>
-        </div>
-      </div>
-      <Body top="7.0in">
         <div className="grid min-h-0 flex-1 gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
           <div className="flex min-h-0 flex-col pb-6">
             <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
@@ -488,7 +510,7 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
             </div>
           </div>
           <div className="flex min-h-0 flex-col">
-            <FillPhoto src="/images/at-sports-facility-exterior.jpg" alt="AT Sports manufacturing facility in Canton, Georgia" position="center 60%" caption="AT Sports manufacturing facility, Canton, Georgia" />
+            <FillPhoto src="/images/at-sports-facility-exterior.jpg" alt="AT Sports headquarters and manufacturing facility in Canton, Georgia" position="center 60%" minHeight="1.6in" caption="AT Sports headquarters and manufacturing, Canton, Georgia" />
           </div>
         </div>
       </Body>
