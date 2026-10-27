@@ -152,8 +152,8 @@ export function PickleballPage() {
       studies={[
         {
           name: "Let's Go Pickleball & Padel",
-          logo: '/images/letsgo-logo.png',
-          photo: '/images/letsgo-courts.jpg',
+  logo: '/images/lets-go-pickleball-logo.png',
+  photo: '/images/lets-go-pickleball-courts.png',
           photoAlt: "Purple and gray indoor pickleball courts at Let's Go Pickleball & Padel",
           badge: 'CushionX + Acrytech',
           stats: ['21 indoor pickleball courts', '2 padel courts', 'Peachtree City, GA'],
