@@ -579,12 +579,12 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
             <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
               Contact
             </div>
-            <div className="mt-2 font-display text-[18px] font-bold" style={{ color: OFF }}>
-              AT Sports, Inc.
-              <span style={{ color: BLUE_LIGHT }}> · </span>
-              {COMPANY.phone}
-              <span style={{ color: BLUE_LIGHT }}> · </span>
-              {COMPANY.web}
+              <div className="mt-2 font-display text-[18px] font-bold" style={{ color: 'var(--background)' }}>
+                AT Sports, Inc.
+                <span style={{ color: BLUE_LIGHT }}> · </span>
+                {COMPANY.phone}
+                <span style={{ color: 'var(--accent)' }}> · </span>
+                sales@atsports.com
             </div>
             <div className="mt-1 font-sans text-[10.5px]" style={{ color: MUTED }}>
               Sales and technical support
@@ -633,12 +633,12 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
         <div className="mt-3 flex items-end justify-between">
           <div>
             <div className="font-display text-[15px] font-bold" style={{ color: OFF }}>AT Sports</div>
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>Built with purpose.</div>
+            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>Surfaces. Systems. Solutions.</div>
           </div>
-          <div className="text-right font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
+          <div className="shrink-0 whitespace-nowrap text-right font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
             {COMPANY.address}
             <br />
-            {COMPANY.phone}
+            {COMPANY.web}
           </div>
         </div>
       </div>
