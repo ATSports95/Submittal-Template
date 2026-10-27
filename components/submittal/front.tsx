@@ -41,7 +41,7 @@ export function CoverPage({ product, info, generic = false }: { product: Product
       </div>
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.15in' }}>
-        <Kicker className="mb-5">Product Submittal · {product.name}</Kicker>
+        <Kicker className="mb-5">Product Submittal Package · {product.name}</Kicker>
         <h1
           className="font-display font-bold text-balance"
           style={{ color: OFF, fontSize: '68px', lineHeight: 0.95, letterSpacing: '-0.025em' }}
@@ -62,10 +62,7 @@ export function CoverPage({ product, info, generic = false }: { product: Product
         <div className="flex items-end justify-between gap-8">
           {generic ? (
             <div className="ml-auto flex min-w-0 flex-col items-end text-right">
-              <div className="font-display text-[17px] font-bold" style={{ color: OFF }}>
-                Product Submittal Package
-              </div>
-              {product.key === 'acrytech' && (
+  {product.key === 'acrytech' && (
                 <img
                   src="/images/acrytech-logo-tag-white.png"
                   alt="Acrytech"
