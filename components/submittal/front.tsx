@@ -1,6 +1,6 @@
 import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule } from '@/components/proposal/page-shell'
 import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
-import { PART_NUMBER, type SpecPart } from '@/lib/spec-part'
+import { PART_HEADING, type SpecPart } from '@/lib/spec-part'
 import { Body, FillPhoto } from './acrytech-pages'
 
 export type ContentsEntry = { label: string; page: number; part?: SpecPart }
@@ -255,7 +255,7 @@ function GroupedContents({ contents, rowPad, labelSize }: { contents: ContentsEn
   let current: SpecPart | undefined
   for (const c of contents) {
     if (c.part && c.part !== current) {
-      rows.push({ kind: 'heading', label: `Part ${PART_NUMBER[c.part]} — ${c.part}` })
+      rows.push({ kind: 'heading', label: PART_HEADING[c.part] })
     }
     current = c.part
     rows.push({ kind: 'item', ...c })

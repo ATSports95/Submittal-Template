@@ -59,10 +59,6 @@ export function SubmittalDoc({
           { key: 'compliance', node: <SpecCompliancePage generic={generic} />, toc: 'Specification Compliance' },
 
           { key: 'manufacturer', part: 'General', node: <ManufacturerPage product={product} generic={generic} />, toc: 'Manufacturer Qualifications' },
-          { key: 'warranty', part: 'General', node: <WarrantyPage product={product} />, toc: 'Warranty' },
-          { key: 'stanford', part: 'General', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
-          { key: 'facilities', part: 'General', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
-          { key: 'partners', part: 'General', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
 
           { key: 'materials', part: 'Products', node: <MaterialSpecsPage />, toc: 'System Overview' },
           { key: 'line-color', part: 'Products', node: <ProductLineColorPage />, toc: 'Product Line — Color Coatings' },
@@ -79,6 +75,11 @@ export function SubmittalDoc({
           { key: 'install-apply', part: 'Execution', node: <InstallationApplyPage />, toc: 'Installation — Application & Finishing' },
           { key: 'coverage', part: 'Execution', node: <CoveragePage />, toc: 'Coverage & Mixing' },
           { key: 'maintenance', part: 'Execution', node: <MaintenancePage />, toc: 'New Surface Maintenance' },
+
+          { key: 'warranty', part: 'References', node: <WarrantyPage product={product} />, toc: 'Warranty' },
+          { key: 'stanford', part: 'References', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
+          { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
+          { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
 
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },
           { key: 'appx', node: <AppendixDividerPage product={product} />, toc: 'Technical Appendices' },

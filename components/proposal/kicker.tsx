@@ -2,7 +2,7 @@
 
 import { createContext, useContext, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
-import { PART_NUMBER, type SpecPart } from '@/lib/spec-part'
+import { PART_KICKER, type SpecPart } from '@/lib/spec-part'
 
 const BLUE_LIGHT = '#5da3ca'
 
@@ -23,7 +23,7 @@ export function Kicker({ children, className }: { children: ReactNode; className
     <div className={cn('flex items-center gap-2', className)}>
       <span aria-hidden="true" className="inline-block h-px" style={{ width: '0.28in', backgroundColor: BLUE_LIGHT }} />
       <span className="font-display text-[9px] font-semibold uppercase" style={{ color: BLUE_LIGHT, letterSpacing: '0.24em' }}>
-        {part && `Part ${PART_NUMBER[part]} · `}
+        {part && `${PART_KICKER[part]} · `}
         {children}
       </span>
     </div>
