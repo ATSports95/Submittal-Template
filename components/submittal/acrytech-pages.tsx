@@ -538,7 +538,7 @@ export function MaterialSpecsPage() {
     <Page>
       <Head
         kicker="Material Specifications"
-        title="System components."
+          title="System overview."
         intro="Components and quality requirements from the Acrytech System Specification for colored and textured acrylic surfacing over asphalt, concrete and existing sports surfaces (Appendix A)."
       />
       <Body top="2.45in" gap="0.2in">

@@ -1,6 +1,9 @@
 import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule } from '@/components/proposal/page-shell'
 import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
+import { PART_NUMBER, type SpecPart } from '@/lib/spec-part'
 import { Body, FillPhoto } from './acrytech-pages'
+
+export type ContentsEntry = { label: string; page: number; part?: SpecPart }
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -102,7 +105,7 @@ export function TransmittalPage({
 }: {
   product: ProductConfig
   info: ProjectInfo
-  contents: { label: string; page: number }[]
+  contents: ContentsEntry[]
 }) {
   const rows: { k: string; v: string; p: string }[] = [
     { k: 'Project', v: info.project, p: 'Project name' },
@@ -174,26 +177,8 @@ export function TransmittalPage({
           </span>
           <div className="h-px flex-1" style={{ backgroundColor: 'rgba(185,196,203,0.2)' }} />
         </div>
-        <div className="mt-3 grid grid-cols-2 gap-x-8">
-          {[contents.slice(0, Math.ceil(contents.length / 2)), contents.slice(Math.ceil(contents.length / 2))].map((col, ci) => (
-            <div key={ci} className="flex flex-col">
-              {col.map((c) => (
-                <div
-                  key={c.label}
-                  className="flex items-baseline gap-2"
-                  style={{ padding: '0.045in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
-                >
-                  <span className="font-sans text-[10.5px]" style={{ color: 'rgba(245,246,246,0.86)' }}>
-                    {c.label}
-                  </span>
-                  <span className="flex-1" />
-                  <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>
-                    {String(c.page).padStart(2, '0')}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ))}
+        <div className="mt-2">
+          <GroupedContents contents={contents} rowPad="0.035in" labelSize="10.5px" />
         </div>
         <p className="mt-4 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>
           Technical data sheets, safety data sheets, warranty and supporting documents are listed in the Technical
@@ -211,7 +196,7 @@ export function ProductInfoPage({
   contents,
 }: {
   product: ProductConfig
-  contents: { label: string; page: number }[]
+  contents: ContentsEntry[]
 }) {
   const rows: { k: string; v: string }[] = [
     { k: 'Product / system', v: product.system },
@@ -261,8 +246,52 @@ export function ProductInfoPage({
   )
 }
 
-function ContentsList({ contents }: { contents: { label: string; page: number }[] }) {
-  const half = Math.ceil(contents.length / 2)
+/**
+ * Contents rows flowed into two columns. Entries tagged with a spec part are
+ * grouped under "Part N — …" headings; untagged front/close items stay ungrouped.
+ */
+function GroupedContents({ contents, rowPad, labelSize }: { contents: ContentsEntry[]; rowPad: string; labelSize: string }) {
+  const rows: ({ kind: 'heading'; label: string } | ({ kind: 'item' } & ContentsEntry))[] = []
+  let current: SpecPart | undefined
+  for (const c of contents) {
+    if (c.part && c.part !== current) {
+      rows.push({ kind: 'heading', label: `Part ${PART_NUMBER[c.part]} — ${c.part}` })
+    }
+    current = c.part
+    rows.push({ kind: 'item', ...c })
+  }
+  return (
+    <div style={{ columnCount: 2, columnGap: '2rem' }}>
+      {rows.map((r) =>
+        r.kind === 'heading' ? (
+          <div
+            key={r.label}
+            className="font-display text-[8px] font-semibold uppercase tracking-[0.2em]"
+            style={{ color: MUTED, padding: '0.09in 0 0.02in', breakAfter: 'avoid', breakInside: 'avoid' }}
+          >
+            {r.label}
+          </div>
+        ) : (
+          <div
+            key={r.label}
+            className="flex items-baseline gap-2"
+            style={{ padding: `${rowPad} 0`, borderBottom: '1px solid rgba(185,196,203,0.08)', breakInside: 'avoid' }}
+          >
+            <span className="font-sans" style={{ fontSize: labelSize, color: 'rgba(245,246,246,0.86)' }}>
+              {r.label}
+            </span>
+            <span className="flex-1" />
+            <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>
+              {String(r.page).padStart(2, '0')}
+            </span>
+          </div>
+        ),
+      )}
+    </div>
+  )
+}
+
+function ContentsList({ contents }: { contents: ContentsEntry[] }) {
   return (
     <>
       <div className="flex items-center gap-3">
@@ -271,26 +300,8 @@ function ContentsList({ contents }: { contents: { label: string; page: number }[
         </span>
         <div className="h-px flex-1" style={{ backgroundColor: 'rgba(185,196,203,0.2)' }} />
       </div>
-      <div className="mt-3 grid grid-cols-2 gap-x-8">
-        {[contents.slice(0, half), contents.slice(half)].map((col, ci) => (
-          <div key={ci} className="flex flex-col">
-            {col.map((c) => (
-              <div
-                key={c.label}
-                className="flex items-baseline gap-2"
-                style={{ padding: '0.06in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
-              >
-                <span className="font-sans text-[11px]" style={{ color: 'rgba(245,246,246,0.86)' }}>
-                  {c.label}
-                </span>
-                <span className="flex-1" />
-                <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>
-                  {String(c.page).padStart(2, '0')}
-                </span>
-              </div>
-            ))}
-          </div>
-        ))}
+      <div className="mt-3">
+        <GroupedContents contents={contents} rowPad="0.05in" labelSize="11px" />
       </div>
       <p className="mt-3 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
         Technical data sheets, safety data sheets, warranty and supporting documents are listed in the Technical
@@ -560,25 +571,30 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
       </div>
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '1.45in' }}>
-        <div className="grid grid-cols-2 gap-4">
-          {generic ? (
-            <div className="glass-strong" style={{ borderRadius: '13px', padding: '0.24in 0.28in', borderTop: '2px solid #5da3ca' }}>
+        {generic ? (
+          <div
+            className="glass-strong flex items-end justify-between gap-6"
+            style={{ borderRadius: '13px', padding: '0.26in 0.32in', borderTop: '2px solid #5da3ca' }}
+          >
+            <div>
               <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
-                AT Sports Sales
+                AT Sports
               </div>
-              <div className="mt-2 font-display text-[15px] font-bold" style={{ color: OFF }}>
+              <div className="mt-2 font-display text-[17px] font-bold" style={{ color: OFF }}>
                 AT Sports, Inc.
               </div>
-              <div className="font-sans text-[10px]" style={{ color: MUTED }}>
-                {product.system}
-              </div>
-              <div className="mt-2 font-sans text-[10.5px] leading-relaxed" style={{ color: OFF }}>
-                {COMPANY.phone}
-                <br />
-                {COMPANY.web}
+              <div className="mt-0.5 font-sans text-[10.5px]" style={{ color: MUTED }}>
+                Sales and technical support
               </div>
             </div>
-          ) : (
+            <div className="text-right font-sans text-[11.5px] leading-relaxed" style={{ color: OFF }}>
+              {COMPANY.phone}
+              <br />
+              {COMPANY.web}
+            </div>
+          </div>
+        ) : (
+        <div className="grid grid-cols-2 gap-4">
           <div className="glass-strong" style={{ borderRadius: '13px', padding: '0.24in 0.28in', borderTop: '2px solid #5da3ca' }}>
             <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
               Your Representative
@@ -595,7 +611,6 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
               <Field value={info.repPhone} placeholder="Phone" />
             </div>
           </div>
-          )}
           <div className="glass" style={{ borderRadius: '13px', padding: '0.24in 0.28in' }}>
             <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
               Technical Support
@@ -613,6 +628,7 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
             </div>
           </div>
         </div>
+        )}
       </div>
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '0.6in' }}>
