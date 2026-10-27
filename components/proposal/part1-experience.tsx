@@ -225,10 +225,15 @@ function LogoPlate({ f, height, plate }: { f: Facility; height: string; plate: s
   return (
     <div
       className="flex shrink-0 items-center justify-center overflow-hidden"
-      style={{ height: plate, borderRadius: '10px', padding: '0.1in 0.14in', background: '#ffffff' }}
+      style={{ height: plate, borderRadius: '10px', padding: '0.1in 0.12in', background: '#ffffff' }}
     >
       {f.logo ? (
-        <img src={f.logo} alt={`${f.name} logo`} className="w-auto object-contain" style={{ height, maxHeight: '100%', maxWidth: '88%' }} />
+        <img
+          src={f.logo}
+          alt={`${f.name} logo`}
+          className="block w-full object-contain"
+          style={{ height, maxHeight: '100%', objectPosition: 'center' }}
+        />
       ) : (
         <span className="text-center font-display text-[12px] font-bold uppercase leading-tight tracking-[0.04em]" style={{ color: '#202528' }}>
           {f.name}
