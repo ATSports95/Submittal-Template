@@ -553,7 +553,7 @@ export function WhyPage({ product }: { product: ProductConfig }) {
 export function ClosingPage({ product, info, generic = false }: { product: ProductConfig; info: ProjectInfo; generic?: boolean }) {
   return (
     <Page>
-      <PhotoBackdrop src="/images/closing.png" alt="Tennis court at dusk" overlay={0.68} showPlaceholder={false} />
+      <PhotoBackdrop src="/images/ppa-stadium-court-aerial.jpg" alt="Aerial view of a PPA Tour stadium pickleball court finished with Acrytech" overlay={0.68} showPlaceholder={false} />
 
       <div className="absolute left-[0.5in] right-[0.5in] top-[0.5in] flex items-center justify-between">
         <img src="/images/atsports-logo.png" alt="AT Sports" className="w-auto" style={{ height: '0.34in' }} />

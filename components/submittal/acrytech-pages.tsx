@@ -523,9 +523,6 @@ export function MixingChart() {
           </div>
         ))}
       </div>
-      <div className="mt-2">
-        <ContentRequired>Confirm which concentrates this chart covers</ContentRequired>
-      </div>
     </div>
   )
 }
