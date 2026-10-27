@@ -29,7 +29,7 @@ import {
   ConcretePrimersPage,
   MaintenancePage,
 } from './acrytech-pages'
-import { ProfessionalTennisPage, PickleballPage } from './reference-pages'
+import { TennisAndPickleballPage, PickleballPage } from './reference-pages'
 import { SubmittalToolbar } from './toolbar'
 import { PRODUCTS, genericProduct, type ProductKey, type ProjectInfo } from '@/lib/submittal'
 
@@ -79,8 +79,7 @@ export function SubmittalDoc({
           { key: 'warranty', part: 'References', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
           { key: 'stanford', part: 'References', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
-          { key: 'pro-tennis', part: 'References', node: <ProfessionalTennisPage />, toc: 'Court 16 + Kingston Open' },
-          { key: 'pickleball', part: 'References', node: <PickleballPage />, toc: 'Pickleball Facilities' },
+      { key: 'case-studies', part: 'References', node: <TennisAndPickleballPage />, toc: 'Case Studies — Tennis & Pickleball' },
           { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
 
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },

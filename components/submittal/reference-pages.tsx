@@ -113,12 +113,96 @@ function CaseStudiesPage({ kicker, title, studies }: { kicker: string; title: st
   )
 }
 
-export function ProfessionalTennisPage() {
+function CaseCard({ study }: { study: CaseStudy }) {
   return (
-    <CaseStudiesPage
-      kicker="Case Studies"
-      title="Professional and indoor tennis."
-      studies={[
+    <article className="glass flex min-h-0 flex-col overflow-hidden" style={{ borderRadius: '14px' }}>
+      <div className="relative shrink-0 overflow-hidden" style={{ height: '1.5in' }}>
+        {hasImage(study.photo) ? (
+          <img
+            src={study.photo}
+            alt={study.photoAlt}
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: study.photoPosition ?? 'center' }}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(50,126,168,0.12)' }}>
+            <span className="font-sans text-[9px] uppercase tracking-[0.14em]" style={{ color: MUTED }}>
+              Photo: {study.name}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="flex min-h-0 flex-1 flex-col gap-2" style={{ padding: '0.16in 0.2in 0.18in' }}>
+        <div className="flex items-center justify-between gap-2">
+          <div
+            className="flex shrink-0 items-center justify-center"
+            style={{ width: '1.25in', height: '0.48in', borderRadius: '8px', padding: '0.05in 0.1in', background: '#ffffff' }}
+          >
+            {hasImage(study.logo) ? (
+              <img src={study.logo} alt={`${study.name} logo`} className="max-h-full max-w-full object-contain" />
+            ) : (
+              <span className="text-center font-display text-[9px] font-bold uppercase" style={{ color: '#181c1f' }}>
+                {study.name}
+              </span>
+            )}
+          </div>
+          <span
+            className="text-right font-display text-[7.5px] font-semibold uppercase leading-snug tracking-[0.12em]"
+            style={{ color: BLUE_LIGHT, border: '1px solid rgba(93,163,202,0.45)', borderRadius: '999px', padding: '0.04in 0.1in' }}
+          >
+            {study.badge}
+          </span>
+        </div>
+        <h3 className="font-display text-[15px] font-bold leading-tight" style={{ color: OFF }}>
+          {study.name}
+        </h3>
+        <div className="flex flex-wrap gap-1.5">
+          {study.stats.map((s) => (
+            <span
+              key={s}
+              className="font-display text-[8.5px] font-semibold"
+              style={{ color: OFF, background: 'rgba(185,196,203,0.1)', borderRadius: '5px', padding: '0.03in 0.08in' }}
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+        <p className="font-sans text-[9.5px] leading-relaxed" style={{ color: BODY }}>
+          {study.copy}
+        </p>
+      </div>
+    </article>
+  )
+}
+
+export function TennisAndPickleballPage() {
+  const studies = [...TENNIS_STUDIES, ...PICKLEBALL_STUDIES]
+  return (
+    <Page>
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.0in' }}>
+        <Kicker className="mb-3">Case Studies</Kicker>
+        <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '30px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
+          Tennis and pickleball.
+        </h2>
+      </div>
+      <div
+        className="absolute left-[0.5in] right-[0.5in] grid grid-cols-2 grid-rows-2"
+        style={{ top: '1.95in', bottom: '0.82in', gap: '0.2in' }}
+      >
+        {studies.map((s) => (
+          <CaseCard key={s.name} study={s} />
+        ))}
+      </div>
+      <PageFooter />
+    </Page>
+  )
+}
+
+export function ProfessionalTennisPage() {
+  return <CaseStudiesPage kicker="Case Studies" title="Professional and indoor tennis." studies={TENNIS_STUDIES} />
+}
+
+const TENNIS_STUDIES: [CaseStudy, CaseStudy] = [
         {
           name: 'Kingston Open',
           logo: '/images/kingston-open-logo.png',
@@ -139,17 +223,13 @@ export function ProfessionalTennisPage() {
           copy:
             'Court 16 uses an integrated 8mm CushionX + Acrytech Coatings system across its indoor facilities: a repeatable surface standard for player development, youth formats and year-round play, delivered consistently from site to site.',
         },
-      ]}
-    />
-  )
-}
+]
 
 export function PickleballPage() {
-  return (
-    <CaseStudiesPage
-      kicker="Pickleball"
-      title="Built for pickleball."
-      studies={[
+  return <CaseStudiesPage kicker="Pickleball" title="Built for pickleball." studies={PICKLEBALL_STUDIES} />
+}
+
+const PICKLEBALL_STUDIES: [CaseStudy, CaseStudy] = [
         {
           name: "Let's Go Pickleball & Padel",
   logo: '/images/lets-go-pickleball-logo.png',
@@ -170,7 +250,4 @@ export function PickleballPage() {
           copy:
             'An indoor club supporting memberships, leagues, lessons and open play, with courts built on a CushionX cushion system and finished with Acrytech color coatings.',
         },
-      ]}
-    />
-  )
-}
+]
