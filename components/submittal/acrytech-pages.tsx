@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { Page, PageFooter, Kicker, ContentRequired } from '@/components/proposal/page-shell'
+import { ArrowRight, Brush, CircleCheck, ShieldCheck, Timer } from 'lucide-react'
+import { Page, PageFooter, Kicker, ContentRequired, IconBadge } from '@/components/proposal/page-shell'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -431,17 +432,17 @@ export function ProductLineColorsPage() {
         title="Acrytech colors."
         intro="Every Acrytech color coat is available in 32 standard colors, with custom colors made to order."
       />
-      <Body top="2.3in" gap="0.2in">
+      <Body top="2.3in" gap="0.28in">
         {[
           { t: 'Player’s Choice Colors', list: PLAYERS_CHOICE },
           { t: 'Specialty Colors', sub: 'Priced by pigment', list: SPECIALTY_COLORS },
         ].map((g) => (
-          <section key={g.t} className="glass" style={{ borderRadius: '12px', padding: '0.18in 0.22in' }}>
+          <section key={g.t} className="glass flex flex-1 flex-col" style={{ borderRadius: '12px', padding: '0.24in 0.26in' }}>
             <div className="flex items-baseline justify-between">
               <h3 className="font-display text-[12px] font-bold uppercase tracking-[0.08em]" style={{ color: OFF }}>{g.t}</h3>
               {g.sub && <span className="font-sans text-[8px] uppercase tracking-[0.1em]" style={{ color: MUTED }}>{g.sub}</span>}
             </div>
-            <ul className="mt-3.5 grid grid-cols-8 gap-x-3 gap-y-3.5" aria-label={g.t}>
+            <ul className="mt-4 grid flex-1 grid-cols-8 content-evenly gap-x-3.5 gap-y-4" aria-label={g.t}>
               {g.list.flatMap((f) => f.colors).map((c) => (
                 <li key={c.name} className="flex flex-col gap-[5px]">
                   <span
@@ -458,8 +459,8 @@ export function ProductLineColorsPage() {
         <TableNote>
           Custom colors are available. Screens alter how colors appear, so request a drawdown from your installer or AT
           Sports account manager for true color. Samples are free; only shipping applies.
-        </TableNote>
-        <FillPhoto src="/images/sample-jars.jpg" alt="Batch-numbered Acrytech color samples on the quality-control shelf" position="center 45%" caption="Every batch is retained as a numbered sample and color-matched before release." />
+  </TableNote>
+
       </Body>
       <PageFooter />
     </Page>
@@ -588,127 +589,209 @@ export function MaterialSpecsPage() {
 }
 
 /* ---------------------------------------------------------------------------
-   ACRYTECH — INSTALLATION REQUIREMENTS
+   ACRYTECH — INSTALLATION REQUIREMENTS (2 pages)
    Source: Acrytech System Specification v. TA1.2, Part 3 — Execution.
    --------------------------------------------------------------------------- */
-export function InstallationPage() {
-  const prep = [
-    {
-      t: 'New Asphalt',
-      items: [
-        'Cure a minimum of 14 days.',
-        'Inspect for contamination and unevenness; report findings to the general contractor.',
-        'Remove mold, mildew, algae, dirt, grease, oil and debris with issue-specific cleaners.',
-        'Flood to check for depressions of 1/16" (1.6 mm) or more; fill with Faultline Sport Patch and allow to cure.',
-      ],
-    },
-    {
-      t: 'New Concrete',
-      items: [
-        'Broom finish and installed vapor barrier for proper bonding.',
-              'Cure a minimum of 28 days (Latex-Based Primer & Sealer may be applied to green concrete 3–7 days after the pour; see Concrete Design & Preparation).',
-              'Acid-etch, grind or shot-blast, then pressure wash and rinse.',
-        'Flood test and patch depressions of 1/16" or more.',
-        'Prime with Acrytech Latex-Based Primer & Sealer.',
-      ],
-    },
-    {
-      t: 'Existing Surfaces',
-      items: [
-        'Pressure wash to remove mold, mildew, algae, dirt, grease, oil and debris.',
-        'Inspect for contamination and unevenness; report findings.',
-        'Fill cracks with Faultline Sport Patch, or the specified crack repair method.',
-      ],
-    },
-  ]
-  const coats = [
-    { n: '1–2', t: 'Resurfacer', d: 'New or rough surfaces require two coats.' },
-    { n: '2', t: 'Color', d: 'Standard durability, suitable for most courts.' },
-    { n: '3', t: 'Color', d: 'Increased durability for high-use courts.' },
-  ]
+function StepNum({ n }: { n: number }) {
+  return (
+    <span className="shrink-0 font-display text-[11px] font-bold tabular-nums" style={{ color: BLUE_LIGHT, width: '0.24in' }}>
+      {String(n).padStart(2, '0')}
+    </span>
+  )
+}
+
+function CardTitle({ children }: { children: ReactNode }) {
+  return (
+    <div className="font-display text-[12.5px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>
+      {children}
+    </div>
+  )
+}
+
+const PREP = [
+  {
+    t: 'New Asphalt',
+    stat: '14 days',
+    statLabel: 'Minimum cure',
+    steps: [
+      'Inspect for contamination and unevenness; report to the general contractor.',
+      'Remove mold, mildew, algae, dirt, grease, oil and debris with issue-specific cleaners.',
+      'Flood test; fill depressions of 1/16" (1.6 mm) or more with Faultline Sport Patch and let cure.',
+    ],
+  },
+  {
+    t: 'New Concrete',
+    stat: '28 days',
+    statLabel: 'Minimum cure',
+    steps: [
+      'Broom finish, with vapor barrier installed, for proper bonding.',
+      'Acid-etch, grind or shot-blast.',
+      'Pressure wash and rinse.',
+      'Flood test; patch depressions of 1/16" or more.',
+      'Prime with Acrytech Latex-Based Primer & Sealer.',
+    ],
+    note: 'Exception: Latex-Based Primer & Sealer may go on green concrete 3–7 days after the pour (see Concrete pages).',
+  },
+  {
+    t: 'Existing Surfaces',
+    stat: 'Clean & repair',
+    statLabel: 'Before any coating',
+    steps: [
+      'Pressure wash to remove mold, mildew, algae, dirt, grease, oil and debris.',
+      'Inspect for contamination and unevenness; report findings.',
+      'Fill cracks with Faultline Sport Patch, or the specified crack repair method.',
+    ],
+  },
+]
+
+export function InstallationPrepPage() {
   return (
     <Page>
       <Head
         kicker="Installation Requirements"
-        title="Prepared, applied and finished to specification."
-        intro="Execution requirements from Part 3 of the Acrytech System Specification. Application limits are product specific; see each product’s TDS."
+        title="Surface preparation."
+        intro="Execution requirements from Part 3 of the Acrytech System Specification. See each product’s TDS for application limits."
       />
-      <Body top="2.45in" gap="0.36in">
+      <Body top="2.2in" gap="0.3in">
         <div>
-        <GroupLabel right="Sections 3.2 – 3.4">Surface Preparation</GroupLabel>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {prep.map((p) => (
-            <div key={p.t} className="glass" style={{ borderRadius: '12px', padding: '0.2in 0.2in' }}>
-              <div className="font-display text-[11.5px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{p.t}</div>
-              <ul className="mt-2.5 flex flex-col gap-2">
-                {p.items.map((it) => (
-                  <li key={it} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
-                    <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
-                    {it}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <GroupLabel right="Sections 3.2 – 3.4">Surface Preparation</GroupLabel>
+          <div className="mt-3 grid grid-cols-3 gap-3.5" style={{ minHeight: '3.9in' }}>
+            {PREP.map((p) => (
+              <div key={p.t} className="glass flex flex-col" style={{ borderRadius: '13px', padding: '0.26in 0.24in' }}>
+                <CardTitle>{p.t}</CardTitle>
+                <div className="mt-3 pb-3" style={{ borderBottom: `1px solid ${RULE}` }}>
+                  <div className="font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '30px', lineHeight: 1 }}>
+                    {p.stat}
+                  </div>
+                  <div className="mt-1.5 font-display text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ color: BLUE_LIGHT }}>
+                    {p.statLabel}
+                  </div>
+                </div>
+                <ol className="mt-3.5 flex flex-col gap-2.5">
+                  {p.steps.map((s, i) => (
+                    <li key={s} className="flex gap-1.5 font-sans text-[10px] leading-snug" style={{ color: BODY }}>
+                      <StepNum n={i + 1} />
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ol>
+                {p.note && (
+                  <p
+                    className="font-sans text-[10px] leading-snug"
+                    style={{ marginTop: 'auto', borderRadius: '9px', padding: '0.1in 0.12in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.34)', color: OFF }}
+                  >
+                    {p.note}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
+        <FillPhoto src="/images/court-substrate-eval.jpg" alt="Inspector evaluating a court substrate before coating" caption="Surface inspection before coating." />
+      </Body>
+      <PageFooter />
+    </Page>
+  )
+}
+
+const APPLICATION_RULES = [
+  { icon: ShieldCheck, t: 'Inspector approves the surface before any coating.' },
+  { icon: Brush, t: 'Apply every coat with a soft rubber squeegee.' },
+  { icon: Timer, t: 'Let each coat dry completely, usually 1–3 hours.' },
+]
+
+const COATS = [
+  { n: '1–2', t: 'Resurfacer coats', d: 'New or rough surfaces require two coats.' },
+  { n: '2', t: 'Color coats', d: 'Standard durability, suitable for most courts.' },
+  { n: '3', t: 'Color coats', d: 'Increased durability for high-use courts.' },
+]
+
+const LINE_STEPS = [
+  { t: 'Wait', d: 'Color fully dry, up to 24 hr after the final coat.' },
+  { t: 'Tape & lay out', d: 'USTA / USA Pickleball guidelines, machine-laid tape.' },
+  { t: 'Prime', d: 'One coat of Line Primer for precise edges.' },
+  { t: 'Paint', d: 'Textured White Line Paint, soft-bristle brush or quality roller; a second coat may be needed.' },
+]
+
+const COMPLETION = [
+  { t: 'Clear the site', d: 'Remove all equipment, leftover materials and waste.' },
+  { t: 'No traffic for 24 hours', d: 'No traffic of any kind, then confirm the surface has dried.' },
+  { t: 'Drying can run longer', d: 'Lack of sun, high humidity, cool substrates or below 70°F (21°C).' },
+]
+
+export function InstallationApplyPage() {
+  return (
+    <Page>
+      <Head kicker="Installation Requirements" title="Application & finishing." />
+      <Body top="1.85in" gap="0.28in">
+        <div>
+          <GroupLabel right="Section 3.5">Application</GroupLabel>
+          <div className="mt-3 grid grid-cols-3 gap-3.5">
+            {APPLICATION_RULES.map((r) => (
+              <div key={r.t} className="flex items-center gap-3">
+                <IconBadge icon={r.icon} size={0.46} />
+                <span className="font-sans text-[10.5px] leading-snug" style={{ color: OFF }}>{r.t}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-3.5">
+            {COATS.map((c, i) => (
+              <div key={i} className="glass-strong" style={{ borderRadius: '13px', padding: '0.24in 0.24in', borderTop: `2px solid ${BLUE_LIGHT}` }}>
+                <div className="whitespace-nowrap font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '46px', lineHeight: 0.9 }}>
+                  {c.n}
+                </div>
+                <div className="mt-2.5 font-display text-[12.5px] font-bold uppercase tracking-[0.08em]" style={{ color: BLUE_LIGHT }}>
+                  {c.t}
+                </div>
+                <div className="mt-1 font-sans text-[10px] leading-snug" style={{ color: MUTED }}>{c.d}</div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2.5 font-sans text-[10px]" style={{ color: MUTED }}>
+            Resurfacer and Color are mixed according to each product’s TDS.
+          </p>
         </div>
 
         <div>
-          <GroupLabel right="Section 3.5">Application</GroupLabel>
-          <p className="mt-2.5 font-sans text-[10px] leading-relaxed" style={{ color: BODY }}>
-            No coatings are applied until the inspector approves the surface. All coatings are applied with a soft rubber
-            squeegee, and each coat dries completely (usually 1–3 hours) before the next. Resurfacer and Color are mixed
-            according to each product’s TDS.
-          </p>
-          <div className="mt-3 grid grid-cols-3 gap-3">
-            {coats.map((c, i) => (
-              <div key={i} className="glass-strong flex items-center gap-3" style={{ borderRadius: '12px', padding: '0.16in 0.2in', borderTop: '2px solid #5da3ca' }}>
-                <span className="whitespace-nowrap font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '28px', lineHeight: 0.9 }}>{c.n}</span>
-                <span>
-                  <span className="block font-display text-[10px] font-bold uppercase tracking-[0.08em]" style={{ color: BLUE_LIGHT }}>
-                    {c.t} coats
+          <GroupLabel right="Section 3.6">Line Markings</GroupLabel>
+          <ol className="mt-3 grid grid-cols-4 gap-2.5">
+            {LINE_STEPS.map((s, i) => (
+              <li key={s.t} className="glass flex flex-col" style={{ borderRadius: '12px', padding: '0.18in 0.18in' }}>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="inline-flex shrink-0 items-center justify-center font-display text-[11px] font-bold tabular-nums"
+                    style={{ width: '0.26in', height: '0.26in', borderRadius: '999px', background: 'rgba(50,126,168,0.2)', border: '1px solid rgba(50,126,168,0.5)', color: OFF }}
+                  >
+                    {i + 1}
                   </span>
-                  <span className="mt-0.5 block font-sans text-[9px] leading-snug" style={{ color: MUTED }}>{c.d}</span>
-                </span>
+                  <span className="font-display text-[12px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{s.t}</span>
+                  {i < LINE_STEPS.length - 1 && (
+                    <ArrowRight size={14} strokeWidth={1.75} color={BLUE_LIGHT} className="ml-auto shrink-0" aria-hidden="true" />
+                  )}
+                </div>
+                <p className="mt-2 font-sans text-[10px] leading-snug" style={{ color: BODY }}>{s.d}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-2.5 font-sans text-[10px]" style={{ color: OFF }}>
+            <span className="font-semibold" style={{ color: BLUE_LIGHT }}>Work length · </span>
+            Above 86°F (30°C) work 20 ft at a time; below, up to 40 ft.
+          </p>
+        </div>
+
+        <div>
+          <GroupLabel right="Section 3.7">Completion</GroupLabel>
+          <div className="mt-3 grid grid-cols-3 gap-3.5">
+            {COMPLETION.map((c) => (
+              <div key={c.t} className="glass" style={{ borderRadius: '12px', padding: '0.18in 0.2in' }}>
+                <CardTitle>{c.t}</CardTitle>
+                <p className="mt-1.5 font-sans text-[10px] leading-snug" style={{ color: MUTED }}>{c.d}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
-          <div>
-            <GroupLabel right="Section 3.6">Line Markings</GroupLabel>
-            <ul className="mt-2.5 flex flex-col gap-2">
-              {[
-                'Applied only after Color is thoroughly dry, up to 24 hours after the final coat.',
-                'Laid out to USTA and USA Pickleball guidelines.',
-                'Painted between machine-laid masking tape with a soft-bristle brush or high-quality roller.',
-                'One coat of Line Primer for precise edges, then one coat of Textured White Line Paint (a second may be needed).',
-                'Work up to 20 ft at a time above 86°F (30°C), or up to 40 ft at a time below.',
-              ].map((it) => (
-                <li key={it} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
-                  <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
-                  {it}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <GroupLabel right="Section 3.7">Completion</GroupLabel>
-            <ul className="mt-2.5 flex flex-col gap-2">
-              {[
-                'All equipment, leftover materials and waste removed from site.',
-                'No traffic of any kind for 24 hours, then confirm the surface has dried.',
-                'Lack of sun, high humidity, cool substrates or temperatures below 70°F (21°C) can extend drying time.',
-              ].map((it) => (
-                <li key={it} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
-                  <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
-                  {it}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <FillPhoto src="/images/line-roller.jpg" alt="Installer rolling a white court line between masking tape" minHeight="1in" />
       </Body>
       <PageFooter />
     </Page>
@@ -716,82 +799,148 @@ export function InstallationPage() {
 }
 
 /* ---------------------------------------------------------------------------
-   ACRYTECH — CONCRETE DESIGN & PREPARATION
+   ACRYTECH ��� CONCRETE DESIGN & PREPARATION (2 pages)
    Source: Acrytech Concrete Design and Preparation v. TA25.1.
    --------------------------------------------------------------------------- */
-export function ConcretePrepPage() {
-  const design = [
-    ['Vapor barrier', 'Install a plastic vapor barrier before the pour: two perpendicular layers with taped joints.'],
-    ['No fly ash', 'Fly ash densifies concrete, causes excessive efflorescence (dusting) and can leave an oily residue.'],
-    ['Specify OPC', 'Avoid Portland Limestone Cement where possible; above 10% it can hinder adhesion. Specify Ordinary Portland Cement (Type I/IA).'],
-    ['Control joints', 'Minimize or omit. If required, place them outside the playing area.'],
-    ['Finish', 'Light to medium broom finish for a mechanical bond.'],
-    ['Cure', 'Moisture cure a minimum of 28 days. Curing agents are not recommended; some drying retarders are not compatible. Contact AT Sports.'],
-    ['Prepare', 'After curing, acid-etch (diluted muriatic or phosphoric) and rinse, or grind or shot-blast, then pressure wash.'],
-    ['Prime', 'Apply a latex-compatible specialty primer to bare concrete. ACRY-Lock primes and adds a top-side moisture barrier.'],
-  ]
-  const hints = [
-    'If acid does not bubble, it is not etching: the slab may already be etched or have a curing agent.',
-    'Tape test: if primer lifts with masking tape, more preparation is needed.',
-    'Check moisture per primer guidelines, typically ASTM F1869 and/or ASTM F2170.',
-    'Slick, machine-finished concrete may need shot-blasting, scarifying or extreme etching.',
-    'Fewer acrylic coats are better: more coats seal off vapor transmission and promote blistering.',
-    'Remove existing paint that is delaminating or peeling.',
-  ]
+const CONCRETE_DESIGN = [
+  ['Vapor barrier', 'Plastic vapor barrier before the pour: two perpendicular layers, taped joints.'],
+  ['No fly ash', 'Densifies concrete, causes excessive efflorescence (dusting) and can leave an oily residue.'],
+  ['Specify OPC', 'Ordinary Portland Cement (Type I/IA). Avoid Portland Limestone Cement; above 10% it can hinder adhesion.'],
+  ['Control joints', 'Minimize or omit. If required, place them outside the playing area.'],
+  ['Finish', 'Light to medium broom finish for a mechanical bond.'],
+  ['Cure', 'Moisture cure 28 days minimum. Curing agents not recommended; some drying retarders are incompatible. Contact AT Sports.'],
+  ['Prepare', 'Acid-etch (diluted muriatic or phosphoric) and rinse, or grind or shot-blast, then pressure wash.'],
+  ['Prime', 'Latex-compatible specialty primer on bare concrete. ACRY-Lock primes and adds a top-side moisture barrier.'],
+]
+
+export function ConcreteDesignPage() {
   return (
     <Page>
-      <Head
-        kicker="Concrete Design & Preparation"
-        title="Designed for coatings from the pour."
-        intro="Concrete contains salts and moisture that migrate to the surface. Coatings on concrete that was not designed and prepared for them can bubble, blister and delaminate. AT Sports recommends the following, in addition to ASBA guidelines for grade and mix design."
-      />
-      <Body top="2.7in" gap="0.2in">
-        <div>
-        <GroupLabel>Design &amp; Construction</GroupLabel>
-        <div className="mt-3 grid grid-cols-2 gap-2.5" style={{ gridAutoRows: '1fr' }}>
-          {design.map(([t, d], i) => (
-            <div key={t} className="glass flex gap-3" style={{ borderRadius: '11px', padding: '0.12in 0.2in' }}>
-              <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>{String(i + 1).padStart(2, '0')}</span>
-              <span>
-                <span className="block font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{t}</span>
-                <span className="mt-1 block font-sans text-[9.5px] leading-snug" style={{ color: MUTED }}>{d}</span>
-              </span>
-            </div>
-          ))}
-        </div>
+      <Head kicker="Concrete Design & Preparation" title="Designed for coatings from the pour." />
+      <Body top="1.85in" gap="0.24in">
+        <div style={{ borderRadius: '13px', padding: '0.22in 0.28in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
+          <div className="font-display text-[10.5px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>
+            Why it matters
+          </div>
+          <p className="mt-1.5 font-sans text-[11.5px] leading-relaxed" style={{ color: OFF }}>
+            Concrete holds salts and moisture that migrate to the surface. Slabs not designed for coatings can bubble,
+            blister and delaminate.
+          </p>
         </div>
 
-        <div>
-          <GroupLabel>Primer Selection</GroupLabel>
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            {[
-              { t: 'Latex-Based Primer & Sealer', d: 'Uniquely applied to green concrete 3–7 days after the pour, or after 28-day cure and acid-etching, grinding or shot-blasting and cleaning.' },
-              { t: 'Solvent Primer & Sealer', d: 'Applied after cure. Suited to mixes with fly ash or added limestone (Type IL), and after pressure washing without etching, grinding or blasting.' },
-            ].map((p) => (
-              <div key={p.t} style={{ borderRadius: '12px', padding: '0.18in 0.22in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.34)' }}>
-                <div className="font-display text-[11.5px] font-bold" style={{ color: OFF }}>{p.t}</div>
-                <p className="mt-1 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>{p.d}</p>
+        <div className="flex min-h-0 flex-1 flex-col">
+          <GroupLabel>Design &amp; Construction</GroupLabel>
+          <div className="mt-3 grid min-h-0 flex-1 grid-cols-2 gap-3" style={{ gridTemplateRows: 'repeat(4, 1fr)' }}>
+            {CONCRETE_DESIGN.map(([t, d], i) => (
+              <div key={t} className="glass flex items-center gap-4" style={{ borderRadius: '13px', padding: '0.2in 0.26in' }}>
+                <span className="shrink-0 font-display font-bold tabular-nums" style={{ color: BLUE_LIGHT, fontSize: '34px', lineHeight: 1, width: '0.55in' }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span>
+                  <CardTitle>{t}</CardTitle>
+                  <span className="mt-1.5 block font-sans text-[10.5px] leading-snug" style={{ color: MUTED }}>{d}</span>
+                </span>
               </div>
             ))}
           </div>
-          <p className="mt-3 font-sans text-[9.5px] leading-relaxed" style={{ color: BODY }}>
-            On 28+ day concrete, prime within moisture and RH limits while the slab is cooling (late afternoon, early
-            evening, or morning once dew has evaporated), never as it heats up, to limit outgassing. A hot slab may be
-            misted, not soaked, to bring it below the maximum application temperature.
+        </div>
+
+        <p className="font-sans text-[10px]" style={{ color: MUTED }}>In addition to ASBA guidelines for grade and mix design.</p>
+      </Body>
+      <PageFooter />
+    </Page>
+  )
+}
+
+const PRIMER_COMPARE = [
+  {
+    row: 'When to apply',
+    latex: 'Green concrete 3–7 days after the pour, or after the 28-day cure.',
+    solvent: 'After cure.',
+  },
+  {
+    row: 'Surface prep',
+    latex: 'After 28-day cure: acid-etch, grind or shot-blast, then clean.',
+    solvent: 'Pressure washing, without etching, grinding or blasting.',
+  },
+  {
+    row: 'Best suited to',
+    latex: 'Green concrete (uniquely applied before full cure).',
+    solvent: 'Mixes with fly ash or added limestone (Type IL).',
+  },
+]
+
+const FIELD_NOTES = [
+  { t: 'Acid test', d: 'No bubbling means no etching: the slab may be pre-etched or have a curing agent.' },
+  { t: 'Tape test', d: 'If primer lifts with masking tape, more preparation is needed.' },
+  { t: 'Moisture', d: 'Check per primer guidelines, typically ASTM F1869 and/or ASTM F2170.' },
+  { t: 'Slick finish', d: 'Machine-finished concrete may need shot-blasting, scarifying or extreme etching.' },
+  { t: 'Fewer coats', d: 'More acrylic coats seal off vapor transmission and promote blistering.' },
+  { t: 'Peeling paint', d: 'Remove existing paint that is delaminating or peeling.' },
+]
+
+const PRIMER_COLS = '1.35in 1fr 1fr'
+
+export function ConcretePrimersPage() {
+  return (
+    <Page>
+      <Head kicker="Concrete Design & Preparation" title="Primer selection & field checks." />
+      <Body top="1.85in" gap="0.26in">
+        <div>
+          <GroupLabel>Primer Selection</GroupLabel>
+          <div className="mt-3 glass overflow-hidden" style={{ borderRadius: '13px' }}>
+            <div
+              className="grid items-end"
+              style={{ gridTemplateColumns: PRIMER_COLS, columnGap: '0.2in', padding: '0.14in 0.24in', background: 'rgba(50,126,168,0.14)' }}
+            >
+              <span />
+              <span className="font-display text-[12.5px] font-bold" style={{ color: OFF }}>Latex-Based Primer &amp; Sealer</span>
+              <span className="font-display text-[12.5px] font-bold" style={{ color: OFF }}>Solvent Primer &amp; Sealer</span>
+            </div>
+            {PRIMER_COMPARE.map((r) => (
+              <div
+                key={r.row}
+                className="grid items-start"
+                style={{ gridTemplateColumns: PRIMER_COLS, columnGap: '0.2in', padding: '0.14in 0.24in', borderTop: `1px solid ${RULE}` }}
+              >
+                <span className="font-display text-[10.5px] font-semibold uppercase tracking-[0.1em]" style={{ color: BLUE_LIGHT }}>{r.row}</span>
+                <span className="font-sans text-[10.5px] leading-snug" style={{ color: BODY }}>{r.latex}</span>
+                <span className="font-sans text-[10.5px] leading-snug" style={{ color: BODY }}>{r.solvent}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ borderRadius: '13px', padding: '0.24in 0.28in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
+          <div className="flex items-center justify-between gap-4">
+            <span className="font-display text-[10.5px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>Timing</span>
+            <span className="font-sans text-[10px]" style={{ color: MUTED }}>28+ day concrete · within moisture &amp; RH limits · limits outgassing</span>
+          </div>
+          <div className="mt-2 font-display font-bold" style={{ color: OFF, fontSize: '24px', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
+            Prime while the slab is cooling
+          </div>
+          <p className="mt-2 font-sans text-[10.5px] leading-relaxed" style={{ color: BODY }}>
+            Late afternoon, early evening, or morning once dew has evaporated, never as it heats up. A hot slab may be
+            misted, not soaked.
           </p>
         </div>
 
         <div>
           <GroupLabel>Field Notes</GroupLabel>
-          <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2">
-            {hints.map((h) => (
-              <div key={h} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
-                <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
-                {h}
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            {FIELD_NOTES.map((n) => (
+              <div key={n.t} className="glass flex gap-2.5" style={{ borderRadius: '12px', padding: '0.16in 0.18in' }}>
+                <CircleCheck size={16} strokeWidth={1.75} color={BLUE_LIGHT} className="mt-px shrink-0" aria-hidden="true" />
+                <span>
+                  <span className="block font-display text-[12px] font-bold" style={{ color: OFF }}>{n.t}</span>
+                  <span className="mt-1 block font-sans text-[10px] leading-snug" style={{ color: MUTED }}>{n.d}</span>
+                </span>
               </div>
             ))}
           </div>
         </div>
+
+        <FillPhoto src="/images/concrete-primer-prep.png" alt="Installer performing a masking-tape adhesion test on freshly primed concrete" position="center 55%" minHeight="1in" />
       </Body>
       <PageFooter />
     </Page>
