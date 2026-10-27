@@ -7,7 +7,6 @@ import { SubstrateEvaluationPage } from '@/components/proposal/part1-verificatio
 import { LabTestedPage, ProductResponsibilityPage } from '@/components/proposal/part1-material'
 import {
   StanfordPage,
-  Court16Page,
   AdditionalExperiencePage,
   NationalPartnershipsPage,
 } from '@/components/proposal/part1-experience'
@@ -95,7 +94,7 @@ export function SubmittalDoc({
           { key: 'pace', node: <CourtPacePage />, toc: 'Acrytech Finish — Court Pace' },
           { key: 'substrate', node: <SubstrateEvaluationPage />, toc: 'Substrate Evaluation' },
           { key: 'chem', node: <ProductResponsibilityPage />, toc: 'Acrytech Chemistry & VOC' },
-          { key: 'court16', node: <Court16Page />, toc: 'Case Study — Court 16' },
+          { key: 'stanford', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
           { key: 'pickleball', node: <PickleballPage />, toc: 'Case Study — Pickleball Facilities' },
           { key: 'support', node: <TechnicalSupportPage />, toc: 'Technical Support' },
           { key: 'warranty', node: <WarrantyPage product={product} />, toc: 'Warranty' },
