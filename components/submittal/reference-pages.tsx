@@ -147,8 +147,8 @@ function CaseCard({ study }: { study: CaseStudy }) {
             )}
           </div>
           <span
-            className="text-right font-display text-[7.5px] font-semibold uppercase leading-snug tracking-[0.12em]"
-            style={{ color: BLUE_LIGHT, border: '1px solid rgba(93,163,202,0.45)', borderRadius: '999px', padding: '0.04in 0.1in' }}
+  className="whitespace-pre-line text-right font-display text-[7.5px] font-semibold uppercase leading-snug tracking-[0.12em]"
+  style={{ color: BLUE_LIGHT, border: '1px solid rgba(93,163,202,0.45)', borderRadius: '999px', padding: '0.04in 0.1in' }}
           >
             {study.badge}
           </span>
@@ -182,7 +182,7 @@ export function TennisAndPickleballPage() {
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.0in' }}>
         <Kicker className="mb-3">Case Studies</Kicker>
         <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '30px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
-          Tennis and pickleball.
+          Proven where it&apos;s played.
         </h2>
       </div>
       <div
@@ -208,8 +208,8 @@ const TENNIS_STUDIES: [CaseStudy, CaseStudy] = [
           logo: '/images/kingston-open-logo.png',
           photo: '/images/kingston-atp-net.jpg',
           photoAlt: 'Kingston Open ATP Challenger match court surfaced with Acrytech',
-          badge: 'Official Surface · ATP Challenger 75',
-          stats: ['6 courts', '2 venues'],
+          badge: 'Official Surface\nATP Challenger 75',
+          stats: ['6 professional courts', '2 venues'],
           copy:
             'AT Sports was the Official Surface of the Kingston Open, preparing and resurfacing six courts across the Liguanea Club and Pegasus Hotel. AT Sports crack-repair materials addressed existing surface conditions, and Acrytech coatings created the finished hard-court playing surface for back-to-back ATP Challenger 75 competition.',
         },
@@ -236,7 +236,7 @@ const PICKLEBALL_STUDIES: [CaseStudy, CaseStudy] = [
   photo: '/images/lets-go-pickleball-courts.png',
           photoAlt: "Purple and gray indoor pickleball courts at Let's Go Pickleball & Padel",
           badge: 'CushionX + Acrytech',
-          stats: ['21 indoor pickleball courts', '2 padel courts', 'Peachtree City, GA'],
+          stats: ['21 indoor courts', '2 padel courts', 'Peachtree City, GA'],
           copy:
             'A year-round, temperature-controlled indoor club for open play, leagues, tournaments, clinics and events. Courts are surfaced with a CushionX cushion system finished with Acrytech color coatings for comfort underfoot and a consistent playing surface.',
         },

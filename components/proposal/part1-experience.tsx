@@ -294,13 +294,9 @@ export function AdditionalExperiencePage() {
       <PageHead
         index="19"
         section="Experience"
-        kicker="Case Studies"
-        title={
-          <>
-Selected Tennis&nbsp;Facilities
-          </>
-        }
-        intro="From professional tournament courts to major collegiate facilities and multi-court racquet campuses, AT Sports experience spans a wide range of competitive tennis environments."
+        kicker="Facilities"
+        title={<>Trusted by collegiate and club programs.</>}
+        intro="Collegiate competition centers and private racquet clubs that rely on AT Sports surfaces for daily training and match play"
         titleSize={30}
         width="6.6in"
       />
