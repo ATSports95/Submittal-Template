@@ -283,14 +283,26 @@
 @media print {
   html,
   body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
     background: #202528 !important;
   }
+  /* Block flow fragments reliably across browsers; flex containers don't. */
   .proposal-doc {
+    display: block;
     gap: 0;
     padding: 0;
   }
+  /* A hair under 11in so sub-pixel rounding at print DPI can never spill a
+     page onto an extra sheet (which shows up as every other page missing). */
   .page {
     box-shadow: none;
+    height: 10.98in;
+    margin: 0;
+    break-inside: auto;
+    page-break-inside: auto;
     break-after: page;
     page-break-after: always;
   }
