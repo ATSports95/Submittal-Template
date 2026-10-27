@@ -386,7 +386,7 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
         </div>
       </div>
       <Body top="7.35in">
-        <FillPhoto src="/images/lab-pour.jpg" alt="AT Sports technician drawing down an Acrytech color sample in the lab" position="center 45%" caption="Color drawdown in the AT Sports lab, Canton, Georgia." />
+        <FillPhoto src="/images/rollx-warehouse-court.jpeg" alt="Red and blue pickleball court finished in the AT Sports warehouse, with stacked Acrytech drums behind it" position="center 60%" caption="Acrytech-coated court in the AT Sports warehouse, Canton, Georgia." />
       </Body>
       <PageFooter />
     </Page>
@@ -414,7 +414,7 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
   ]
   return (
     <Page>
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.15in' }}>
+      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '0.95in' }}>
         <Kicker className="mb-3">{product.key === 'acrytech' ? 'About AT Sports' : 'Manufacturer Qualifications'}</Kicker>
         <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
           One manufacturer,
@@ -426,9 +426,9 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
           throughout the United States and internationally from its manufacturing facility in Canton, Georgia.
         </p>
 
-        <div className="mt-6 grid grid-cols-3 gap-3">
+        <div className="mt-5 grid grid-cols-3 gap-3">
           {facts.map((f) => (
-            <div key={f.l} style={{ borderTop: '2px solid rgba(50,126,168,0.5)', paddingTop: '0.12in' }}>
+            <div key={f.l} style={{ borderTop: '2px solid rgba(50,126,168,0.5)', paddingTop: '0.1in' }}>
               <div className="font-display text-[20px] font-bold" style={{ color: OFF, letterSpacing: '-0.01em' }}>{f.n}</div>
               <div className="mt-1 font-display text-[8.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: MUTED }}>{f.l}</div>
             </div>
@@ -437,7 +437,7 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
 
         <div className="mt-5 grid grid-cols-2 gap-3">
           {quals.map((q) => (
-            <div key={q.t} className="glass" style={{ borderRadius: '12px', padding: '0.16in 0.22in' }}>
+            <div key={q.t} className="glass" style={{ borderRadius: '12px', padding: '0.13in 0.2in' }}>
               <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{q.t}</div>
               <p className="mt-1.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>{q.d}</p>
             </div>
@@ -446,19 +446,18 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
 
         <div
           className="mt-3 flex items-center gap-5"
-          style={{ borderRadius: '12px', padding: '0.14in 0.22in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.32)' }}
+          style={{ borderRadius: '12px', padding: '0.1in 0.22in 0.1in 0.1in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.32)' }}
         >
           <div
-            className="flex shrink-0 items-center justify-center"
-            style={{ width: '1.45in', height: '0.62in', borderRadius: '9px', padding: '0.07in 0.12in', background: '#ffffff' }}
+            className="shrink-0 overflow-hidden"
+            style={{ width: '1.55in', height: '0.72in', borderRadius: '8px', background: '#ffffff' }}
           >
-            {existsSync(path.join(process.cwd(), 'public', 'images', 'asba-member.png')) ? (
-              <img src="/images/asba-member.png" alt="American Sports Builders Association member" className="max-h-full max-w-full object-contain" />
-            ) : (
-              <span className="text-center font-display text-[11px] font-bold uppercase tracking-[0.08em]" style={{ color: '#181c1f' }}>
-                ASBA Member
-              </span>
-            )}
+            {/* Source PNG has ~14% white margin top/bottom; object-cover trims it so the mark fills the plate */}
+            <img
+              src="/images/asba-member-logo.png"
+              alt="Member, American Sports Builders Association"
+              className="h-full w-full object-cover"
+            />
           </div>
           <div className="min-w-0">
             <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
@@ -475,13 +474,13 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
       </div>
       <Body top="7.0in">
         <div className="grid min-h-0 flex-1 gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
-          <div>
+          <div className="flex min-h-0 flex-col pb-6">
             <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
               AT Sports Product Lines
             </div>
-            <div className="mt-2.5 flex flex-col">
+            <div className="mt-2.5 flex flex-1 flex-col" style={{ borderTop: '1px solid rgba(185,196,203,0.12)' }}>
               {lines.map((l) => (
-                <div key={l.name} className="flex items-baseline justify-between gap-3" style={{ padding: '0.07in 0', borderBottom: '1px solid rgba(185,196,203,0.12)' }}>
+                <div key={l.name} className="flex flex-1 items-center justify-between gap-3" style={{ borderBottom: '1px solid rgba(185,196,203,0.12)' }}>
                   <span className="font-display text-[12px] font-bold" style={{ color: l.name === product.name ? BLUE_LIGHT : OFF }}>{l.name}</span>
                   <span className="font-sans text-[9px]" style={{ color: MUTED }}>{l.d}</span>
                 </div>
