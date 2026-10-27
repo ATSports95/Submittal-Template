@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs'
+import path from 'node:path'
 import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule } from '@/components/proposal/page-shell'
 import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
 import { PART_HEADING, type SpecPart } from '@/lib/spec-part'
@@ -409,7 +411,7 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
   return (
     <Page>
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.15in' }}>
-        <Kicker className="mb-3">Manufacturer Qualifications</Kicker>
+        <Kicker className="mb-3">{product.key === 'acrytech' ? 'About AT Sports' : 'Manufacturer Qualifications'}</Kicker>
         <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
           One manufacturer,
           <br />
@@ -429,17 +431,45 @@ export function ManufacturerPage({ product, generic = false }: { product: Produc
           ))}
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="mt-5 grid grid-cols-2 gap-3">
           {quals.map((q) => (
-            <div key={q.t} className="glass" style={{ borderRadius: '12px', padding: '0.2in 0.24in', minHeight: '1.2in' }}>
+            <div key={q.t} className="glass" style={{ borderRadius: '12px', padding: '0.16in 0.22in' }}>
               <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{q.t}</div>
               <p className="mt-1.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>{q.d}</p>
             </div>
           ))}
         </div>
 
+        <div
+          className="mt-3 flex items-center gap-5"
+          style={{ borderRadius: '12px', padding: '0.14in 0.22in', background: 'rgba(50,126,168,0.1)', border: '1px solid rgba(50,126,168,0.32)' }}
+        >
+          <div
+            className="flex shrink-0 items-center justify-center"
+            style={{ width: '1.45in', height: '0.62in', borderRadius: '9px', padding: '0.07in 0.12in', background: '#ffffff' }}
+          >
+            {existsSync(path.join(process.cwd(), 'public', 'images', 'asba-member.png')) ? (
+              <img src="/images/asba-member.png" alt="American Sports Builders Association member" className="max-h-full max-w-full object-contain" />
+            ) : (
+              <span className="text-center font-display text-[11px] font-bold uppercase tracking-[0.08em]" style={{ color: '#181c1f' }}>
+                ASBA Member
+              </span>
+            )}
+          </div>
+          <div className="min-w-0">
+            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
+              Industry Membership
+            </div>
+            <p className="mt-1 font-sans text-[10.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.86)' }}>
+              Member of the American Sports Builders Association (ASBA) since 2015.{' '}
+              {product.key === 'acrytech'
+                ? 'Acrytech installations conform to ASBA guidelines.'
+                : 'CushionX and Acrytech installations conform to ASBA guidelines.'}
+            </p>
+          </div>
+        </div>
       </div>
-      <Body top="6.55in">
+      <Body top="7.0in">
         <div className="grid min-h-0 flex-1 gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
           <div>
             <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
@@ -572,25 +602,19 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '1.45in' }}>
         {generic ? (
-          <div
-            className="glass-strong flex items-end justify-between gap-6"
-            style={{ borderRadius: '13px', padding: '0.26in 0.32in', borderTop: '2px solid #5da3ca' }}
-          >
-            <div>
-              <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
-                AT Sports
-              </div>
-              <div className="mt-2 font-display text-[17px] font-bold" style={{ color: OFF }}>
-                AT Sports, Inc.
-              </div>
-              <div className="mt-0.5 font-sans text-[10.5px]" style={{ color: MUTED }}>
-                Sales and technical support
-              </div>
+          <div className="glass-strong" style={{ borderRadius: '13px', padding: '0.26in 0.32in', borderTop: '2px solid #5da3ca' }}>
+            <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
+              Contact
             </div>
-            <div className="text-right font-sans text-[11.5px] leading-relaxed" style={{ color: OFF }}>
+            <div className="mt-2 font-display text-[18px] font-bold" style={{ color: OFF }}>
+              AT Sports, Inc.
+              <span style={{ color: BLUE_LIGHT }}> · </span>
               {COMPANY.phone}
-              <br />
+              <span style={{ color: BLUE_LIGHT }}> · </span>
               {COMPANY.web}
+            </div>
+            <div className="mt-1 font-sans text-[10.5px]" style={{ color: MUTED }}>
+              Sales and technical support
             </div>
           </div>
         ) : (

@@ -29,6 +29,7 @@ import {
   ConcretePrimersPage,
   MaintenancePage,
 } from './acrytech-pages'
+import { ProfessionalTennisPage, PickleballPage } from './reference-pages'
 import { SubmittalToolbar } from './toolbar'
 import { PRODUCTS, genericProduct, type ProductKey, type ProjectInfo } from '@/lib/submittal'
 
@@ -56,9 +57,8 @@ export function SubmittalDoc({
     productKey === 'acrytech'
       ? [
           { key: 'letter', node: <LetterPage product={product} info={info} generic={generic} />, toc: 'Introduction' },
+          { key: 'manufacturer', node: <ManufacturerPage product={product} generic={generic} />, toc: 'About AT Sports' },
           { key: 'compliance', node: <SpecCompliancePage generic={generic} />, toc: 'Specification Compliance' },
-
-          { key: 'manufacturer', part: 'General', node: <ManufacturerPage product={product} generic={generic} />, toc: 'Manufacturer Qualifications' },
 
           { key: 'materials', part: 'Products', node: <MaterialSpecsPage />, toc: 'System Overview' },
           { key: 'line-color', part: 'Products', node: <ProductLineColorPage />, toc: 'Product Line — Color Coatings' },
@@ -78,6 +78,8 @@ export function SubmittalDoc({
 
           { key: 'warranty', part: 'References', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'stanford', part: 'References', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
+          { key: 'pro-tennis', part: 'References', node: <ProfessionalTennisPage />, toc: 'Court 16 + Kingston Open' },
+          { key: 'pickleball', part: 'References', node: <PickleballPage />, toc: 'Pickleball Facilities' },
           { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
           { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
 
@@ -95,6 +97,7 @@ export function SubmittalDoc({
           { key: 'substrate', node: <SubstrateEvaluationPage />, toc: 'Substrate Evaluation' },
           { key: 'chem', node: <ProductResponsibilityPage />, toc: 'Acrytech Chemistry & VOC' },
           { key: 'court16', node: <Court16Page />, toc: 'Case Study — Court 16' },
+          { key: 'pickleball', node: <PickleballPage />, toc: 'Case Study — Pickleball Facilities' },
           { key: 'support', node: <TechnicalSupportPage />, toc: 'Technical Support' },
           { key: 'warranty', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },

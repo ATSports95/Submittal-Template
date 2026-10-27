@@ -350,7 +350,7 @@ export function ProductLineColorPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 1 of 4"
+        kicker="Color Coatings · 1 of 4"
         title="Color coatings."
         intro="Every Acrytech color coat is a 100% acrylic latex, self-crosslinking formulation. The line is engineered so each product can be matched to the substrate, the level of use and the sport."
       />
@@ -377,7 +377,7 @@ export function ProductLinePrepPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 2 of 4"
+        kicker="Primers & Resurfacers · 2 of 4"
         title="Primers, sealers & resurfacers."
         intro="Preparation products are selected for the substrate: primers and sealers bond to and protect asphalt and concrete, and resurfacers fill, level and build the base the color coats are applied to."
       />
@@ -404,7 +404,7 @@ export function ProductLineFinishPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 3 of 4"
+        kicker="Lines & Additives · 3 of 4"
         title="Lines & additives."
         intro="Line products finish the court layout, and additives let the installer tune texture and drying on site."
       />
@@ -428,7 +428,7 @@ export function ProductLineColorsPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 4 of 4"
+        kicker="Acrytech Colors · 4 of 4"
         title="Acrytech colors."
         intro="Every Acrytech color coat is available in 32 standard colors, with custom colors made to order."
       />
@@ -537,7 +537,7 @@ export function MaterialSpecsPage() {
   return (
     <Page>
       <Head
-        kicker="Material Specifications"
+        kicker="System Overview"
           title="System overview."
         intro="Components and quality requirements from the Acrytech System Specification for colored and textured acrylic surfacing over asphalt, concrete and existing sports surfaces (Appendix A)."
       />
@@ -648,7 +648,7 @@ export function InstallationPrepPage() {
   return (
     <Page>
       <Head
-        kicker="Installation Requirements"
+        kicker="Surface Preparation"
         title="Surface preparation."
         intro="Execution requirements from Part 3 of the Acrytech System Specification. See each product’s TDS for application limits."
       />
@@ -722,7 +722,7 @@ const COMPLETION = [
 export function InstallationApplyPage() {
   return (
     <Page>
-      <Head kicker="Installation Requirements" title="Application & finishing." />
+      <Head kicker="Application & Finishing" title="Application & finishing." />
       <Body top="1.85in" gap="0.28in">
         <div>
           <GroupLabel right="Section 3.5">Application</GroupLabel>
@@ -816,7 +816,7 @@ const CONCRETE_DESIGN = [
 export function ConcreteDesignPage() {
   return (
     <Page>
-      <Head kicker="Concrete Design & Preparation" title="Designed for coatings from the pour." />
+      <Head kicker="Concrete Design & Construction" title="Designed for coatings from the pour." />
       <Body top="1.85in" gap="0.24in">
         <div style={{ borderRadius: '13px', padding: '0.22in 0.28in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
           <div className="font-display text-[10.5px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>
@@ -884,7 +884,7 @@ const PRIMER_COLS = '1.35in 1fr 1fr'
 export function ConcretePrimersPage() {
   return (
     <Page>
-      <Head kicker="Concrete Design & Preparation" title="Primer selection & field checks." />
+      <Head kicker="Concrete Primers & Field Notes" title="Primer selection & field checks." />
       <Body top="1.85in" gap="0.26in">
         <div>
           <GroupLabel>Primer Selection</GroupLabel>
