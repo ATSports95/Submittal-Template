@@ -162,8 +162,8 @@ export function PickleballPage() {
         },
         {
           name: 'Match Point Pickleball Club',
-          logo: '/images/matchpoint-logo.png',
-          photo: '/images/matchpoint-courts.jpg',
+    logo: '/images/match-point-logo.png',
+    photo: '/images/match-point-courts.png',
           photoAlt: 'Red and gray indoor pickleball courts at Match Point Pickleball Club',
           badge: 'CushionX + Acrytech',
           stats: ['38 indoor courts', 'Columbus, OH'],
