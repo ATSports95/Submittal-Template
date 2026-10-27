@@ -241,8 +241,8 @@ const PRIMERS: Product[] = [
   { name: 'Latex-Based Primer & Sealer', d: 'SBR latex that waterproofs the substrate and blocks efflorescence and asphalt impurities. Can go on green concrete 3–7 days after the pour.', coverage: '.05–.07', temp: '34–130°F', dry: '3 hr', cure: '—', pack: '55 / 30 / 5 gal' },
   { name: 'Solvent Primer & Sealer', d: 'Penetrating acrylic primer for concrete with fly ash or high limestone, and clean concrete without etching, grinding or blasting.', coverage: <>1st coat 28–39 SY/gal<br />2nd coat 39–50 SY/gal</>, temp: '50–100°F', dry: '1–4 hr', cure: '24 hr', pack: '55 / 5 gal' },
   { name: 'Slurry Coat', d: 'Self-leveling acrylic cement admix for smoothing, control joints, depressions and cracks up to 1/4", and over existing coatings.', coverage: '.05–.07', temp: '40–120°F', dry: '—', cure: '48 hr', pack: '55 / 30 / 5 gal' },
-  { name: 'Urethane Primer', d: 'Abrasion-resistant, flexible, non-tacky aliphatic water-based polyurethane primer. Dries clear.', coverage: '17–22', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal', flag: 'Confirm units' },
-  { name: 'Urethane Clear Coat', d: 'Hard, non-tacky polyurethane clear coat that seals and extends the life of all Acrytech coatings.', coverage: '22–33', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal', flag: 'Confirm units' },
+  { name: 'Urethane Primer', d: 'Abrasion-resistant, flexible, non-tacky aliphatic water-based polyurethane primer. Dries clear.', coverage: '17–22 SY/gal', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal' },
+  { name: 'Urethane Clear Coat', d: 'Hard, non-tacky polyurethane clear coat that seals and extends the life of all Acrytech coatings.', coverage: '22–33 SY/gal', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal' },
 ]
 
 const RESURFACERS: Product[] = [
