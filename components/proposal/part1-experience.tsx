@@ -192,21 +192,21 @@ const TENNIS_FACILITIES: Facility[] = [
   { name: 'Farm & Forge', logo: '/images/logos/farm-forge.png', caption: 'Private racquet campus · College Grove, TN' },
   { name: 'Texas Tech University', logo: '/images/logos/texas-tech.png', caption: 'McLeod Tennis Center · Lubbock, TX' },
   { name: 'Georgia Tech', logo: '/images/logos/georgia-tech.png', caption: 'Ken Byers Tennis Complex · Atlanta, GA' },
-  { name: 'Baylor University', caption: 'Hurd Tennis Center · Waco, TX' },
-  { name: 'University of Oklahoma', caption: 'Headington Family Tennis Center · Norman, OK' },
+  { name: 'Baylor University', logo: '/images/logos/baylor.png', caption: 'Hurd Tennis Center · Waco, TX' },
+  { name: 'University of Oklahoma', logo: '/images/logos/oklahoma.png', caption: 'Headington Family Tennis Center · Norman, OK' },
 ]
 
 const CLUB_FACILITIES: Facility[] = [
-  { name: 'The Picklr', caption: 'Multiple locations' },
-  { name: 'Dill Dinkers', caption: 'Multiple locations' },
-  { name: 'Pickle Rage', caption: 'Multiple locations' },
-  { name: 'The Pickle Pad', caption: 'Multiple locations' },
-  { name: 'Chicken N Pickle', caption: 'Multiple locations' },
-  { name: 'PACE Pickleball Club', caption: 'Multiple locations' },
-  { name: 'The Hub Pickleball', caption: 'Multiple locations' },
-  { name: 'The Pickle Club', caption: 'First CushionX facility in Australia' },
-  { name: 'Club Volo', caption: 'Multiple locations' },
-  { name: 'Invited', caption: 'Private country & city clubs' },
+  { name: 'The Picklr', logo: '/images/logos/picklr.png', caption: 'Multiple locations' },
+  { name: 'Dill Dinkers', logo: '/images/logos/dill-dinkers.png', caption: 'Multiple locations' },
+  { name: 'Pickle Rage', logo: '/images/logos/pickle-rage.png', caption: 'Multiple locations' },
+  { name: 'The Pickle Pad', logo: '/images/logos/Pickle-Pad.png', caption: 'Multiple locations' },
+  { name: 'Chicken N Pickle', logo: '/images/logos/chicken-n-pickle.png', caption: 'Multiple locations' },
+  { name: 'PACE Pickleball Club', logo: '/images/logos/pace.png', caption: 'Multiple locations' },
+  { name: 'The Hub Pickleball', logo: '/images/logos/The-hub.png', caption: 'Multiple locations' },
+  { name: 'The Pickle Club', logo: '/images/logos/the-pickle-club.png', caption: 'First CushionX facility in Australia' },
+  { name: 'Club Volo', logo: '/images/logos/club-volo.png', caption: 'Multiple locations' },
+  { name: 'Invited', logo: '/images/logos/invited.png', caption: 'Private country & city clubs' },
 ]
 
 function SectionLabel({ children }: { children: ReactNode }) {
