@@ -386,7 +386,7 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
         </div>
       </div>
       <Body top="7.35in">
-        <FillPhoto src="/images/rollx-warehouse-court.jpeg" alt="Red and blue pickleball court finished in the AT Sports warehouse, with stacked Acrytech drums behind it" position="center 60%" caption="Acrytech-coated court in the AT Sports warehouse, Canton, Georgia." />
+        <FillPhoto src="/images/rollx-warehouse-court.jpeg" alt="Red and blue pickleball court finished in the AT Sports warehouse, with stacked Acrytech drums behind it" position="center 92%" caption="Acrytech-coated court in the AT Sports warehouse, Canton, Georgia." />
       </Body>
       <PageFooter />
     </Page>
