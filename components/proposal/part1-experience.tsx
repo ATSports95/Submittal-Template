@@ -22,12 +22,11 @@ export function StanfordPage() {
         <img src="/images/stanford-aerial.jpg" alt="Aerial view of Stanford's Arrillaga Tennis Center showing 12 championship outdoor courts" className="h-full w-full object-cover" />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(24,28,31,0.55) 0%, rgba(24,28,31,0) 30%, rgba(24,28,31,0.15) 55%, rgba(24,28,31,0.96) 100%)' }} />
         <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '0.3in' }}>
-          <Kicker className="mb-2">Stanford</Kicker>
+          <Kicker className="mb-2">Case Studies</Kicker>
           <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '34px', lineHeight: 0.98, letterSpacing: '-0.02em' }}>
-            Built for championship tennis.
+            Stanford University
           </h2>
           <div className="mt-2 flex items-baseline gap-3">
-            <span className="font-display text-[15px] font-bold" style={{ color: OFF }}>Stanford University</span>
             <span className="font-sans text-[11px]" style={{ color: BLUE_LIGHT }}>Arrillaga Tennis Center</span>
             <span className="font-sans text-[10px]" style={{ color: MUTED }}>Palo Alto, California</span>
           </div>
@@ -295,7 +294,7 @@ export function AdditionalExperiencePage() {
       <PageHead
         index="19"
         section="Experience"
-        kicker="Tennis Experience"
+        kicker="Case Studies"
         title={
           <>
 Selected Tennis&nbsp;Facilities
