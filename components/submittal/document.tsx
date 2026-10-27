@@ -77,7 +77,6 @@ export function SubmittalDoc({
 
           { key: 'warranty', part: 'References', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
-          { key: 'stanford', part: 'References', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
       { key: 'case-studies', part: 'References', node: <TennisAndPickleballPage />, toc: 'Case Studies — Tennis & Pickleball' },
           { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
 

@@ -10,7 +10,7 @@ const BODY = 'rgba(245,246,246,0.8)'
 
 /** Images are supplied by the user; fall back to a named plate until they're added to /public. */
 function hasImage(src: string) {
-  return existsSync(path.join(process.cwd(), 'public', src))
+  return Boolean(src) && existsSync(path.join(process.cwd(), 'public', src))
 }
 
 type CaseStudy = {
@@ -214,14 +214,14 @@ const TENNIS_STUDIES: [CaseStudy, CaseStudy] = [
             'AT Sports was the Official Surface of the Kingston Open, preparing and resurfacing six courts across the Liguanea Club and Pegasus Hotel. AT Sports crack-repair materials addressed existing surface conditions, and Acrytech coatings created the finished hard-court playing surface for back-to-back ATP Challenger 75 competition.',
         },
         {
-          name: 'Court 16',
-          logo: '/images/court16-logo.png',
-          photo: '/images/court16-fishtown.jpg',
-          photoAlt: 'Court 16 indoor tennis facility with CushionX and Acrytech courts',
-          badge: 'CushionX + Acrytech',
-          stats: ['8mm CushionX', 'NYC · Philadelphia · Boston'],
+          name: 'Stanford University',
+          logo: '',
+          photo: '/images/stanford-cardinal.jpg',
+          photoAlt: "Cardinal and gray championship courts at Stanford's Arrillaga Tennis Center",
+          badge: 'Acrytech Coatings',
+          stats: ['12 championship courts', 'Palo Alto, CA'],
           copy:
-            'Court 16 uses an integrated 8mm CushionX + Acrytech Coatings system across its indoor facilities: a repeatable surface standard for player development, youth formats and year-round play, delivered consistently from site to site.',
+            "Opened in April 2026, Stanford's Arrillaga Tennis Center supports championship competition, daily athlete development and major collegiate events. Its 12 championship outdoor courts and covered practice courts are surfaced with the AT Sports Acrytech Coatings system.",
         },
 ]
 
