@@ -134,14 +134,17 @@ export function SpecCompliancePage({ generic = false }: { generic?: boolean }) {
 
         <div style={{ borderRadius: '13px', padding: '0.24in 0.3in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
           <div className="font-display text-[9.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>
-            Suggested Specification Language · Part 2 – Products
+            For Specifiers · Suggested Specification Language
           </div>
+          <p className="mt-1.5 font-sans text-[10px] leading-relaxed" style={{ color: MUTED }}>
+            Copy into Section 2.1 of the project specification to list Acrytech as an acceptable manufacturer.
+          </p>
           <div className="mt-2.5 font-mono text-[10px] leading-relaxed" style={{ color: OFF }}>
             2.1 MANUFACTURERS
             <br />
             A. Acceptable manufacturer: AT Sports, Inc., 189 Etowah Industrial Court, Canton, GA 30114.
             <br />
-            &nbsp;&nbsp;&nbsp;770-734-3000 · www.atsports.com
+            &nbsp;&nbsp;&nbsp;770-734-3000 · atsports.com
             <br />
             &nbsp;&nbsp;&nbsp;1. Product: Acrytech Coatings System (Acrytech Resurfacer, Acrytech Color, Acrytech Line Paint).
           </div>
