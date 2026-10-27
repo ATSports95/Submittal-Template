@@ -530,13 +530,14 @@ export function MixingChart() {
   )
 }
 
+const SUBMITTAL_CHECKLIST = [
+  { req: 'Technical Data Sheets for all system components', where: 'Appendices B–E' },
+  { req: 'Color chart', where: 'Appendix G' },
+  { req: 'Safety Data Sheets for all system components', where: 'Appendix F' },
+  { req: 'Manufacturer’s warranty, 2-year (spec minimum: 1 year)', where: 'Appendix O' },
+]
+
 export function MaterialSpecsPage() {
-  const qa = [
-    'Coatings, patching and resurfacing compounds are Acrytech by AT Sports, or an approved equal documented to the owner.',
-    'On request, the contractor gives the inspector a volume estimate for each product (AT Sports Paint Estimator).',
-    'Submit Technical Data Sheets for system components and a color chart.',
-    'Submit Safety Data Sheets for system components, and the manufacturer’s warranty (minimum one year).',
-  ]
   return (
     <Page>
       <Head
@@ -560,7 +561,7 @@ export function MaterialSpecsPage() {
             <div
               key={m.t}
               className="grid items-start"
-              style={{ gridTemplateColumns: '1fr 0.8in 1.35in', columnGap: '0.16in', padding: '0.15in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+              style={{ gridTemplateColumns: '1fr 0.8in 1.35in', columnGap: '0.16in', padding: '0.1in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
             >
               <span>
                 <span className="block font-display text-[11.5px] font-bold" style={{ color: OFF }}>{m.t}</span>
@@ -575,15 +576,23 @@ export function MaterialSpecsPage() {
         </div>
 
         <div>
-          <GroupLabel right="Sections 1.2 – 1.3">Quality Assurance &amp; Submittals</GroupLabel>
-          <ul className="mt-2.5 grid grid-cols-2 gap-x-6 gap-y-2">
-            {qa.map((q) => (
-              <li key={q} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
-                <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
-                {q}
+          <GroupLabel right="Sections 1.2 – 1.3">Submittal Requirements Met</GroupLabel>
+          <ul className="mt-2.5 glass overflow-hidden" style={{ borderRadius: '12px' }}>
+            {SUBMITTAL_CHECKLIST.map((row, i) => (
+              <li
+                key={row.req}
+                className="flex items-center gap-3"
+                style={{ padding: '0.1in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+              >
+                <CircleCheck size={14} strokeWidth={2} color={BLUE_LIGHT} className="shrink-0" aria-hidden="true" />
+                <span className="min-w-0 flex-1 font-sans text-[10px] leading-snug" style={{ color: OFF }}>{row.req}</span>
+                <span className="shrink-0 font-display text-[10px] font-bold" style={{ color: BLUE_LIGHT }}>{row.where}</span>
               </li>
             ))}
           </ul>
+          <p className="mt-2 font-sans text-[8.5px] leading-snug" style={{ color: MUTED }}>
+            Material volume estimates for each product are available on request (AT Sports Paint Estimator).
+          </p>
         </div>
       </Body>
       <PageFooter />
