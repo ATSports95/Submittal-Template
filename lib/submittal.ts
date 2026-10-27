@@ -86,7 +86,7 @@ export const PRODUCTS: Record<ProductKey, ProductConfig> = {
       { k: 'C', t: 'Acrytech Resurfacer Technical Data Sheet' },
       { k: 'D', t: 'Primer / Sealer Technical Data' },
       { k: 'E', t: 'Line Paint / Line Primer Technical Data' },
-      { k: 'F', t: 'Safety Data Sheets', sub: 'All products listed above' },
+      { k: 'F', t: 'Safety Data Sheets' },
       { k: 'G', t: 'Acrytech Color Chart' },
       { k: 'H', t: 'Acrytech Mixing Chart / Pace Profiles' },
       { k: 'I', t: 'ITF Court Pace Classification Certificates' },
