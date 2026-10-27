@@ -61,7 +61,7 @@ export function CoverPage({ product, info, generic = false }: { product: Product
         <div className="mb-4 h-px w-full" style={{ backgroundColor: 'rgba(185,196,203,0.24)' }} />
         <div className="flex items-end justify-between gap-8">
           {generic ? (
-            <div className="min-w-0">
+            <div className="ml-auto flex min-w-0 flex-col items-end text-right">
               <div className="font-display text-[17px] font-bold" style={{ color: OFF }}>
                 Product Submittal Package
               </div>
@@ -69,13 +69,10 @@ export function CoverPage({ product, info, generic = false }: { product: Product
                 <img
                   src="/images/acrytech-logo-tag-white.png"
                   alt="Acrytech"
-                  className="mb-2 mt-2 block w-auto"
+                  className="mt-2 block w-auto"
                   style={{ height: '0.45in' }}
                 />
               )}
-              <div className="font-sans text-[11px]" style={{ color: MUTED }}>
-                {product.system}
-              </div>
             </div>
           ) : (
             <div className="min-w-0">
@@ -90,17 +87,19 @@ export function CoverPage({ product, info, generic = false }: { product: Product
               </div>
             </div>
           )}
-          <div className="shrink-0 text-right">
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.22em]" style={{ color: BLUE_LIGHT }}>
-              Submitted by
+          {!generic && (
+            <div className="shrink-0 text-right">
+              <div className="font-display text-[9px] font-semibold uppercase tracking-[0.22em]" style={{ color: BLUE_LIGHT }}>
+                Submitted by
+              </div>
+              <div className="mt-1 font-display text-[17px] font-bold" style={{ color: OFF }}>
+                AT Sports
+              </div>
+              <div className="font-sans text-[11px]" style={{ color: MUTED }}>
+                {product.system}
+              </div>
             </div>
-            <div className="mt-1 font-display text-[17px] font-bold" style={{ color: OFF }}>
-              AT Sports
-            </div>
-            <div className="font-sans text-[11px]" style={{ color: MUTED }}>
-              {product.system}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </Page>
