@@ -128,28 +128,14 @@ export function AppendixIndexPage({ product, generic = false }: { product: Produ
             <LinkCard
               icon={<FileStack aria-hidden="true" className="size-5 shrink-0" style={{ color: BLUE_LIGHT }} />}
               title="Complete Acrytech Technical Data Sheet library"
-              text="A full list of Technical Data Sheets for the Acrytech product line can be found here."
+              text="A full list of Technical Data Sheets for the Acrytech product line."
               href={ACRYTECH_TDS_URL}
               cta="View All TDS"
             />
             <LinkCard
               icon={<BookOpen aria-hidden="true" className="size-5 shrink-0" style={{ color: BLUE_LIGHT }} />}
               title="AT Sports Product Catalog"
-              text={
-                <>
-                  The complete AT Sports Product Catalog{' '}
-                  <a
-                    href={PRODUCT_CATALOG_URL}
-                    target="_blank"
-                    rel="noopener"
-                    className="underline underline-offset-2"
-                    style={{ color: BLUE_LIGHT }}
-                  >
-                    can be viewed here
-                  </a>
-                  .
-                </>
-              }
+              text="A full list of AT Sports Products."
               href={PRODUCT_CATALOG_URL}
               cta="View Catalog"
             />
