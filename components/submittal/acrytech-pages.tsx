@@ -690,7 +690,7 @@ export function InstallationPrepPage() {
                 {p.note && (
                   <p
                     className="font-sans text-[10px] leading-snug"
-                    style={{ marginTop: 'auto', borderRadius: '9px', padding: '0.1in 0.12in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.34)', color: OFF }}
+                    style={{ marginTop: '0.2in', borderRadius: '9px', padding: '0.12in 0.14in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.34)', color: OFF }}
                   >
                     {p.note}
                   </p>
