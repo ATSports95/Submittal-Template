@@ -660,7 +660,7 @@ export function InstallationPrepPage() {
               <div key={p.t} className="glass flex flex-col" style={{ borderRadius: '13px', padding: '0.26in 0.24in' }}>
                 <CardTitle>{p.t}</CardTitle>
                 <div className="mt-3 pb-3" style={{ borderBottom: `1px solid ${RULE}` }}>
-                  <div className="font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '30px', lineHeight: 1 }}>
+                  <div className="whitespace-nowrap font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '27px', lineHeight: 1 }}>
                     {p.stat}
                   </div>
                   <div className="mt-1.5 font-display text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ color: BLUE_LIGHT }}>
