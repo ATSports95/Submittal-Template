@@ -1,3 +1,4 @@
+import { ArrowUpRight, FileStack } from 'lucide-react'
 import { Page, PageFooter, Kicker, PartDivider, ContentRequired } from './page-shell'
 import type { ProductConfig } from '@/lib/submittal'
 
@@ -72,19 +73,37 @@ export function AppendixIndexPage({ product, generic = false }: { product: Produ
           </p>
         </div>
         {product.key === 'acrytech' && (
-          <p className="mt-3 font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
-            A full list of Technical Data Sheets for the Acrytech product line{' '}
+          <div
+            className="mt-4 flex items-center justify-between gap-6"
+            style={{
+              borderRadius: '13px',
+              padding: '0.22in 0.3in',
+              background: 'rgba(93,163,202,0.1)',
+              border: '1px solid rgba(93,163,202,0.45)',
+            }}
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <FileStack aria-hidden="true" className="size-5 shrink-0" style={{ color: BLUE_LIGHT }} />
+              <div className="min-w-0">
+                <div className="font-display text-[12px] font-bold leading-snug" style={{ color: OFF }}>
+                  Complete Acrytech Technical Data Sheet library
+                </div>
+                <p className="mt-0.5 font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
+                  A full list of Technical Data Sheets for the Acrytech product line can be found here.
+                </p>
+              </div>
+            </div>
             <a
               href={ACRYTECH_TDS_URL}
               target="_blank"
               rel="noopener"
-              className="underline underline-offset-2"
-              style={{ color: BLUE_LIGHT }}
+              className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap font-display text-[10.5px] font-bold"
+              style={{ borderRadius: '999px', padding: '0.1in 0.22in', background: BLUE_LIGHT, color: '#0b1c28' }}
             >
-              can be found here
+              View All TDS
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
             </a>
-            .
-          </p>
+          </div>
         )}
       </div>
       <PageFooter />
