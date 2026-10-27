@@ -4,6 +4,8 @@ import type { ProductConfig } from '@/lib/submittal'
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
 const MUTED = '#b9c4cb'
+const ACRYTECH_TDS_URL =
+  'https://www.dropbox.com/scl/fo/yd9rxm6s9sas5j6wqimna/AKA7wA1HlWc5k4Ny_qpC46I?rlkey=s1jg6w1ju1d92dr16t3bqn9gr&dl=0'
 
 export function AppendixDividerPage({ product }: { product: ProductConfig }) {
   return (
@@ -69,6 +71,21 @@ export function AppendixIndexPage({ product, generic = false }: { product: Produ
             letters · project-specific product substitution documentation.
           </p>
         </div>
+        {product.key === 'acrytech' && (
+          <p className="mt-3 font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
+            A full list of Technical Data Sheets for the Acrytech product line{' '}
+            <a
+              href={ACRYTECH_TDS_URL}
+              target="_blank"
+              rel="noopener"
+              className="underline underline-offset-2"
+              style={{ color: BLUE_LIGHT }}
+            >
+              can be found here
+            </a>
+            .
+          </p>
+        )}
       </div>
       <PageFooter />
     </Page>
