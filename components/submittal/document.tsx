@@ -77,11 +77,11 @@ export function SubmittalDoc({
           { key: 'maintenance', part: 'Execution', node: <MaintenancePage />, toc: 'New Surface Maintenance' },
 
           { key: 'warranty', part: 'References', node: <WarrantyPage product={product} />, toc: 'Warranty' },
+          { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
           { key: 'stanford', part: 'References', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
           { key: 'pro-tennis', part: 'References', node: <ProfessionalTennisPage />, toc: 'Court 16 + Kingston Open' },
           { key: 'pickleball', part: 'References', node: <PickleballPage />, toc: 'Pickleball Facilities' },
           { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
-          { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
 
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },
           { key: 'appx', node: <AppendixDividerPage product={product} />, toc: 'Technical Appendices' },
