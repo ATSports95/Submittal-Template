@@ -65,6 +65,14 @@ export function CoverPage({ product, info, generic = false }: { product: Product
               <div className="font-display text-[17px] font-bold" style={{ color: OFF }}>
                 Product Submittal Package
               </div>
+              {product.key === 'acrytech' && (
+                <img
+                  src="/images/acrytech-logo-tag-white.png"
+                  alt="Acrytech"
+                  className="mb-2 mt-2 block w-auto"
+                  style={{ height: '0.45in' }}
+                />
+              )}
               <div className="font-sans text-[11px]" style={{ color: MUTED }}>
                 {product.system}
               </div>
