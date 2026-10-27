@@ -224,7 +224,7 @@ function ProductTable({ rows, dense = false }: { rows: Product[]; dense?: boolea
 }
 
 const COLOR_COATS: Product[] = [
-  { name: 'Color', d: 'The standard Acrytech color and finish coat. 100% acrylic latex with self-crosslinking technology and high-quality pigments.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
+  { name: 'Color', d: 'The standard Acrytech color and finish coat. 100% acrylic latex with self-crosslinking technology and high-quality pigments.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34���130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
   { name: 'ColorFlex', d: 'Flexible color coat for cushioned systems and overlays, substantial substrate movement and fabric crack repair systems.', coverage: <>Conc. .045–.06<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
   { name: 'Urethane Color', d: 'Polyurethane-modified acrylic color for courts with heavy traffic and usage.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 gal · Tex. 55* / 30 gal' },
   { name: 'Color UV+', d: 'Color system with additional UV resistance and microorganism protection.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '36–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 gal · Tex. 55* / 30 gal' },
@@ -534,7 +534,7 @@ const SUBMITTAL_CHECKLIST = [
   { req: 'Technical Data Sheets for all system components', where: 'Appendices B–E' },
   { req: 'Color chart', where: 'Appendix G' },
   { req: 'Safety Data Sheets for all system components', where: 'Appendix F' },
-  { req: 'Manufacturer’s warranty, 2-year (spec minimum: 1 year)', where: 'Appendix O' },
+  { req: 'Manufacturer’s warranty, 2-year (spec minimum: 1 year)', where: 'Appendix N' },
 ]
 
 export function MaterialSpecsPage() {
