@@ -134,14 +134,17 @@ export function SpecCompliancePage({ generic = false }: { generic?: boolean }) {
 
         <div style={{ borderRadius: '13px', padding: '0.24in 0.3in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
           <div className="font-display text-[9.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: BLUE_LIGHT }}>
-            Suggested Specification Language · Part 2 – Products
+            For Specifiers · Suggested Specification Language
           </div>
+          <p className="mt-1.5 font-sans text-[10px] leading-relaxed" style={{ color: MUTED }}>
+            Copy into Section 2.1 of the project specification to list Acrytech as an acceptable manufacturer.
+          </p>
           <div className="mt-2.5 font-mono text-[10px] leading-relaxed" style={{ color: OFF }}>
             2.1 MANUFACTURERS
             <br />
             A. Acceptable manufacturer: AT Sports, Inc., 189 Etowah Industrial Court, Canton, GA 30114.
             <br />
-            &nbsp;&nbsp;&nbsp;770-734-3000 · www.atsports.com
+            &nbsp;&nbsp;&nbsp;770-734-3000 · atsports.com
             <br />
             &nbsp;&nbsp;&nbsp;1. Product: Acrytech Coatings System (Acrytech Resurfacer, Acrytech Color, Acrytech Line Paint).
           </div>
@@ -221,7 +224,7 @@ function ProductTable({ rows, dense = false }: { rows: Product[]; dense?: boolea
 }
 
 const COLOR_COATS: Product[] = [
-  { name: 'Color', d: 'The standard Acrytech color and finish coat. 100% acrylic latex with self-crosslinking technology and high-quality pigments.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
+  { name: 'Color', d: 'The standard Acrytech color and finish coat. 100% acrylic latex with self-crosslinking technology and high-quality pigments.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34���130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
   { name: 'ColorFlex', d: 'Flexible color coat for cushioned systems and overlays, substantial substrate movement and fabric crack repair systems.', coverage: <>Conc. .045–.06<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
   { name: 'Urethane Color', d: 'Polyurethane-modified acrylic color for courts with heavy traffic and usage.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 gal · Tex. 55* / 30 gal' },
   { name: 'Color UV+', d: 'Color system with additional UV resistance and microorganism protection.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '36–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 gal · Tex. 55* / 30 gal' },
@@ -238,8 +241,8 @@ const PRIMERS: Product[] = [
   { name: 'Latex-Based Primer & Sealer', d: 'SBR latex that waterproofs the substrate and blocks efflorescence and asphalt impurities. Can go on green concrete 3–7 days after the pour.', coverage: '.05–.07', temp: '34–130°F', dry: '3 hr', cure: '—', pack: '55 / 30 / 5 gal' },
   { name: 'Solvent Primer & Sealer', d: 'Penetrating acrylic primer for concrete with fly ash or high limestone, and clean concrete without etching, grinding or blasting.', coverage: <>1st coat 28–39 SY/gal<br />2nd coat 39–50 SY/gal</>, temp: '50–100°F', dry: '1–4 hr', cure: '24 hr', pack: '55 / 5 gal' },
   { name: 'Slurry Coat', d: 'Self-leveling acrylic cement admix for smoothing, control joints, depressions and cracks up to 1/4", and over existing coatings.', coverage: '.05–.07', temp: '40–120°F', dry: '—', cure: '48 hr', pack: '55 / 30 / 5 gal' },
-  { name: 'Urethane Primer', d: 'Abrasion-resistant, flexible, non-tacky aliphatic water-based polyurethane primer. Dries clear.', coverage: '17–22', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal', flag: 'Confirm units' },
-  { name: 'Urethane Clear Coat', d: 'Hard, non-tacky polyurethane clear coat that seals and extends the life of all Acrytech coatings.', coverage: '22–33', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal', flag: 'Confirm units' },
+  { name: 'Urethane Primer', d: 'Abrasion-resistant, flexible, non-tacky aliphatic water-based polyurethane primer. Dries clear.', coverage: '17–22 SY/gal', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal' },
+  { name: 'Urethane Clear Coat', d: 'Hard, non-tacky polyurethane clear coat that seals and extends the life of all Acrytech coatings.', coverage: '22–33 SY/gal', temp: '—', dry: '30 min–1 hr', cure: '4 hr', pack: '55 / 30 / 5 gal' },
 ]
 
 const RESURFACERS: Product[] = [
@@ -350,7 +353,7 @@ export function ProductLineColorPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 1 of 4"
+        kicker="Color Coatings · 1 of 4"
         title="Color coatings."
         intro="Every Acrytech color coat is a 100% acrylic latex, self-crosslinking formulation. The line is engineered so each product can be matched to the substrate, the level of use and the sport."
       />
@@ -377,7 +380,7 @@ export function ProductLinePrepPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 2 of 4"
+        kicker="Primers & Resurfacers · 2 of 4"
         title="Primers, sealers & resurfacers."
         intro="Preparation products are selected for the substrate: primers and sealers bond to and protect asphalt and concrete, and resurfacers fill, level and build the base the color coats are applied to."
       />
@@ -404,7 +407,7 @@ export function ProductLineFinishPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 3 of 4"
+        kicker="Lines & Additives · 3 of 4"
         title="Lines & additives."
         intro="Line products finish the court layout, and additives let the installer tune texture and drying on site."
       />
@@ -428,7 +431,7 @@ export function ProductLineColorsPage() {
   return (
     <Page>
       <Head
-        kicker="Acrytech Product Line · 4 of 4"
+        kicker="Acrytech Colors · 4 of 4"
         title="Acrytech colors."
         intro="Every Acrytech color coat is available in 32 standard colors, with custom colors made to order."
       />
@@ -520,25 +523,23 @@ export function MixingChart() {
           </div>
         ))}
       </div>
-      <div className="mt-2">
-        <ContentRequired>Confirm which concentrates this chart covers</ContentRequired>
-      </div>
     </div>
   )
 }
 
+const SUBMITTAL_CHECKLIST = [
+  { req: 'Technical Data Sheets for all system components', where: 'Appendices B–E' },
+  { req: 'Color chart', where: 'Appendix G' },
+  { req: 'Safety Data Sheets for all system components', where: 'Appendix F' },
+  { req: 'Manufacturer’s warranty, 2-year (spec minimum: 1 year)', where: 'Appendix N' },
+]
+
 export function MaterialSpecsPage() {
-  const qa = [
-    'Coatings, patching and resurfacing compounds are Acrytech by AT Sports, or an approved equal documented to the owner.',
-    'On request, the contractor gives the inspector a volume estimate for each product (AT Sports Paint Estimator).',
-    'Submit Technical Data Sheets for system components and a color chart.',
-    'Submit Safety Data Sheets for system components, and the manufacturer’s warranty (minimum one year).',
-  ]
   return (
     <Page>
       <Head
-        kicker="Material Specifications"
-        title="System components."
+        kicker="System Overview"
+          title="System overview."
         intro="Components and quality requirements from the Acrytech System Specification for colored and textured acrylic surfacing over asphalt, concrete and existing sports surfaces (Appendix A)."
       />
       <Body top="2.45in" gap="0.2in">
@@ -557,7 +558,7 @@ export function MaterialSpecsPage() {
             <div
               key={m.t}
               className="grid items-start"
-              style={{ gridTemplateColumns: '1fr 0.8in 1.35in', columnGap: '0.16in', padding: '0.15in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+              style={{ gridTemplateColumns: '1fr 0.8in 1.35in', columnGap: '0.16in', padding: '0.1in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
             >
               <span>
                 <span className="block font-display text-[11.5px] font-bold" style={{ color: OFF }}>{m.t}</span>
@@ -572,15 +573,23 @@ export function MaterialSpecsPage() {
         </div>
 
         <div>
-          <GroupLabel right="Sections 1.2 – 1.3">Quality Assurance &amp; Submittals</GroupLabel>
-          <ul className="mt-2.5 grid grid-cols-2 gap-x-6 gap-y-2">
-            {qa.map((q) => (
-              <li key={q} className="flex gap-2 font-sans text-[9.5px] leading-snug" style={{ color: BODY }}>
-                <span className="mt-[4px] inline-block h-[4px] w-[4px] shrink-0 rounded-full" style={{ backgroundColor: BLUE_LIGHT }} />
-                {q}
+          <GroupLabel right="Sections 1.2 – 1.3">Submittal Requirements Met</GroupLabel>
+          <ul className="mt-2.5 glass overflow-hidden" style={{ borderRadius: '12px' }}>
+            {SUBMITTAL_CHECKLIST.map((row, i) => (
+              <li
+                key={row.req}
+                className="flex items-center gap-3"
+                style={{ padding: '0.1in 0.24in', borderTop: i === 0 ? 'none' : `1px solid ${RULE}` }}
+              >
+                <CircleCheck size={14} strokeWidth={2} color={BLUE_LIGHT} className="shrink-0" aria-hidden="true" />
+                <span className="min-w-0 flex-1 font-sans text-[10px] leading-snug" style={{ color: OFF }}>{row.req}</span>
+                <span className="shrink-0 font-display text-[10px] font-bold" style={{ color: BLUE_LIGHT }}>{row.where}</span>
               </li>
             ))}
           </ul>
+          <p className="mt-2 font-sans text-[8.5px] leading-snug" style={{ color: MUTED }}>
+            Material volume estimates for each product are available on request (AT Sports Paint Estimator).
+          </p>
         </div>
       </Body>
       <PageFooter />
@@ -648,7 +657,7 @@ export function InstallationPrepPage() {
   return (
     <Page>
       <Head
-        kicker="Installation Requirements"
+        kicker="Surface Preparation"
         title="Surface preparation."
         intro="Execution requirements from Part 3 of the Acrytech System Specification. See each product’s TDS for application limits."
       />
@@ -660,7 +669,7 @@ export function InstallationPrepPage() {
               <div key={p.t} className="glass flex flex-col" style={{ borderRadius: '13px', padding: '0.26in 0.24in' }}>
                 <CardTitle>{p.t}</CardTitle>
                 <div className="mt-3 pb-3" style={{ borderBottom: `1px solid ${RULE}` }}>
-                  <div className="font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '30px', lineHeight: 1 }}>
+                  <div className="whitespace-nowrap font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '27px', lineHeight: 1 }}>
                     {p.stat}
                   </div>
                   <div className="mt-1.5 font-display text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ color: BLUE_LIGHT }}>
@@ -678,7 +687,7 @@ export function InstallationPrepPage() {
                 {p.note && (
                   <p
                     className="font-sans text-[10px] leading-snug"
-                    style={{ marginTop: 'auto', borderRadius: '9px', padding: '0.1in 0.12in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.34)', color: OFF }}
+                    style={{ marginTop: '0.2in', borderRadius: '9px', padding: '0.12in 0.14in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.34)', color: OFF }}
                   >
                     {p.note}
                   </p>
@@ -722,7 +731,7 @@ const COMPLETION = [
 export function InstallationApplyPage() {
   return (
     <Page>
-      <Head kicker="Installation Requirements" title="Application & finishing." />
+      <Head kicker="Application & Finishing" title="Application & finishing." />
       <Body top="1.85in" gap="0.28in">
         <div>
           <GroupLabel right="Section 3.5">Application</GroupLabel>
@@ -816,7 +825,7 @@ const CONCRETE_DESIGN = [
 export function ConcreteDesignPage() {
   return (
     <Page>
-      <Head kicker="Concrete Design & Preparation" title="Designed for coatings from the pour." />
+      <Head kicker="Concrete Design & Construction" title="Designed for coatings from the pour." />
       <Body top="1.85in" gap="0.24in">
         <div style={{ borderRadius: '13px', padding: '0.22in 0.28in', background: 'rgba(50,126,168,0.12)', border: '1px solid rgba(50,126,168,0.36)' }}>
           <div className="font-display text-[10.5px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>
@@ -884,7 +893,7 @@ const PRIMER_COLS = '1.35in 1fr 1fr'
 export function ConcretePrimersPage() {
   return (
     <Page>
-      <Head kicker="Concrete Design & Preparation" title="Primer selection & field checks." />
+      <Head kicker="Concrete Primers & Field Notes" title="Primer selection & field checks." />
       <Body top="1.85in" gap="0.26in">
         <div>
           <GroupLabel>Primer Selection</GroupLabel>

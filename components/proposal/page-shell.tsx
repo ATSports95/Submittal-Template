@@ -6,33 +6,8 @@ const BLUE_LIGHT = '#5da3ca'
 const OFF = '#f5f6f6'
 const MUTED = '#b9c4cb'
 
-/**
- * Kicker label — short Modern Blue rule + letterspaced caps.
- * The AT Sports section-label motif ("— WHY AT SPORTS").
- */
-export function Kicker({
-  children,
-  className,
-}: {
-  children: ReactNode
-  className?: string
-}) {
-  return (
-    <div className={cn('flex items-center gap-2', className)}>
-      <span
-        aria-hidden="true"
-        className="inline-block h-px"
-        style={{ width: '0.28in', backgroundColor: BLUE_LIGHT }}
-      />
-      <span
-        className="font-display text-[9px] font-semibold uppercase"
-        style={{ color: BLUE_LIGHT, letterSpacing: '0.24em' }}
-      >
-        {children}
-      </span>
-    </div>
-  )
-}
+export { Kicker } from './kicker'
+import { Kicker } from './kicker'
 
 /** Fully-rounded pill chip, e.g. component/spec tags. */
 export function Pill({

@@ -1,6 +1,12 @@
-import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule } from '@/components/proposal/page-shell'
+import { existsSync } from 'node:fs'
+import path from 'node:path'
+import { Factory, FileText, Headset, ScanBarcode } from 'lucide-react'
+import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule, IconBadge } from '@/components/proposal/page-shell'
 import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
+import { PART_HEADING, type SpecPart } from '@/lib/spec-part'
 import { Body, FillPhoto } from './acrytech-pages'
+
+export type ContentsEntry = { label: string; page: number; part?: SpecPart }
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -36,7 +42,7 @@ export function CoverPage({ product, info, generic = false }: { product: Product
       </div>
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.15in' }}>
-        <Kicker className="mb-5">Product Submittal · {product.name}</Kicker>
+        <Kicker className="mb-5">Product Submittal Package · {product.name}</Kicker>
         <h1
           className="font-display font-bold text-balance"
           style={{ color: OFF, fontSize: '68px', lineHeight: 0.95, letterSpacing: '-0.025em' }}
@@ -56,13 +62,15 @@ export function CoverPage({ product, info, generic = false }: { product: Product
         <div className="mb-4 h-px w-full" style={{ backgroundColor: 'rgba(185,196,203,0.24)' }} />
         <div className="flex items-end justify-between gap-8">
           {generic ? (
-            <div className="min-w-0">
-              <div className="font-display text-[17px] font-bold" style={{ color: OFF }}>
-                Product Submittal Package
-              </div>
-              <div className="font-sans text-[11px]" style={{ color: MUTED }}>
-                {product.system}
-              </div>
+            <div className="ml-auto flex min-w-0 flex-col items-end text-right">
+  {product.key === 'acrytech' && (
+                <img
+                  src="/images/acrytech-logo-tag-white.png"
+                  alt="Acrytech"
+                  className="mt-2 block w-auto"
+                  style={{ height: '0.45in' }}
+                />
+              )}
             </div>
           ) : (
             <div className="min-w-0">
@@ -77,17 +85,19 @@ export function CoverPage({ product, info, generic = false }: { product: Product
               </div>
             </div>
           )}
-          <div className="shrink-0 text-right">
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.22em]" style={{ color: BLUE_LIGHT }}>
-              Submitted by
+          {!generic && (
+            <div className="shrink-0 text-right">
+              <div className="font-display text-[9px] font-semibold uppercase tracking-[0.22em]" style={{ color: BLUE_LIGHT }}>
+                Submitted by
+              </div>
+              <div className="mt-1 font-display text-[17px] font-bold" style={{ color: OFF }}>
+                AT Sports
+              </div>
+              <div className="font-sans text-[11px]" style={{ color: MUTED }}>
+                {product.system}
+              </div>
             </div>
-            <div className="mt-1 font-display text-[17px] font-bold" style={{ color: OFF }}>
-              AT Sports
-            </div>
-            <div className="font-sans text-[11px]" style={{ color: MUTED }}>
-              {product.system}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </Page>
@@ -102,7 +112,7 @@ export function TransmittalPage({
 }: {
   product: ProductConfig
   info: ProjectInfo
-  contents: { label: string; page: number }[]
+  contents: ContentsEntry[]
 }) {
   const rows: { k: string; v: string; p: string }[] = [
     { k: 'Project', v: info.project, p: 'Project name' },
@@ -174,26 +184,8 @@ export function TransmittalPage({
           </span>
           <div className="h-px flex-1" style={{ backgroundColor: 'rgba(185,196,203,0.2)' }} />
         </div>
-        <div className="mt-3 grid grid-cols-2 gap-x-8">
-          {[contents.slice(0, Math.ceil(contents.length / 2)), contents.slice(Math.ceil(contents.length / 2))].map((col, ci) => (
-            <div key={ci} className="flex flex-col">
-              {col.map((c) => (
-                <div
-                  key={c.label}
-                  className="flex items-baseline gap-2"
-                  style={{ padding: '0.045in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
-                >
-                  <span className="font-sans text-[10.5px]" style={{ color: 'rgba(245,246,246,0.86)' }}>
-                    {c.label}
-                  </span>
-                  <span className="flex-1" />
-                  <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>
-                    {String(c.page).padStart(2, '0')}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ))}
+        <div className="mt-2">
+          <GroupedContents contents={contents} rowPad="0.035in" labelSize="10.5px" />
         </div>
         <p className="mt-4 font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>
           Technical data sheets, safety data sheets, warranty and supporting documents are listed in the Technical
@@ -211,7 +203,7 @@ export function ProductInfoPage({
   contents,
 }: {
   product: ProductConfig
-  contents: { label: string; page: number }[]
+  contents: ContentsEntry[]
 }) {
   const rows: { k: string; v: string }[] = [
     { k: 'Product / system', v: product.system },
@@ -261,8 +253,52 @@ export function ProductInfoPage({
   )
 }
 
-function ContentsList({ contents }: { contents: { label: string; page: number }[] }) {
-  const half = Math.ceil(contents.length / 2)
+/**
+ * Contents rows flowed into two columns. Entries tagged with a spec part are
+ * grouped under "Part N — …" headings; untagged front/close items stay ungrouped.
+ */
+function GroupedContents({ contents, rowPad, labelSize }: { contents: ContentsEntry[]; rowPad: string; labelSize: string }) {
+  const rows: ({ kind: 'heading'; label: string } | ({ kind: 'item' } & ContentsEntry))[] = []
+  let current: SpecPart | undefined
+  for (const c of contents) {
+    if (c.part && c.part !== current) {
+      rows.push({ kind: 'heading', label: PART_HEADING[c.part] })
+    }
+    current = c.part
+    rows.push({ kind: 'item', ...c })
+  }
+  return (
+    <div style={{ columnCount: 2, columnGap: '2rem' }}>
+      {rows.map((r) =>
+        r.kind === 'heading' ? (
+          <div
+            key={r.label}
+            className="font-display text-[8px] font-semibold uppercase tracking-[0.2em]"
+            style={{ color: MUTED, padding: '0.09in 0 0.02in', breakAfter: 'avoid', breakInside: 'avoid' }}
+          >
+            {r.label}
+          </div>
+        ) : (
+          <div
+            key={r.label}
+            className="flex items-baseline gap-2"
+            style={{ padding: `${rowPad} 0`, borderBottom: '1px solid rgba(185,196,203,0.08)', breakInside: 'avoid' }}
+          >
+            <span className="font-sans" style={{ fontSize: labelSize, color: 'rgba(245,246,246,0.86)' }}>
+              {r.label}
+            </span>
+            <span className="flex-1" />
+            <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>
+              {String(r.page).padStart(2, '0')}
+            </span>
+          </div>
+        ),
+      )}
+    </div>
+  )
+}
+
+function ContentsList({ contents }: { contents: ContentsEntry[] }) {
   return (
     <>
       <div className="flex items-center gap-3">
@@ -271,26 +307,8 @@ function ContentsList({ contents }: { contents: { label: string; page: number }[
         </span>
         <div className="h-px flex-1" style={{ backgroundColor: 'rgba(185,196,203,0.2)' }} />
       </div>
-      <div className="mt-3 grid grid-cols-2 gap-x-8">
-        {[contents.slice(0, half), contents.slice(half)].map((col, ci) => (
-          <div key={ci} className="flex flex-col">
-            {col.map((c) => (
-              <div
-                key={c.label}
-                className="flex items-baseline gap-2"
-                style={{ padding: '0.06in 0', borderBottom: '1px solid rgba(185,196,203,0.08)' }}
-              >
-                <span className="font-sans text-[11px]" style={{ color: 'rgba(245,246,246,0.86)' }}>
-                  {c.label}
-                </span>
-                <span className="flex-1" />
-                <span className="font-display text-[10px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>
-                  {String(c.page).padStart(2, '0')}
-                </span>
-              </div>
-            ))}
-          </div>
-        ))}
+      <div className="mt-3">
+        <GroupedContents contents={contents} rowPad="0.05in" labelSize="11px" />
       </div>
       <p className="mt-3 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
         Technical data sheets, safety data sheets, warranty and supporting documents are listed in the Technical
@@ -369,7 +387,7 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
         </div>
       </div>
       <Body top="7.35in">
-        <FillPhoto src="/images/lab-pour.jpg" alt="AT Sports technician drawing down an Acrytech color sample in the lab" position="center 45%" caption="Color drawdown in the AT Sports lab, Canton, Georgia." />
+        <FillPhoto src="/images/rollx-warehouse-court.jpeg" alt="Red and blue pickleball court finished in the AT Sports warehouse, with stacked Acrytech drums behind it" position="center 68%" caption="Acrytech-coated court in the AT Sports warehouse, Canton, Georgia." />
       </Body>
       <PageFooter />
     </Page>
@@ -377,75 +395,71 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
 }
 
 /* MANUFACTURER QUALIFICATIONS — replaces the earlier About / Manufacturer Direct pages */
-export function ManufacturerPage({ product, generic = false }: { product: ProductConfig; generic?: boolean }) {
+export function ManufacturerPage({ product }: { product: ProductConfig; generic?: boolean }) {
   const facts = [
     { n: '1995', l: 'Founded' },
-    { n: 'Canton, GA', l: 'Manufacturing' },
-    { n: 'U.S. + Intl', l: 'Markets served' },
-  ]
-  const lines = [
-    { name: 'Acrytech', d: 'Acrylic sports surface coatings' },
-    { name: 'CushionX', d: 'Cushioned sports surfaces' },
-    { name: 'Faultline', d: 'Court crack-repair systems' },
-    { name: 'RollX', d: 'Portable sports surfaces' },
+    { n: '30+ years', l: 'Manufacturing experience' },
+    { n: 'Canton, GA', l: 'Manufactured in the USA' },
   ]
   const quals = [
-    { t: 'Single-source responsibility', d: `${product.name} products are formulated, manufactured and quality-controlled by AT Sports, so one company is responsible for the product from formulation through field support.` },
-    { t: 'Batch traceability', d: 'Every batch is tied to a documented production run and color-matched against a controlled reference standard before release, supporting batch-number recording on site.' },
-    { t: 'Published documentation', d: 'Three-part guide specification, technical and safety data sheets, substrate and concrete guidance, mixing and coverage data, maintenance guide and limited warranty.' },
-    { t: 'Certified installation', d: `Warranty coverage requires installation by AT Sports-certified installers to published guidelines.${generic ? '' : ' A certified installer letter is issued per project on request.'}` },
+    { Icon: Factory, t: 'Single-source responsibility', d: 'All system components are formulated, manufactured and quality-controlled by AT Sports.' },
+    { Icon: ScanBarcode, t: 'Batch traceability', d: 'Every batch is tied to a documented production run and color-matched to a reference standard before release.' },
+    { Icon: FileText, t: 'Published documentation', d: 'Three-part guide specification, TDS, SDS, application instructions, maintenance guide and limited warranty.' },
+    { Icon: Headset, t: 'Technical support', d: 'System specification, application guidance, field troubleshooting and post-installation assistance from the manufacturer.' },
   ]
+  const factValue = 'whitespace-nowrap font-display text-[22px] font-bold leading-none'
+  const factLabel = 'mt-2 font-display text-[8px] font-semibold uppercase leading-snug tracking-[0.12em]'
   return (
     <Page>
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '1.15in' }}>
-        <Kicker className="mb-3">Manufacturer Qualifications</Kicker>
-        <h2 className="font-display font-bold" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
-          One manufacturer,
-          <br />
-          responsible for the system.
-        </h2>
-        <p className="mt-3 max-w-[6.2in] font-sans text-[11.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
-          AT Sports, Inc. has manufactured sports-surface coatings and materials since 1995 and supports projects
-          throughout the United States and internationally from its manufacturing facility in Canton, Georgia.
-        </p>
+      <Body top="0.95in" gap="0.34in">
+        <header>
+          <Kicker className="mb-3">About AT Sports</Kicker>
+          <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
+            Manufacturer qualifications.
+          </h2>
+          <p className="mt-3 max-w-[6.8in] font-sans text-[11.5px] leading-relaxed text-pretty" style={{ color: 'rgba(245,246,246,0.78)' }}>
+            AT Sports, Inc. has formulated and manufactured sports surfacing systems in Canton, Georgia since 1995. One
+            company is responsible for the {product.name} system from raw material to finished court.
+          </p>
+        </header>
 
-        <div className="mt-6 grid grid-cols-3 gap-3">
-          {facts.map((f) => (
-            <div key={f.l} style={{ borderTop: '2px solid rgba(50,126,168,0.5)', paddingTop: '0.12in' }}>
-              <div className="font-display text-[20px] font-bold" style={{ color: OFF, letterSpacing: '-0.01em' }}>{f.n}</div>
-              <div className="mt-1 font-display text-[8.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: MUTED }}>{f.l}</div>
+        <div className="grid grid-cols-4 gap-4">
+          {facts.map((s) => (
+            <div key={s.l} style={{ borderTop: '2px solid #327ea8', paddingTop: '0.12in' }}>
+              <div className={factValue} style={{ color: OFF, letterSpacing: '-0.015em' }}>{s.n}</div>
+              <div className={factLabel} style={{ color: MUTED }}>{s.l}</div>
+            </div>
+          ))}
+          <div className="flex items-start justify-between gap-2" style={{ borderTop: '2px solid #327ea8', paddingTop: '0.12in' }}>
+            <div>
+              <div className={factValue} style={{ color: OFF, letterSpacing: '-0.015em' }}>ASBA</div>
+              <div className={factLabel} style={{ color: MUTED }}>Member since 2015</div>
+            </div>
+            <div
+              className="flex shrink-0 items-center justify-center overflow-hidden"
+              style={{ height: '0.4in', width: '0.78in', borderRadius: '7px', background: '#ffffff' }}
+            >
+              {/* source has ~16% transparent margin top and bottom; oversize and let the plate crop it */}
+              <img src="/images/asba-member-logo.png" alt="Member, American Sports Builders Association" className="w-auto max-w-none shrink-0" style={{ height: '0.46in' }} />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-8 gap-y-5">
+          {quals.map(({ Icon, t, d }) => (
+            <div key={t} className="flex items-start gap-3">
+              <IconBadge icon={Icon} size={0.38} />
+              <div className="min-w-0">
+                <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{t}</div>
+                <p className="mt-1 font-sans text-[9.5px] leading-relaxed text-pretty" style={{ color: MUTED }}>{d}</p>
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-3">
-          {quals.map((q) => (
-            <div key={q.t} className="glass" style={{ borderRadius: '12px', padding: '0.2in 0.24in', minHeight: '1.2in' }}>
-              <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{q.t}</div>
-              <p className="mt-1.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>{q.d}</p>
-            </div>
-          ))}
-        </div>
-
-      </div>
-      <Body top="6.55in">
-        <div className="grid min-h-0 flex-1 gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
-          <div>
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
-              AT Sports Product Lines
-            </div>
-            <div className="mt-2.5 flex flex-col">
-              {lines.map((l) => (
-                <div key={l.name} className="flex items-baseline justify-between gap-3" style={{ padding: '0.07in 0', borderBottom: '1px solid rgba(185,196,203,0.12)' }}>
-                  <span className="font-display text-[12px] font-bold" style={{ color: l.name === product.name ? BLUE_LIGHT : OFF }}>{l.name}</span>
-                  <span className="font-sans text-[9px]" style={{ color: MUTED }}>{l.d}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex min-h-0 flex-col">
-            <FillPhoto src="/images/at-sports-facility-exterior.jpg" alt="AT Sports manufacturing facility in Canton, Georgia" position="center 60%" caption="AT Sports manufacturing facility, Canton, Georgia" />
-          </div>
+        <div className="grid min-h-0 flex-1 grid-cols-2 gap-5">
+          <FillPhoto src="/images/sample-jars.jpg" alt="Batch-numbered production sample jars" caption="Batch-numbered production samples" minHeight="1.8in" />
+          <FillPhoto src="/images/color-match-board.jpg" alt="Color matching board compared against reference standards" caption="Color matching against reference standards" minHeight="1.8in" />
         </div>
       </Body>
       <PageFooter />
@@ -539,7 +553,7 @@ export function WhyPage({ product }: { product: ProductConfig }) {
 export function ClosingPage({ product, info, generic = false }: { product: ProductConfig; info: ProjectInfo; generic?: boolean }) {
   return (
     <Page>
-      <PhotoBackdrop src="/images/closing.png" alt="Tennis court at dusk" overlay={0.68} showPlaceholder={false} />
+      <PhotoBackdrop src="/images/ppa-stadium-court-aerial.jpg" alt="Aerial view of a PPA Tour stadium pickleball court finished with Acrytech" overlay={0.68} showPlaceholder={false} />
 
       <div className="absolute left-[0.5in] right-[0.5in] top-[0.5in] flex items-center justify-between">
         <img src="/images/atsports-logo.png" alt="AT Sports" className="w-auto" style={{ height: '0.34in' }} />
@@ -560,25 +574,24 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
       </div>
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '1.45in' }}>
-        <div className="grid grid-cols-2 gap-4">
-          {generic ? (
-            <div className="glass-strong" style={{ borderRadius: '13px', padding: '0.24in 0.28in', borderTop: '2px solid #5da3ca' }}>
-              <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
-                AT Sports Sales
-              </div>
-              <div className="mt-2 font-display text-[15px] font-bold" style={{ color: OFF }}>
-                AT Sports, Inc.
-              </div>
-              <div className="font-sans text-[10px]" style={{ color: MUTED }}>
-                {product.system}
-              </div>
-              <div className="mt-2 font-sans text-[10.5px] leading-relaxed" style={{ color: OFF }}>
-                {COMPANY.phone}
-                <br />
-                {COMPANY.web}
-              </div>
+        {generic ? (
+          <div className="glass-strong" style={{ borderRadius: '13px', padding: '0.26in 0.32in', borderTop: '2px solid #5da3ca' }}>
+            <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
+              Contact
             </div>
-          ) : (
+              <div className="mt-2 font-display text-[18px] font-bold" style={{ color: 'var(--background)' }}>
+                AT Sports, Inc.
+                <span style={{ color: BLUE_LIGHT }}> · </span>
+                {COMPANY.phone}
+                <span style={{ color: 'var(--accent)' }}> · </span>
+                sales@atsports.com
+            </div>
+            <div className="mt-1 font-sans text-[10.5px]" style={{ color: MUTED }}>
+              Sales and technical support
+            </div>
+          </div>
+        ) : (
+        <div className="grid grid-cols-2 gap-4">
           <div className="glass-strong" style={{ borderRadius: '13px', padding: '0.24in 0.28in', borderTop: '2px solid #5da3ca' }}>
             <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
               Your Representative
@@ -595,7 +608,6 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
               <Field value={info.repPhone} placeholder="Phone" />
             </div>
           </div>
-          )}
           <div className="glass" style={{ borderRadius: '13px', padding: '0.24in 0.28in' }}>
             <div className="font-display text-[8.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
               Technical Support
@@ -613,6 +625,7 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
             </div>
           </div>
         </div>
+        )}
       </div>
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ bottom: '0.6in' }}>
@@ -620,12 +633,12 @@ export function ClosingPage({ product, info, generic = false }: { product: Produ
         <div className="mt-3 flex items-end justify-between">
           <div>
             <div className="font-display text-[15px] font-bold" style={{ color: OFF }}>AT Sports</div>
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>Built with purpose.</div>
+            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.18em]" style={{ color: BLUE_LIGHT }}>Surfaces. Systems. Solutions.</div>
           </div>
-          <div className="text-right font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
+          <div className="shrink-0 whitespace-nowrap text-right font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>
             {COMPANY.address}
             <br />
-            {COMPANY.phone}
+            {COMPANY.web}
           </div>
         </div>
       </div>

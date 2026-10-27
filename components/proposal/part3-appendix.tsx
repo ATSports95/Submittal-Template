@@ -1,9 +1,63 @@
+import type { ReactNode } from 'react'
+import { ArrowUpRight, BookOpen, FileStack } from 'lucide-react'
 import { Page, PageFooter, Kicker, PartDivider, ContentRequired } from './page-shell'
 import type { ProductConfig } from '@/lib/submittal'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
 const MUTED = '#b9c4cb'
+const ACRYTECH_TDS_URL =
+  'https://www.dropbox.com/scl/fo/yd9rxm6s9sas5j6wqimna/AKA7wA1HlWc5k4Ny_qpC46I?rlkey=s1jg6w1ju1d92dr16t3bqn9gr&dl=0'
+const PRODUCT_CATALOG_URL =
+  'https://www.dropbox.com/scl/fi/wr1pj598yvy3l246345ad/AT-Sports-Product-Catalog.pdf?rlkey=bhlojfbym9vpz3wig0pvz3rkt&dl=0'
+
+function LinkCard({
+  icon,
+  title,
+  text,
+  href,
+  cta,
+}: {
+  icon: ReactNode
+  title: string
+  text: ReactNode
+  href: string
+  cta: string
+}) {
+  return (
+    <div
+      className="mt-3 flex items-center justify-between gap-6"
+      style={{
+        borderRadius: '13px',
+        padding: '0.2in 0.3in',
+        background: 'rgba(93,163,202,0.1)',
+        border: '1px solid rgba(93,163,202,0.45)',
+      }}
+    >
+      <div className="flex min-w-0 items-center gap-3">
+        {icon}
+        <div className="min-w-0">
+          <div className="font-display text-[12px] font-bold leading-snug" style={{ color: OFF }}>
+            {title}
+          </div>
+          <p className="mt-0.5 font-sans text-[10px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.78)' }}>
+            {text}
+          </p>
+        </div>
+      </div>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener"
+        className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap font-display text-[10.5px] font-bold"
+        style={{ borderRadius: '999px', padding: '0.1in 0.22in', background: BLUE_LIGHT, color: '#0b1c28' }}
+      >
+        {cta}
+        <ArrowUpRight aria-hidden="true" className="size-3.5" />
+      </a>
+    </div>
+  )
+}
 
 export function AppendixDividerPage({ product }: { product: ProductConfig }) {
   return (
@@ -28,7 +82,7 @@ export function AppendixIndexPage({ product, generic = false }: { product: Produ
         <div
           key={a.k}
           className="grid grid-cols-[0.44in_1fr] items-start gap-3"
-          style={{ padding: items.length <= 14 ? '0.26in 0' : '0.2in 0', borderTop: i === 0 ? '1px solid rgba(185,196,203,0.16)' : '1px solid rgba(185,196,203,0.1)' }}
+          style={{ padding: items.length <= 14 ? '0.17in 0' : '0.13in 0', borderTop: i === 0 ? '1px solid rgba(185,196,203,0.16)' : '1px solid rgba(185,196,203,0.1)' }}
         >
           <span className="font-display text-[16px] font-bold" style={{ color: BLUE_LIGHT, lineHeight: 1 }}>{a.k}</span>
           <div>
@@ -69,6 +123,24 @@ export function AppendixIndexPage({ product, generic = false }: { product: Produ
             letters · project-specific product substitution documentation.
           </p>
         </div>
+        {product.key === 'acrytech' && (
+          <>
+            <LinkCard
+              icon={<FileStack aria-hidden="true" className="size-5 shrink-0" style={{ color: BLUE_LIGHT }} />}
+              title="Complete Acrytech Technical Data Sheet library"
+              text="A full list of Technical Data Sheets for the Acrytech product line."
+              href={ACRYTECH_TDS_URL}
+              cta="View All TDS"
+            />
+            <LinkCard
+              icon={<BookOpen aria-hidden="true" className="size-5 shrink-0" style={{ color: BLUE_LIGHT }} />}
+              title="AT Sports Product Catalog"
+              text="A full list of AT Sports Products."
+              href={PRODUCT_CATALOG_URL}
+              cta="View Catalog"
+            />
+          </>
+        )}
       </div>
       <PageFooter />
     </Page>
