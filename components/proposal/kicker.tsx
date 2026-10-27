@@ -19,11 +19,14 @@ export function PartProvider({ part, children }: { part?: SpecPart; children: Re
  */
 export function Kicker({ children, className }: { children: ReactNode; className?: string }) {
   const part = useContext(PartContext)
+  const prefix = part ? PART_KICKER[part] : undefined
+  const alreadyPrefixed =
+    typeof children === 'string' && !!prefix && children.toLowerCase().startsWith(prefix.toLowerCase())
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <span aria-hidden="true" className="inline-block h-px" style={{ width: '0.28in', backgroundColor: BLUE_LIGHT }} />
       <span className="font-display text-[9px] font-semibold uppercase" style={{ color: BLUE_LIGHT, letterSpacing: '0.24em' }}>
-        {part && `${PART_KICKER[part]} · `}
+        {prefix && !alreadyPrefixed && `${prefix} · `}
         {children}
       </span>
     </div>
