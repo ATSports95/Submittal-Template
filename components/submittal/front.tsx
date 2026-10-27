@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import path from 'node:path'
-import { BadgeCheck, Factory, FlaskConical, ScanBarcode } from 'lucide-react'
-import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule } from '@/components/proposal/page-shell'
+import { Factory, FileText, Headset, ScanBarcode } from 'lucide-react'
+import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule, IconBadge } from '@/components/proposal/page-shell'
 import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
 import { PART_HEADING, type SpecPart } from '@/lib/spec-part'
 import { Body, FillPhoto } from './acrytech-pages'
@@ -396,122 +396,70 @@ export function LetterPage({ product, info, generic = false }: { product: Produc
 
 /* MANUFACTURER QUALIFICATIONS — replaces the earlier About / Manufacturer Direct pages */
 export function ManufacturerPage({ product }: { product: ProductConfig; generic?: boolean }) {
-  const stats = [
-    { n: '30+', l: 'Years manufacturing' },
-    { n: 'Cat. 3 & 4', l: 'ITF court pace classification' },
-    { n: 'PPA Tour & MLP', l: 'Official surface' },
-    { n: 'Hundreds', l: 'Facilities across North America and internationally' },
+  const facts = [
+    { n: '1995', l: 'Founded' },
+    { n: '30+ years', l: 'Manufacturing experience' },
+    { n: 'Canton, GA', l: 'Manufactured in the USA' },
   ]
-  const proofs = [
-    { Icon: Factory, t: 'In-house manufacturing', d: 'Formulated, produced and quality-controlled in Canton, GA.' },
-    { Icon: ScanBarcode, t: 'Batch traceability', d: 'Every batch color-matched to a reference standard and recorded.' },
-    { Icon: FlaskConical, t: 'Direct technical support', d: 'In-house product development and chemistry team.' },
-    { Icon: BadgeCheck, t: 'Certified installation', d: 'Installed by AT Sports-certified crews to published guidelines.' },
+  const quals = [
+    { Icon: Factory, t: 'Single-source responsibility', d: 'All system components are formulated, manufactured and quality-controlled by AT Sports.' },
+    { Icon: ScanBarcode, t: 'Batch traceability', d: 'Every batch is tied to a documented production run and color-matched to a reference standard before release.' },
+    { Icon: FileText, t: 'Published documentation', d: 'Three-part guide specification, TDS, SDS, application instructions, maintenance guide and limited warranty.' },
+    { Icon: Headset, t: 'Technical support', d: 'System specification, application guidance, field troubleshooting and post-installation assistance from the manufacturer.' },
   ]
-  const lines = [
-    { name: 'Acrytech', d: 'Acrylic sports surface coatings' },
-    { name: 'CushionX', d: 'Cushioned sports surfaces' },
-    { name: 'Faultline', d: 'Court crack-repair systems' },
-    { name: 'RollX', d: 'Portable sports surfaces' },
-  ]
-  const LOGO_H = '0.46in'
-  const credentials: { label: string; dark?: boolean; logos: { src: string; alt: string; h?: string }[] }[] = [
-    // ASBA source has ~16% transparent margin top and bottom, so it renders taller to match the other marks
-    { label: 'ASBA member since 2015', logos: [{ src: '/images/asba-member-logo.png', alt: 'Member, American Sports Builders Association', h: '0.68in' }] },
-    {
-      label: 'ITF classified',
-      logos: [
-        { src: '/images/itf-level-3-medium.png', alt: 'ITF Classified Court Pace, Category 3 Medium' },
-        { src: '/images/itf-level-4-medium-fast.png', alt: 'ITF Classified Court Pace, Category 4 Medium-Fast' },
-      ],
-    },
-    { label: 'Official Surface, PPA Tour', dark: true, logos: [{ src: '/images/ppa-logo-white.png', alt: 'PPA Tour' }] },
-    { label: 'Official Surface, Major League Pickleball', dark: true, logos: [{ src: '/images/mlp-logo-white.png', alt: 'Major League Pickleball' }] },
-  ]
+  const factValue = 'whitespace-nowrap font-display text-[22px] font-bold leading-none'
+  const factLabel = 'mt-2 font-display text-[8px] font-semibold uppercase leading-snug tracking-[0.12em]'
   return (
     <Page>
-      <Body top="0.95in" gap="0.26in">
+      <Body top="0.95in" gap="0.34in">
         <header>
           <Kicker className="mb-3">About AT Sports</Kicker>
           <h2 className="font-display font-bold text-balance" style={{ color: OFF, fontSize: '32px', lineHeight: 1.02, letterSpacing: '-0.015em' }}>
-            Manufacturer-direct since 1995.
+            Manufacturer qualifications.
           </h2>
-          <p className="mt-3 max-w-[6.6in] font-sans text-[11.5px] leading-relaxed text-pretty" style={{ color: 'rgba(245,246,246,0.78)' }}>
-            AT Sports formulates, manufactures and supports its sports-surface systems in Canton, Georgia, with one
-            company responsible from raw material to finished court.
+          <p className="mt-3 max-w-[6.8in] font-sans text-[11.5px] leading-relaxed text-pretty" style={{ color: 'rgba(245,246,246,0.78)' }}>
+            AT Sports, Inc. has formulated and manufactured sports surfacing systems in Canton, Georgia since 1995. One
+            company is responsible for the {product.name} system from raw material to finished court.
           </p>
         </header>
 
         <div className="grid grid-cols-4 gap-4">
-          {stats.map((s) => (
+          {facts.map((s) => (
             <div key={s.l} style={{ borderTop: '2px solid #327ea8', paddingTop: '0.12in' }}>
-              <div className="whitespace-nowrap font-display text-[21px] font-bold leading-none" style={{ color: OFF, letterSpacing: '-0.015em' }}>
-                {s.n}
-              </div>
-              <div className="mt-2 font-display text-[8px] font-semibold uppercase leading-snug tracking-[0.12em]" style={{ color: MUTED }}>
-                {s.l}
-              </div>
+              <div className={factValue} style={{ color: OFF, letterSpacing: '-0.015em' }}>{s.n}</div>
+              <div className={factLabel} style={{ color: MUTED }}>{s.l}</div>
             </div>
           ))}
+          <div className="flex items-start justify-between gap-2" style={{ borderTop: '2px solid #327ea8', paddingTop: '0.12in' }}>
+            <div>
+              <div className={factValue} style={{ color: OFF, letterSpacing: '-0.015em' }}>ASBA</div>
+              <div className={factLabel} style={{ color: MUTED }}>Member since 2015</div>
+            </div>
+            <div
+              className="flex shrink-0 items-center justify-center overflow-hidden"
+              style={{ height: '0.4in', width: '0.78in', borderRadius: '7px', background: '#ffffff' }}
+            >
+              {/* source has ~16% transparent margin top and bottom; oversize and let the plate crop it */}
+              <img src="/images/asba-member-logo.png" alt="Member, American Sports Builders Association" className="w-auto max-w-none shrink-0" style={{ height: '0.46in' }} />
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-3">
-          {credentials.map((c) => (
-            <figure key={c.label} className="flex flex-col gap-2">
-              <div
-                className="flex items-center justify-center gap-2 overflow-hidden"
-                style={{
-                  height: '0.78in',
-                  borderRadius: '10px',
-                  background: c.dark ? '#14181b' : '#ffffff',
-                  border: c.dark ? '1px solid rgba(185,196,203,0.18)' : 'none',
-                }}
-              >
-                {c.logos.map((l) => (
-                  <img key={l.src} src={l.src} alt={l.alt} className="w-auto shrink-0 object-contain" style={{ height: l.h ?? LOGO_H }} />
-                ))}
-              </div>
-              <figcaption className="text-center font-display text-[8px] font-semibold uppercase leading-snug tracking-[0.12em]" style={{ color: MUTED }}>
-                {c.label}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-          {proofs.map(({ Icon, t, d }) => (
+        <div className="grid grid-cols-2 gap-x-8 gap-y-5">
+          {quals.map(({ Icon, t, d }) => (
             <div key={t} className="flex items-start gap-3">
-              <div
-                className="flex shrink-0 items-center justify-center"
-                style={{ width: '0.36in', height: '0.36in', borderRadius: '9px', background: 'rgba(50,126,168,0.16)', border: '1px solid rgba(50,126,168,0.4)' }}
-              >
-                <Icon className="h-4 w-4" style={{ color: BLUE_LIGHT }} aria-hidden="true" />
-              </div>
+              <IconBadge icon={Icon} size={0.38} />
               <div className="min-w-0">
                 <div className="font-display text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: OFF }}>{t}</div>
-                <p className="mt-0.5 font-sans text-[9.5px] leading-relaxed" style={{ color: MUTED }}>{d}</p>
+                <p className="mt-1 font-sans text-[9.5px] leading-relaxed text-pretty" style={{ color: MUTED }}>{d}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="grid min-h-0 flex-1 gap-5" style={{ gridTemplateColumns: '2.6in 1fr' }}>
-          <div className="flex min-h-0 flex-col pb-6">
-            <div className="font-display text-[9px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
-              AT Sports Product Lines
-            </div>
-            <div className="mt-2.5 flex flex-1 flex-col" style={{ borderTop: '1px solid rgba(185,196,203,0.12)' }}>
-              {lines.map((l) => (
-                <div key={l.name} className="flex flex-1 items-center justify-between gap-3" style={{ borderBottom: '1px solid rgba(185,196,203,0.12)' }}>
-                  <span className="font-display text-[12px] font-bold" style={{ color: l.name === product.name ? BLUE_LIGHT : OFF }}>{l.name}</span>
-                  <span className="font-sans text-[9px]" style={{ color: MUTED }}>{l.d}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex min-h-0 flex-col">
-            <FillPhoto src="/images/at-sports-facility-exterior.jpg" alt="AT Sports headquarters and manufacturing facility in Canton, Georgia" position="center 60%" minHeight="1.6in" caption="AT Sports headquarters and manufacturing, Canton, Georgia" />
-          </div>
+        <div className="grid min-h-0 flex-1 grid-cols-2 gap-5">
+          <FillPhoto src="/images/sample-jars.jpg" alt="Batch-numbered production sample jars" caption="Batch-numbered production samples" minHeight="1.8in" />
+          <FillPhoto src="/images/color-match-board.jpg" alt="Color matching board compared against reference standards" caption="Color matching against reference standards" minHeight="1.8in" />
         </div>
       </Body>
       <PageFooter />

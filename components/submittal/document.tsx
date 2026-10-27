@@ -56,7 +56,7 @@ export function SubmittalDoc({
     productKey === 'acrytech'
       ? [
           { key: 'letter', node: <LetterPage product={product} info={info} generic={generic} />, toc: 'Introduction' },
-          { key: 'manufacturer', node: <ManufacturerPage product={product} generic={generic} />, toc: 'About AT Sports' },
+          { key: 'manufacturer', node: <ManufacturerPage product={product} generic={generic} />, toc: 'Manufacturer Qualifications' },
           { key: 'compliance', node: <SpecCompliancePage generic={generic} />, toc: 'Specification Compliance' },
 
           { key: 'materials', part: 'Products', node: <MaterialSpecsPage />, toc: 'System Overview' },
