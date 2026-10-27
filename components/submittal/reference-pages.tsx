@@ -215,8 +215,8 @@ const TENNIS_STUDIES: [CaseStudy, CaseStudy] = [
         },
         {
           name: 'Stanford University',
-          logo: '',
-          photo: '/images/stanford-cardinal.jpg',
+  logo: '/images/stanford-logo.png',
+  photo: '/images/stanford-cardinal.jpg',
           photoAlt: "Cardinal and gray championship courts at Stanford's Arrillaga Tennis Center",
           badge: 'Acrytech Coatings',
           stats: ['12 championship courts', 'Palo Alto, CA'],
