@@ -78,7 +78,7 @@ export function SubmittalDoc({
           { key: 'warranty', part: 'References', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
       { key: 'case-studies', part: 'References', node: <TennisAndPickleballPage />, toc: 'Case Studies — Tennis & Pickleball' },
-          { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Selected Tennis Facilities' },
+          { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Collegiate & Club Facilities' },
 
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },
           { key: 'appx', node: <AppendixDividerPage product={product} />, toc: 'Technical Appendices' },
@@ -95,6 +95,7 @@ export function SubmittalDoc({
           { key: 'chem', node: <ProductResponsibilityPage />, toc: 'Acrytech Chemistry & VOC' },
           { key: 'stanford', node: <StanfordPage />, toc: 'Project Reference — Stanford' },
           { key: 'pickleball', node: <PickleballPage />, toc: 'Case Study — Pickleball Facilities' },
+          { key: 'facilities', node: <AdditionalExperiencePage />, toc: 'Collegiate & Club Facilities' },
           { key: 'support', node: <TechnicalSupportPage />, toc: 'Technical Support' },
           { key: 'warranty', node: <WarrantyPage product={product} />, toc: 'Warranty' },
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },

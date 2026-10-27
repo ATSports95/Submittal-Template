@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import {
   Page,
   PageCounter,
@@ -181,131 +182,104 @@ export function Court16Page() {
   )
 }
 
-/* PAGE 23 — TENNIS EXPERIENCE (PROJECT WALL) */
-type TennisProject = {
-  id: string
-  logo: string
-  name: string
-  sub: string
-  desc: string
-  count: string
-  countLabel: string
-  breakdown?: string
+/* PAGE 23 — COLLEGIATE & CLUB FACILITIES (LOGO WALL) */
+type Facility = { name: string; logo?: string; caption: string }
+
+const TENNIS_FACILITIES: Facility[] = [
+  { name: 'Virginia Tech', logo: '/images/logos/virginia-tech.png', caption: 'Burrows-Burleson Tennis Center · Blacksburg, VA' },
+  { name: 'Vanderbilt University', logo: '/images/logos/vanderbilt.png', caption: 'Lummis Family Tennis Center · Nashville, TN' },
+  { name: 'Belmont University', logo: '/images/logos/belmont.png', caption: 'Beaman Family Tennis Complex · Nashville, TN' },
+  { name: 'Farm & Forge', logo: '/images/logos/farm-forge.png', caption: 'Private racquet campus · College Grove, TN' },
+  { name: 'Texas Tech University', logo: '/images/logos/texas-tech.png', caption: 'McLeod Tennis Center · Lubbock, TX' },
+  { name: 'Georgia Tech', logo: '/images/logos/georgia-tech.png', caption: 'Ken Byers Tennis Complex · Atlanta, GA' },
+  { name: 'Baylor University', caption: 'Hurd Tennis Center · Waco, TX' },
+  { name: 'University of Oklahoma', caption: 'Headington Family Tennis Center · Norman, OK' },
+]
+
+const CLUB_FACILITIES: Facility[] = [
+  { name: 'The Picklr', caption: 'Multiple locations' },
+  { name: 'Dill Dinkers', caption: 'Multiple locations' },
+  { name: 'Pickle Rage', caption: 'Multiple locations' },
+  { name: 'The Pickle Pad', caption: 'Multiple locations' },
+  { name: 'Chicken N Pickle', caption: 'Multiple locations' },
+  { name: 'PACE Pickleball Club', caption: 'Multiple locations' },
+  { name: 'The Hub Pickleball', caption: 'Multiple locations' },
+  { name: 'The Pickle Club', caption: 'First CushionX facility in Australia' },
+  { name: 'Club Volo', caption: 'Multiple locations' },
+  { name: 'Invited', caption: 'Private country & city clubs' },
+]
+
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="font-display text-[10.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: BLUE_LIGHT }}>
+        {children}
+      </span>
+      <div className="h-px flex-1" style={{ backgroundColor: 'rgba(185,196,203,0.2)' }} />
+    </div>
+  )
 }
 
-function TennisCell({ p }: { p: TennisProject }) {
+/** White plate with a uniform logo height; falls back to a wordmark until the logo file is supplied. */
+function LogoPlate({ f, height, plate }: { f: Facility; height: string; plate: string }) {
   return (
-    <div className="flex flex-col">
-      {/* Logo plate */}
-      <div
-        className="flex items-center justify-center"
-        style={{ height: '1.02in', borderRadius: '11px', padding: '0.14in 0.2in', background: '#ffffff', border: '1px solid rgba(185,196,203,0.16)' }}
-      >
-        <img src={p.logo || "/placeholder.svg"} alt={`${p.name} logo`} className="max-h-full w-auto object-contain" style={{ maxWidth: '82%' }} />
-      </div>
-
-      {/* Index + name */}
-      <div className="mt-2.5 flex items-baseline gap-2">
-        <span className="font-display text-[9px] font-semibold tabular-nums" style={{ color: BLUE_LIGHT }}>{p.id}</span>
-        <span className="font-display text-[14px] font-bold leading-none" style={{ color: OFF }}>{p.name}</span>
-      </div>
-      <div className="mt-1 font-display text-[8px] font-semibold uppercase tracking-[0.1em]" style={{ color: BLUE_LIGHT }}>{p.sub}</div>
-
-      {/* Court count — hero stat integrated with the facility */}
-      <div className="mt-2.5 flex items-end gap-2">
-        <span className="font-display font-bold leading-[0.85] tabular-nums" style={{ color: OFF, fontSize: '34px' }}>{p.count}</span>
-        <span className="pb-0.5 font-display text-[8px] font-semibold uppercase leading-tight tracking-[0.09em]" style={{ color: BLUE_LIGHT, maxWidth: '0.9in' }}>{p.countLabel}</span>
-      </div>
-      {p.breakdown && (
-        <div className="mt-1 font-sans text-[8px] uppercase tracking-[0.07em]" style={{ color: MUTED }}>{p.breakdown}</div>
+    <div
+      className="flex shrink-0 items-center justify-center overflow-hidden"
+      style={{ height: plate, borderRadius: '10px', padding: '0.1in 0.14in', background: '#ffffff' }}
+    >
+      {f.logo ? (
+        <img src={f.logo} alt={`${f.name} logo`} className="w-auto object-contain" style={{ height, maxHeight: '100%', maxWidth: '88%' }} />
+      ) : (
+        <span className="text-center font-display text-[12px] font-bold uppercase leading-tight tracking-[0.04em]" style={{ color: '#202528' }}>
+          {f.name}
+        </span>
       )}
-
-      {/* Description */}
-      <div className="mt-auto pt-2.5">
-        <div className="h-px w-full" style={{ backgroundColor: 'rgba(185,196,203,0.14)' }} />
-        <p className="mt-2 font-sans text-[9px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.72)' }}>{p.desc}</p>
-      </div>
     </div>
   )
 }
 
 export function AdditionalExperiencePage() {
-  const projects: TennisProject[] = [
-    {
-      id: '01',
-      logo: '/images/logos/virginia-tech.png',
-      name: 'Virginia Tech',
-      sub: 'Burrows-Burleson Tennis Center · Blacksburg, VA',
-      desc: 'ACC competition facility supporting Virginia Tech men\u2019s and women\u2019s tennis.',
-      count: '18',
-      countLabel: 'Total Courts',
-      breakdown: '12 Outdoor · 6 Indoor',
-    },
-    {
-      id: '02',
-      logo: '/images/logos/vanderbilt.png',
-      name: 'Vanderbilt University',
-      sub: 'Lummis Family Tennis Center · Nashville, TN',
-      desc: 'SEC competition facility supporting Vanderbilt men\u2019s and women\u2019s tennis.',
-      count: '12',
-      countLabel: 'Outdoor Competition Courts',
-    },
-    {
-      id: '03',
-      logo: '/images/logos/belmont.png',
-      name: 'Belmont University',
-      sub: 'Beaman Family Tennis Complex · Nashville, TN',
-      desc: 'On-campus NCAA Division I complex serving Belmont\u2019s men\u2019s and women\u2019s programs.',
-      count: '6',
-      countLabel: 'Outdoor Competition Courts',
-    },
-    {
-      id: '04',
-      logo: '/images/logos/farm-forge.png',
-      name: 'Farm & Forge',
-      sub: 'Private Racquet Campus · College Grove, TN',
-      desc: 'Large-scale tennis campus combining indoor and outdoor hard courts.',
-      count: '30',
-      countLabel: 'Tennis Courts',
-      breakdown: '12 Indoor · 18 Outdoor',
-    },
-    {
-      id: '05',
-      logo: '/images/logos/texas-tech.png',
-      name: 'Texas Tech University',
-      sub: 'McLeod Tennis Center · Lubbock, TX',
-      desc: 'Division I collegiate tennis center built for competition, regional events and spectator play.',
-      count: '12',
-      countLabel: 'Outdoor Competition Courts',
-    },
-    {
-      id: '06',
-      logo: '/images/logos/georgia-tech.png',
-      name: 'Georgia Tech',
-      sub: 'Ken Byers Tennis Complex · Atlanta, GA',
-      desc: 'Major collegiate complex combining indoor & outdoor competition and practice courts.',
-      count: '16',
-      countLabel: 'Total Courts',
-      breakdown: '6 Indoor · 10 Outdoor  ',
-    },
-  ]
   return (
     <Page>
       <PageHead
         index="19"
         section="Experience"
-        kicker="Facilities"
+        kicker="References · Facilities"
         title={<>Trusted by collegiate and club programs.</>}
-        intro="Collegiate competition centers and private racquet clubs that rely on AT Sports surfaces for daily training and match play"
+        intro="Collegiate competition centers and private racquet clubs that rely on AT Sports surfaces for daily training and match play."
         titleSize={30}
         width="6.6in"
       />
-      <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '3.05in' }}>
-        <div className="grid grid-cols-3 gap-x-6 gap-y-20">
-          {projects.map((p) => (
-            <TennisCell key={p.id} p={p} />
-          ))}
-        </div>
+      <div className="absolute left-[0.5in] right-[0.5in] flex flex-col" style={{ top: '2.85in', bottom: '0.82in', gap: '0.26in' }}>
+        <section className="flex min-h-0 flex-[1.15] flex-col gap-3">
+          <SectionLabel>Collegiate &amp; Club Tennis</SectionLabel>
+          <div className="grid min-h-0 flex-1 grid-cols-4 grid-rows-2 gap-x-3 gap-y-4">
+            {TENNIS_FACILITIES.map((f) => (
+              <div key={f.name} className="flex min-h-0 flex-col">
+                <LogoPlate f={f} height="0.52in" plate="0.95in" />
+                <div className="mt-2 font-display text-[11.5px] font-bold leading-tight" style={{ color: OFF }}>{f.name}</div>
+                <div className="mt-1 font-sans text-[8.5px] leading-snug" style={{ color: MUTED }}>{f.caption}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="flex min-h-0 flex-1 flex-col gap-3">
+          <SectionLabel>Pickleball &amp; Racquet Clubs</SectionLabel>
+          <div className="grid min-h-0 flex-1 grid-cols-5 grid-rows-2 gap-x-3 gap-y-4">
+            {CLUB_FACILITIES.map((f) => (
+              <div key={f.name} className="flex min-h-0 flex-col">
+                <LogoPlate f={f} height="0.46in" plate="0.95in" />
+                <div className="mt-1.5 text-center font-sans text-[8.5px] leading-snug" style={{ color: MUTED }}>{f.caption}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <p className="font-sans text-[8.5px] leading-relaxed" style={{ color: 'rgba(185,196,203,0.72)', maxWidth: '6.6in' }}>
+          The brands shown represent only a portion of the organizations that choose AT Sports. Our surfacing systems are
+          trusted at hundreds of additional facilities across North America and internationally.
+        </p>
       </div>
 
       <PageFooter index="19" section="AT Sports Proposal" total={TOTAL} />
