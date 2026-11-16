@@ -14,7 +14,8 @@ Built from the USTA National Campus submittal design.
 | `/acrytech/international`, `/cushionx/international` | International generic packages. Cover reads "International Edition" and the Acrytech warranty term is 5 years. Edition settings live in `EDITIONS` in `lib/submittal.ts`. |
 
 Project details are passed in the URL (`/acrytech?project=...&repName=...`), so a personalized
-link can be bookmarked or shared. **Download PDF** opens the browser print dialog. Choose
+link can be bookmarked or shared. Adding `edition=international` builds the international edition
+of a personalized submittal. **Download PDF** opens the browser print dialog. Choose
 *Save as PDF*, margins *None* and turn on *Background graphics*.
 
 ## How it's organized

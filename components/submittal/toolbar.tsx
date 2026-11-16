@@ -24,6 +24,12 @@ export function SubmittalToolbar({
   const [showTip, setShowTip] = useState(false)
   const product = PRODUCTS[productKey]
   const filled = Boolean(info.project)
+  const international = edition === 'international'
+  const title = generic
+    ? `${product.footerLabel} — ${EDITIONS[edition].packageLabel}`
+    : international
+      ? `${product.footerLabel} — ${EDITIONS.international.coverLabel}`
+      : product.footerLabel
 
   return (
     <div className="no-print sticky top-0 z-50 w-full border-b border-white/10 bg-[#202528]/95 backdrop-blur">
@@ -34,7 +40,7 @@ export function SubmittalToolbar({
           </a>
           <div className="min-w-0">
             <div className="truncate text-[13px] font-semibold text-[#f5f6f6]">
-              {generic ? `${product.footerLabel} — ${EDITIONS[edition].packageLabel}` : product.footerLabel}
+              {title}
             </div>
             <div className="truncate text-[11px] text-[#b9c4cb]">
               {generic
@@ -48,7 +54,7 @@ export function SubmittalToolbar({
         <div className="flex items-center gap-2">
           {!generic && (
             <a
-              href={`/?${toQuery(info, { product: productKey })}`}
+              href={`/?${toQuery(info, { product: productKey, edition: international ? edition : '' })}`}
               className="rounded-md border border-white/20 px-3 py-1.5 text-[12px] font-medium text-[#f5f6f6] hover:bg-white/10"
             >
               {filled ? 'Edit details' : 'Add project details'}

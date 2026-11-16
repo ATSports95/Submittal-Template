@@ -46,9 +46,17 @@ export function CoverPage({
 
       <div className="absolute left-[0.5in] right-[0.5in] top-[0.5in] flex items-center justify-between">
         <img src="/images/atsports-logo.png" alt="AT Sports" className="w-auto" style={{ height: '0.5in' }} />
-        <span className="font-display text-[8.5px] font-medium uppercase tracking-[0.22em]" style={{ color: MUTED }}>
-          {generic ? EDITIONS[edition].coverLabel : <Field value={info.date} placeholder="Submittal date" />}
-        </span>
+        <div
+          className="flex flex-col items-end gap-1 font-display text-[8.5px] font-medium uppercase tracking-[0.22em]"
+          style={{ color: MUTED }}
+        >
+          {(generic || edition === 'international') && <span>{EDITIONS[edition].coverLabel}</span>}
+          {!generic && (
+            <span>
+              <Field value={info.date} placeholder="Submittal date" />
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="absolute left-[0.5in] right-[0.5in]" style={{ top: '2.15in' }}>

@@ -1,5 +1,5 @@
 import { ProjectForm } from '@/components/submittal/project-form'
-import { PRODUCTS, parseProjectInfo, type ProductKey } from '@/lib/submittal'
+import { PRODUCTS, parseEdition, parseProjectInfo, type ProductKey } from '@/lib/submittal'
 
 export default async function Home({
   searchParams,
@@ -68,7 +68,7 @@ export default async function Home({
           <p className="mb-6 mt-1 text-[14px] leading-relaxed text-[#b9c4cb]">
             Add the project and your contact details to build a tailored package.
           </p>
-          <ProjectForm initial={info} initialProduct={product} />
+          <ProjectForm initial={info} initialProduct={product} initialEdition={parseEdition(params)} />
         </section>
       </div>
     </main>

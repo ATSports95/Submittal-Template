@@ -2,22 +2,40 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { PRODUCTS, PROJECT_FIELDS, type ProductKey, type ProjectInfo } from '@/lib/submittal'
+import { EDITIONS, PRODUCTS, PROJECT_FIELDS, type PackageEdition, type ProductKey, type ProjectInfo } from '@/lib/submittal'
 
 const inputCls =
   'w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-[14px] text-[#f5f6f6] placeholder:text-[#7d8a92] focus:border-[#5da3ca] focus:outline-none focus:ring-1 focus:ring-[#5da3ca]'
 
-export function ProjectForm({ initial, initialProduct }: { initial: ProjectInfo; initialProduct: ProductKey }) {
+export function ProjectForm({
+  initial,
+  initialProduct,
+  initialEdition = 'standard',
+}: {
+  initial: ProjectInfo
+  initialProduct: ProductKey
+  initialEdition?: PackageEdition
+}) {
   const router = useRouter()
   const [product, setProduct] = useState<ProductKey>(initialProduct)
+  const [edition, setEdition] = useState<PackageEdition>(initialEdition)
   const [info, setInfo] = useState<ProjectInfo>(initial)
 
   const submit = (e: FormEvent) => {
     e.preventDefault()
     const q = new URLSearchParams()
+    if (edition === 'international') q.set('edition', edition)
     for (const [k, v] of Object.entries(info)) if (v.trim()) q.set(k, v.trim())
     router.push(`/${product}${q.toString() ? `?${q}` : ''}`)
   }
+
+  const editionNote = (e: PackageEdition) =>
+    [
+      e === 'international' ? 'International Edition cover' : 'Standard cover',
+      product === 'acrytech' ? `${EDITIONS[e].acrytechWarranty.years}-year warranty` : '',
+    ]
+      .filter(Boolean)
+      .join(' · ')
 
   const group = (g: 'project' | 'rep') =>
     PROJECT_FIELDS.filter((f) => f.group === g).map((f) => (
@@ -61,16 +79,41 @@ export function ProjectForm({ initial, initialProduct }: { initial: ProjectInfo;
         </div>
       </fieldset>
 
+      <fieldset className="flex flex-col gap-3">
+        <legend className="mb-3 font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-[#5da3ca]">
+          2 · Edition
+        </legend>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {(Object.keys(EDITIONS) as PackageEdition[]).map((k) => {
+            const active = edition === k
+            return (
+              <button
+                key={k}
+                type="button"
+                onClick={() => setEdition(k)}
+                aria-pressed={active}
+                className={`rounded-lg border p-4 text-left transition ${
+                  active ? 'border-[#5da3ca] bg-[#327ea8]/15' : 'border-white/15 bg-white/[0.03] hover:border-white/30'
+                }`}
+              >
+                <div className="font-display text-[18px] font-bold text-[#f5f6f6]">{EDITIONS[k].name}</div>
+                <div className="text-[12px] text-[#b9c4cb]">{editionNote(k)}</div>
+              </button>
+            )
+          })}
+        </div>
+      </fieldset>
+
       <fieldset>
         <legend className="mb-3 font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-[#5da3ca]">
-          2 · Project
+          3 · Project
         </legend>
         <div className="grid gap-4 sm:grid-cols-2">{group('project')}</div>
       </fieldset>
 
       <fieldset>
         <legend className="mb-3 font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-[#5da3ca]">
-          3 · Your contact info
+          4 · Your contact info
         </legend>
         <div className="grid gap-4 sm:grid-cols-2">{group('rep')}</div>
       </fieldset>

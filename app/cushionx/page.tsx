@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { SubmittalDoc } from '@/components/submittal/document'
-import { parseProjectInfo } from '@/lib/submittal'
+import { parseEdition, parseProjectInfo } from '@/lib/submittal'
 
 export const metadata: Metadata = {
   title: 'CushionX Product Submittal — AT Sports',
@@ -12,5 +12,6 @@ export default async function CushionXSubmittal({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
-  return <SubmittalDoc productKey="cushionx" info={parseProjectInfo(await searchParams)} />
+  const params = await searchParams
+  return <SubmittalDoc productKey="cushionx" info={parseProjectInfo(params)} edition={parseEdition(params)} />
 }
