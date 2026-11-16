@@ -29,13 +29,6 @@ export function ProjectForm({
     router.push(`/${product}${q.toString() ? `?${q}` : ''}`)
   }
 
-  const editionNote = [
-    edition === 'international' ? 'International Edition cover' : '',
-    product === 'acrytech' ? `${EDITIONS[edition].acrytechWarranty.years}-year warranty` : '',
-  ]
-    .filter(Boolean)
-    .join(' · ')
-
   const group = (g: 'project' | 'rep') =>
     PROJECT_FIELDS.filter((f) => f.group === g).map((f) => (
       <label key={f.key} className="flex flex-col gap-1.5">
@@ -100,7 +93,6 @@ export function ProjectForm({
               )
             })}
           </div>
-          {editionNote && <span className="text-[#b9c4cb]/70">{editionNote}</span>}
         </div>
       </fieldset>
 
