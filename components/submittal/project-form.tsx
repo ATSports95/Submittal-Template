@@ -70,7 +70,12 @@ export function ProjectForm({
           })}
         </div>
         <div className="flex flex-wrap items-center gap-3 text-[12px] text-[#b9c4cb]">
-          <span id="edition-label">Edition</span>
+            <span
+              id="edition-label"
+              className="font-display font-bold uppercase tracking-[0.2em]"
+            >
+              EDITION:
+            </span>
           <div
             role="group"
             aria-labelledby="edition-label"
