@@ -29,13 +29,12 @@ export function ProjectForm({
     router.push(`/${product}${q.toString() ? `?${q}` : ''}`)
   }
 
-  const editionNote = (e: PackageEdition) =>
-    [
-      e === 'international' ? 'International Edition cover' : 'Standard cover',
-      product === 'acrytech' ? `${EDITIONS[e].acrytechWarranty.years}-year warranty` : '',
-    ]
-      .filter(Boolean)
-      .join(' · ')
+  const editionNote = [
+    edition === 'international' ? 'International Edition cover' : '',
+    product === 'acrytech' ? `${EDITIONS[edition].acrytechWarranty.years}-year warranty` : '',
+  ]
+    .filter(Boolean)
+    .join(' · ')
 
   const group = (g: 'project' | 'rep') =>
     PROJECT_FIELDS.filter((f) => f.group === g).map((f) => (
@@ -77,43 +76,44 @@ export function ProjectForm({
             )
           })}
         </div>
-      </fieldset>
-
-      <fieldset className="flex flex-col gap-3">
-        <legend className="mb-3 font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-[#5da3ca]">
-          2 · Edition
-        </legend>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {(Object.keys(EDITIONS) as PackageEdition[]).map((k) => {
-            const active = edition === k
-            return (
-              <button
-                key={k}
-                type="button"
-                onClick={() => setEdition(k)}
-                aria-pressed={active}
-                className={`rounded-lg border p-4 text-left transition ${
-                  active ? 'border-[#5da3ca] bg-[#327ea8]/15' : 'border-white/15 bg-white/[0.03] hover:border-white/30'
-                }`}
-              >
-                <div className="font-display text-[18px] font-bold text-[#f5f6f6]">{EDITIONS[k].name}</div>
-                <div className="text-[12px] text-[#b9c4cb]">{editionNote(k)}</div>
-              </button>
-            )
-          })}
+        <div className="flex flex-wrap items-center gap-3 text-[12px] text-[#b9c4cb]">
+          <span id="edition-label">Edition</span>
+          <div
+            role="group"
+            aria-labelledby="edition-label"
+            className="inline-flex gap-0.5 rounded-md border border-white/10 p-0.5"
+          >
+            {(Object.keys(EDITIONS) as PackageEdition[]).map((k) => {
+              const active = edition === k
+              return (
+                <button
+                  key={k}
+                  type="button"
+                  onClick={() => setEdition(k)}
+                  aria-pressed={active}
+                  className={`rounded px-2.5 py-1 transition ${
+                    active ? 'bg-white/10 text-[#f5f6f6]' : 'hover:text-[#f5f6f6]'
+                  }`}
+                >
+                  {EDITIONS[k].name}
+                </button>
+              )
+            })}
+          </div>
+          {editionNote && <span className="text-[#b9c4cb]/70">{editionNote}</span>}
         </div>
       </fieldset>
 
       <fieldset>
         <legend className="mb-3 font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-[#5da3ca]">
-          3 · Project
+          2 · Project
         </legend>
         <div className="grid gap-4 sm:grid-cols-2">{group('project')}</div>
       </fieldset>
 
       <fieldset>
         <legend className="mb-3 font-display text-[12px] font-semibold uppercase tracking-[0.2em] text-[#5da3ca]">
-          4 · Your contact info
+          3 · Your contact info
         </legend>
         <div className="grid gap-4 sm:grid-cols-2">{group('rep')}</div>
       </fieldset>
