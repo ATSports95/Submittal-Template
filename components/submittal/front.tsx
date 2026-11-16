@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { Factory, FileText, Headset, ScanBarcode } from 'lucide-react'
 import { Page, PageFooter, Kicker, PhotoBackdrop, DividerRule, IconBadge } from '@/components/proposal/page-shell'
-import { COMPANY, GENERIC_EDITION, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
+import { COMPANY, EDITIONS, type PackageEdition, type ProductConfig, type ProjectInfo } from '@/lib/submittal'
 import { PART_HEADING, type SpecPart } from '@/lib/spec-part'
 import { Body, FillPhoto } from './acrytech-pages'
 
@@ -19,7 +19,17 @@ function Field({ value, placeholder }: { value: string; placeholder: string }) {
 }
 
 /* COVER — personalized from the rep's project details */
-export function CoverPage({ product, info, generic = false }: { product: ProductConfig; info: ProjectInfo; generic?: boolean }) {
+export function CoverPage({
+  product,
+  info,
+  generic = false,
+  edition = 'standard',
+}: {
+  product: ProductConfig
+  info: ProjectInfo
+  generic?: boolean
+  edition?: PackageEdition
+}) {
   return (
     <Page>
       {product.key === 'cushionx' ? (
@@ -37,7 +47,7 @@ export function CoverPage({ product, info, generic = false }: { product: Product
       <div className="absolute left-[0.5in] right-[0.5in] top-[0.5in] flex items-center justify-between">
         <img src="/images/atsports-logo.png" alt="AT Sports" className="w-auto" style={{ height: '0.5in' }} />
         <span className="font-display text-[8.5px] font-medium uppercase tracking-[0.22em]" style={{ color: MUTED }}>
-          {generic ? `Edition ${GENERIC_EDITION}` : <Field value={info.date} placeholder="Submittal date" />}
+          {generic ? EDITIONS[edition].coverLabel : <Field value={info.date} placeholder="Submittal date" />}
         </span>
       </div>
 

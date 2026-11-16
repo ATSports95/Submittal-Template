@@ -10,6 +10,8 @@ Built from the USTA National Campus submittal design.
 | `/` | Submittal builder. The rep picks a product and enters project and contact details. |
 | `/acrytech` | Acrytech Coatings System submittal |
 | `/cushionx` | CushionX Cushion Surface System submittal |
+| `/acrytech/general`, `/cushionx/general` | Generic packages with no project details (cover reads "Edition 2026") |
+| `/acrytech/international`, `/cushionx/international` | International generic packages. Cover reads "International Edition" and the Acrytech warranty term is 5 years. Edition settings live in `EDITIONS` in `lib/submittal.ts`. |
 
 Project details are passed in the URL (`/acrytech?project=...&repName=...`), so a personalized
 link can be bookmarked or shared. **Download PDF** opens the browser print dialog. Choose

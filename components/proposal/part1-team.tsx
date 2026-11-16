@@ -1,13 +1,14 @@
 import { Page, PageCounter, PageFooter, Kicker, ContentRequired } from './page-shell'
-import type { ProductConfig } from '@/lib/submittal'
+import { EDITIONS, type PackageEdition, type ProductConfig } from '@/lib/submittal'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
 const MUTED = '#b9c4cb'
 
 /* PAGE 29 — WARRANTY */
-export function WarrantyPage({ product }: { product: ProductConfig }) {
+export function WarrantyPage({ product, edition = 'standard' }: { product: ProductConfig; edition?: PackageEdition }) {
   const cx = product.key === 'cushionx'
+  const { years, word } = EDITIONS[edition].acrytechWarranty
   return (
     <Page>
             <div className="absolute left-[0.5in]" style={{ top: '1.3in', width: '4.1in' }}>
@@ -34,7 +35,7 @@ export function WarrantyPage({ product }: { product: ProductConfig }) {
             <>
               <p className="font-sans text-[11.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.8)' }}>
                 AT Sports warrants that Acrytech products conform to product specifications and are free from defects in
-                material and workmanship for two years, subject to the terms and conditions of the published warranty.
+                material and workmanship for {word} years, subject to the terms and conditions of the published warranty.
               </p>
               <p className="font-sans text-[11.5px] leading-relaxed" style={{ color: 'rgba(245,246,246,0.8)' }}>
                 Coverage is valid when Acrytech products are properly applied by AT Sports-certified installers according to
@@ -53,7 +54,7 @@ export function WarrantyPage({ product }: { product: ProductConfig }) {
       <div className="absolute right-[0.5in]" style={{ top: '1.6in', width: '3in' }}>
         <div className="glass-strong flex flex-col" style={{ borderRadius: '16px', padding: '0.4in 0.34in', borderTop: '3px solid #5da3ca' }}>
           <span className="font-display font-bold tabular-nums" style={{ color: OFF, fontSize: '76px', lineHeight: 0.82, letterSpacing: '-0.03em' }}>
-            {cx ? <ContentRequired>Term</ContentRequired> : '2-Year'}
+            {cx ? <ContentRequired>Term</ContentRequired> : `${years}-Year`}
           </span>
           <span className="mt-2 font-display text-[13px] font-bold uppercase tracking-[0.08em]" style={{ color: BLUE_LIGHT }}>
             Limited Product Warranty

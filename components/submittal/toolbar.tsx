@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PRODUCTS, type ProductKey, type ProjectInfo } from '@/lib/submittal'
+import { EDITIONS, PRODUCTS, type PackageEdition, type ProductKey, type ProjectInfo } from '@/lib/submittal'
 
 function toQuery(info: ProjectInfo, extra: Record<string, string> = {}) {
   const q = new URLSearchParams()
@@ -14,10 +14,12 @@ export function SubmittalToolbar({
   productKey,
   info,
   generic = false,
+  edition = 'standard',
 }: {
   productKey: ProductKey
   info: ProjectInfo
   generic?: boolean
+  edition?: PackageEdition
 }) {
   const [showTip, setShowTip] = useState(false)
   const product = PRODUCTS[productKey]
@@ -32,7 +34,7 @@ export function SubmittalToolbar({
           </a>
           <div className="min-w-0">
             <div className="truncate text-[13px] font-semibold text-[#f5f6f6]">
-              {generic ? `${product.footerLabel} — Generic Package` : product.footerLabel}
+              {generic ? `${product.footerLabel} — ${EDITIONS[edition].packageLabel}` : product.footerLabel}
             </div>
             <div className="truncate text-[11px] text-[#b9c4cb]">
               {generic

@@ -137,6 +137,30 @@ export const COMPANY = {
 /** Edition shown on the cover of the generic (non-personalized) packages. */
 export const GENERIC_EDITION = '2026'
 
+/** Generic packages come in a standard and an international edition. */
+export type PackageEdition = 'standard' | 'international'
+
+export type EditionConfig = {
+  /** Shown top-right on the cover of the generic package */
+  coverLabel: string
+  /** Shown in the on-screen toolbar */
+  packageLabel: string
+  acrytechWarranty: { years: number; word: string }
+}
+
+export const EDITIONS: Record<PackageEdition, EditionConfig> = {
+  standard: {
+    coverLabel: `Edition ${GENERIC_EDITION}`,
+    packageLabel: 'Generic Package',
+    acrytechWarranty: { years: 2, word: 'two' },
+  },
+  international: {
+    coverLabel: 'International Edition',
+    packageLabel: 'International Package',
+    acrytechWarranty: { years: 5, word: 'five' },
+  },
+}
+
 /** Appendices that only make sense for a specific project are left out of the generic packages. */
 export function genericProduct(product: ProductConfig): ProductConfig {
   return { ...product, appendices: product.appendices.filter((a) => a.t !== 'Certified Installer Letter') }
