@@ -2,19 +2,29 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { PRODUCTS, PROJECT_FIELDS, type ProductKey, type ProjectInfo } from '@/lib/submittal'
+import { EDITIONS, PRODUCTS, PROJECT_FIELDS, type PackageEdition, type ProductKey, type ProjectInfo } from '@/lib/submittal'
 
 const inputCls =
   'w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-[14px] text-[#f5f6f6] placeholder:text-[#7d8a92] focus:border-[#5da3ca] focus:outline-none focus:ring-1 focus:ring-[#5da3ca]'
 
-export function ProjectForm({ initial, initialProduct }: { initial: ProjectInfo; initialProduct: ProductKey }) {
+export function ProjectForm({
+  initial,
+  initialProduct,
+  initialEdition = 'standard',
+}: {
+  initial: ProjectInfo
+  initialProduct: ProductKey
+  initialEdition?: PackageEdition
+}) {
   const router = useRouter()
   const [product, setProduct] = useState<ProductKey>(initialProduct)
+  const [edition, setEdition] = useState<PackageEdition>(initialEdition)
   const [info, setInfo] = useState<ProjectInfo>(initial)
 
   const submit = (e: FormEvent) => {
     e.preventDefault()
     const q = new URLSearchParams()
+    if (edition === 'international') q.set('edition', edition)
     for (const [k, v] of Object.entries(info)) if (v.trim()) q.set(k, v.trim())
     router.push(`/${product}${q.toString() ? `?${q}` : ''}`)
   }
@@ -58,6 +68,36 @@ export function ProjectForm({ initial, initialProduct }: { initial: ProjectInfo;
               </button>
             )
           })}
+        </div>
+        <div className="flex flex-wrap items-center gap-3 text-[12px] text-[#b9c4cb]">
+            <span
+              id="edition-label"
+              className="font-display font-bold uppercase tracking-[0.2em]"
+            >
+              EDITION:
+            </span>
+          <div
+            role="group"
+            aria-labelledby="edition-label"
+            className="inline-flex gap-0.5 rounded-md border border-white/10 p-0.5"
+          >
+            {(Object.keys(EDITIONS) as PackageEdition[]).map((k) => {
+              const active = edition === k
+              return (
+                <button
+                  key={k}
+                  type="button"
+                  onClick={() => setEdition(k)}
+                  aria-pressed={active}
+                  className={`rounded px-2.5 py-1 transition ${
+                    active ? 'bg-white/10 text-[#f5f6f6]' : 'hover:text-[#f5f6f6]'
+                  }`}
+                >
+                  {EDITIONS[k].name}
+                </button>
+              )
+            })}
+          </div>
         </div>
       </fieldset>
 

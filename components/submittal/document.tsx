@@ -29,8 +29,10 @@ import {
   MaintenancePage,
 } from './acrytech-pages'
 import { TennisAndPickleballPage, PickleballPage } from './reference-pages'
+import { AppendixSheetPage } from './appendix-sheets'
 import { SubmittalToolbar } from './toolbar'
-import { PRODUCTS, genericProduct, type ProductKey, type ProjectInfo } from '@/lib/submittal'
+import { PRODUCTS, genericProduct, type PackageEdition, type ProductKey, type ProjectInfo } from '@/lib/submittal'
+import { acrytechAppendixSheets } from '@/lib/acrytech-appendix'
 
 type Entry = { key: string; node: ReactNode; toc?: string; part?: SpecPart }
 
@@ -44,11 +46,14 @@ export function SubmittalDoc({
   productKey,
   info,
   generic = false,
+  edition = 'standard',
 }: {
   productKey: ProductKey
   info: ProjectInfo
   /** Generic package: no project, customer, installer or rep details. */
   generic?: boolean
+  /** International edition: cover label and Acrytech warranty term differ. */
+  edition?: PackageEdition
 }) {
   const product = generic ? genericProduct(PRODUCTS[productKey]) : PRODUCTS[productKey]
 
@@ -57,11 +62,11 @@ export function SubmittalDoc({
       ? [
           { key: 'letter', node: <LetterPage product={product} info={info} generic={generic} />, toc: 'Introduction' },
           { key: 'manufacturer', node: <ManufacturerPage product={product} generic={generic} />, toc: 'Manufacturer Qualifications' },
-          { key: 'compliance', node: <SpecCompliancePage generic={generic} />, toc: 'Specification Compliance' },
+          { key: 'compliance', node: <SpecCompliancePage generic={generic} edition={edition} />, toc: 'Specification Compliance' },
 
-          { key: 'materials', part: 'Products', node: <MaterialSpecsPage />, toc: 'System Overview' },
-          { key: 'line-color', part: 'Products', node: <ProductLineColorPage />, toc: 'Product Line — Color Coatings' },
-          { key: 'line-prep', part: 'Products', node: <ProductLinePrepPage />, toc: 'Product Line — Primers & Resurfacers' },
+          { key: 'materials', part: 'Products', node: <MaterialSpecsPage edition={edition} />, toc: 'System Overview' },
+          { key: 'line-color', part: 'Products', node: <ProductLineColorPage edition={edition} />, toc: 'Product Line — Color Coatings' },
+          { key: 'line-prep', part: 'Products', node: <ProductLinePrepPage edition={edition} />, toc: 'Product Line — Primers & Resurfacers' },
           { key: 'line-finish', part: 'Products', node: <ProductLineFinishPage />, toc: 'Product Line — Lines & Additives' },
           { key: 'line-colors', part: 'Products', node: <ProductLineColorsPage />, toc: 'Product Line — Acrytech Colors' },
           { key: 'pace', part: 'Products', node: <CourtPacePage />, toc: 'Court Pace & ITF Classification' },
@@ -75,7 +80,7 @@ export function SubmittalDoc({
           { key: 'coverage', part: 'Execution', node: <CoveragePage />, toc: 'Coverage & Mixing' },
           { key: 'maintenance', part: 'Execution', node: <MaintenancePage />, toc: 'New Surface Maintenance' },
 
-          { key: 'warranty', part: 'References', node: <WarrantyPage product={product} />, toc: 'Warranty' },
+          { key: 'warranty', part: 'References', node: <WarrantyPage product={product} edition={edition} />, toc: 'Warranty' },
           { key: 'partners', part: 'References', node: <NationalPartnershipsPage />, toc: 'Official Surface Partnerships' },
       { key: 'case-studies', part: 'References', node: <TennisAndPickleballPage />, toc: 'Case Studies — Tennis & Pickleball' },
           { key: 'facilities', part: 'References', node: <AdditionalExperiencePage />, toc: 'Collegiate & Club Facilities' },
@@ -97,7 +102,7 @@ export function SubmittalDoc({
           { key: 'pickleball', node: <PickleballPage />, toc: 'Case Study — Pickleball Facilities' },
           { key: 'facilities', node: <AdditionalExperiencePage />, toc: 'Collegiate & Club Facilities' },
           { key: 'support', node: <TechnicalSupportPage />, toc: 'Technical Support' },
-          { key: 'warranty', node: <WarrantyPage product={product} />, toc: 'Warranty' },
+          { key: 'warranty', node: <WarrantyPage product={product} edition={edition} />, toc: 'Warranty' },
           { key: 'closing', node: <ClosingPage product={product} info={info} generic={generic} />, toc: 'Contact' },
           { key: 'appx', node: <AppendixDividerPage product={product} />, toc: 'Technical Appendices' },
           { key: 'appx-index', node: <AppendixIndexPage product={product} generic={generic} /> },
@@ -108,8 +113,13 @@ export function SubmittalDoc({
     .map((e, i): ContentsEntry | null => (e.toc ? { label: e.toc, page: i + 3, part: e.part } : null))
     .filter((c): c is ContentsEntry => c !== null)
 
+  const attachments: Entry[] =
+    productKey === 'acrytech' && generic
+      ? acrytechAppendixSheets(edition).map((sheet) => ({ key: `sheet-${sheet.n}`, node: <AppendixSheetPage sheet={sheet} /> }))
+      : []
+
   const pages: Entry[] = [
-    { key: 'cover', node: <CoverPage product={product} info={info} generic={generic} /> },
+    { key: 'cover', node: <CoverPage product={product} info={info} generic={generic} edition={edition} /> },
     {
       key: 'transmittal',
       node: generic ? (
@@ -119,11 +129,12 @@ export function SubmittalDoc({
       ),
     },
     ...body,
+    ...attachments,
   ]
 
   return (
     <>
-      <SubmittalToolbar productKey={productKey} info={info} generic={generic} />
+      <SubmittalToolbar productKey={productKey} info={info} generic={generic} edition={edition} />
       <SubmittalDocument label={product.footerLabel} pageCount={pages.length}>
         {pages.map((p) => (
           <PartProvider key={p.key} part={p.part}>

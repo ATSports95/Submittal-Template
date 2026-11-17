@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { ArrowRight, Brush, CircleCheck, ShieldCheck, Timer } from 'lucide-react'
 import { Page, PageFooter, Kicker, ContentRequired, IconBadge } from '@/components/proposal/page-shell'
+import { EDITIONS, type PackageEdition } from '@/lib/submittal'
 
 const OFF = '#f5f6f6'
 const BLUE_LIGHT = '#5da3ca'
@@ -99,9 +100,24 @@ const COMPLIANCE = [
   { req: 'Traceability', val: 'Batch number of each product recorded on site and kept for the warranty period', doc: 'System Specification 1.2' },
 ]
 
-const COMPLIANCE_GENERIC = COMPLIANCE.map((c) => (c.req === 'Installer' ? { ...c, doc: 'Acrytech Limited Warranty' } : c))
+function complianceRows(generic: boolean, warrantyYears: number) {
+  return COMPLIANCE.map((c) => {
+    if (c.req === 'Warranty') {
+      return { ...c, val: `${warrantyYears}-year limited product warranty (specification minimum: one year)` }
+    }
+    if (generic && c.req === 'Installer') return { ...c, doc: 'Acrytech Limited Warranty' }
+    return c
+  })
+}
 
-export function SpecCompliancePage({ generic = false }: { generic?: boolean }) {
+export function SpecCompliancePage({
+  generic = false,
+  edition = 'standard',
+}: {
+  generic?: boolean
+  edition?: PackageEdition
+}) {
+  const rows = complianceRows(generic, EDITIONS[edition].acrytechWarranty.years)
   return (
     <Page>
       <Head
@@ -119,7 +135,7 @@ export function SpecCompliancePage({ generic = false }: { generic?: boolean }) {
             <span>Acrytech</span>
             <span>Supporting document</span>
           </div>
-          {(generic ? COMPLIANCE_GENERIC : COMPLIANCE).map((c, i) => (
+          {rows.map((c, i) => (
             <div
               key={c.req}
               className="grid flex-1 items-center"
@@ -349,7 +365,8 @@ function TableNote({ children }: { children: ReactNode }) {
   return <p className="font-sans text-[9px] leading-relaxed" style={{ color: MUTED }}>{children}</p>
 }
 
-export function ProductLineColorPage() {
+export function ProductLineColorPage({ edition = 'standard' }: { edition?: PackageEdition }) {
+  const warrantyYears = EDITIONS[edition].acrytechWarranty.years
   return (
     <Page>
       <Head
@@ -367,7 +384,7 @@ export function ProductLineColorPage() {
           <ProductTable rows={SPECIALTY} dense />
         </div>
         <TableNote>
-          All products carry a 2-year limited warranty. *55-gal drums of textured product contain 39 gal. Source: AT Sports
+          All products carry a {warrantyYears}-year limited warranty. *55-gal drums of textured product contain 39 gal. Source: AT Sports
           Product Catalog 2026. Full values are given in each product’s Technical Data Sheet (Technical Appendices).
         </TableNote>
       </Body>
@@ -376,7 +393,8 @@ export function ProductLineColorPage() {
   )
 }
 
-export function ProductLinePrepPage() {
+export function ProductLinePrepPage({ edition = 'standard' }: { edition?: PackageEdition }) {
+  const warrantyYears = EDITIONS[edition].acrytechWarranty.years
   return (
     <Page>
       <Head
@@ -394,7 +412,7 @@ export function ProductLinePrepPage() {
           <ProductTable rows={RESURFACERS} dense />
         </div>
         <TableNote>
-          2-year limited warranty on all products except Faultline Sport Patch (see TDS). *55-gal textured drums contain
+          {warrantyYears}-year limited warranty on all products except Faultline Sport Patch (see TDS). *55-gal textured drums contain
           39 gal. Urethane Primer and Clear Coat coverage is as printed in the catalog (“Gal per sq yd”).
         </TableNote>
       </Body>
@@ -527,14 +545,15 @@ export function MixingChart() {
   )
 }
 
-const SUBMITTAL_CHECKLIST = [
+const submittalChecklist = (warrantyYears: number) => [
   { req: 'Technical Data Sheets for all system components', where: 'Appendices B–E' },
   { req: 'Color chart', where: 'Appendix G' },
   { req: 'Safety Data Sheets for all system components', where: 'Appendix F' },
-  { req: 'Manufacturer’s warranty, 2-year (spec minimum: 1 year)', where: 'Appendix N' },
+  { req: `Manufacturer’s warranty, ${warrantyYears}-year (spec minimum: 1 year)`, where: 'Appendix N' },
 ]
 
-export function MaterialSpecsPage() {
+export function MaterialSpecsPage({ edition = 'standard' }: { edition?: PackageEdition }) {
+  const checklist = submittalChecklist(EDITIONS[edition].acrytechWarranty.years)
   return (
     <Page>
       <Head
@@ -575,7 +594,7 @@ export function MaterialSpecsPage() {
         <div>
           <GroupLabel right="Sections 1.2 – 1.3">Submittal Requirements Met</GroupLabel>
           <ul className="mt-2.5 glass overflow-hidden" style={{ borderRadius: '12px' }}>
-            {SUBMITTAL_CHECKLIST.map((row, i) => (
+            {checklist.map((row, i) => (
               <li
                 key={row.req}
                 className="flex items-center gap-3"
