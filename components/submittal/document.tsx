@@ -32,7 +32,7 @@ import { TennisAndPickleballPage, PickleballPage } from './reference-pages'
 import { AppendixSheetPage } from './appendix-sheets'
 import { SubmittalToolbar } from './toolbar'
 import { PRODUCTS, genericProduct, type PackageEdition, type ProductKey, type ProjectInfo } from '@/lib/submittal'
-import { ACRYTECH_APPENDIX_SHEETS } from '@/lib/acrytech-appendix'
+import { acrytechAppendixSheets } from '@/lib/acrytech-appendix'
 
 type Entry = { key: string; node: ReactNode; toc?: string; part?: SpecPart }
 
@@ -113,11 +113,9 @@ export function SubmittalDoc({
     .map((e, i): ContentsEntry | null => (e.toc ? { label: e.toc, page: i + 3, part: e.part } : null))
     .filter((c): c is ContentsEntry => c !== null)
 
-  // The attached documents state the standard two-year warranty, so they are
-  // bound into the standard generic package only.
   const attachments: Entry[] =
-    productKey === 'acrytech' && generic && edition === 'standard'
-      ? ACRYTECH_APPENDIX_SHEETS.map((sheet) => ({ key: `sheet-${sheet.n}`, node: <AppendixSheetPage sheet={sheet} /> }))
+    productKey === 'acrytech' && generic
+      ? acrytechAppendixSheets(edition).map((sheet) => ({ key: `sheet-${sheet.n}`, node: <AppendixSheetPage sheet={sheet} /> }))
       : []
 
   const pages: Entry[] = [
