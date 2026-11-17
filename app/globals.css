@@ -204,6 +204,11 @@
   page-break-inside: avoid;
 }
 
+/* Attached technical documents are white sheets shown as issued. */
+.page.sheet {
+  background: #ffffff;
+}
+
 .proposal-doc > .page {
   counter-increment: pg;
 }

@@ -9,6 +9,21 @@ function toQuery(info: ProjectInfo, extra: Record<string, string> = {}) {
   return q.toString()
 }
 
+/** Lazy images that have not scrolled into view yet would otherwise print as blank pages. */
+function loadDeferredImages() {
+  const deferred = Array.from(document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]'))
+  return Promise.all(
+    deferred.map((img) => {
+      img.loading = 'eager'
+      if (img.complete) return Promise.resolve()
+      return new Promise<void>((resolve) => {
+        img.addEventListener('load', () => resolve(), { once: true })
+        img.addEventListener('error', () => resolve(), { once: true })
+      })
+    }),
+  )
+}
+
 /** On-screen controls above the document. Hidden when printing. */
 export function SubmittalToolbar({
   productKey,
@@ -22,6 +37,16 @@ export function SubmittalToolbar({
   edition?: PackageEdition
 }) {
   const [showTip, setShowTip] = useState(false)
+  const [preparing, setPreparing] = useState(false)
+
+  async function downloadPdf() {
+    setShowTip(true)
+    setPreparing(true)
+    await loadDeferredImages()
+    setPreparing(false)
+    setTimeout(() => window.print(), 50)
+  }
+
   const product = PRODUCTS[productKey]
   const filled = Boolean(info.project)
   const international = edition === 'international'
@@ -63,13 +88,12 @@ export function SubmittalToolbar({
           <div className="relative">
             <button
               type="button"
-              onClick={() => {
-                setShowTip(true)
-                setTimeout(() => window.print(), 50)
-              }}
-              className="rounded-md bg-[#327ea8] px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-[#3b8fbd]"
+              onClick={downloadPdf}
+              disabled={preparing}
+              aria-busy={preparing}
+              className="rounded-md bg-[#327ea8] px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-[#3b8fbd] disabled:opacity-70"
             >
-              Download PDF
+              {preparing ? 'Preparing…' : 'Download PDF'}
             </button>
             {showTip && (
               <div className="absolute right-0 top-[calc(100%+8px)] w-[260px] rounded-md border border-white/15 bg-[#2a3034] p-3 text-[11px] leading-relaxed text-[#d6dde1] shadow-xl">
