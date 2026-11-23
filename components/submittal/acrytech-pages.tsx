@@ -239,18 +239,37 @@ function ProductTable({ rows, dense = false }: { rows: Product[]; dense?: boolea
   )
 }
 
-const COLOR_COATS: Product[] = [
-  { name: 'Color', d: 'The standard Acrytech color and finish coat. 100% acrylic latex with self-crosslinking technology and high-quality pigments.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34���130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
-  { name: 'ColorFlex', d: 'Flexible color coat for cushioned systems and overlays, substantial substrate movement and fabric crack repair systems.', coverage: <>Conc. .045–.06<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 / 5 gal · Tex. 55* / 30 gal' },
-  { name: 'Urethane Color', d: 'Polyurethane-modified acrylic color for courts with heavy traffic and usage.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 gal · Tex. 55* / 30 gal' },
-  { name: 'Color UV+', d: 'Color system with additional UV resistance and microorganism protection.', coverage: <>Conc. .04–.05<br />Tex. .06–.07</>, temp: '36–130°F', dry: '1–3 hr', cure: '24 hr', pack: 'Conc. 55 / 30 gal · Tex. 55* / 30 gal' },
-  { name: 'Quick-Dry', d: 'VOC-free coating formulated to dry and cure faster than standard color. Available in ColorFlex coatings only.', coverage: '.04–.05', temp: '34–130°F', dry: '1–3 hr', cure: '24 hr', pack: '55 / 30 / 5 gal' },
-  { name: 'CoolGuard', d: 'Textured, flexible acrylic surface technology that reduces surface temperatures by up to 30%.', coverage: '.075–.09', temp: '36–130°F', dry: '1–3 hr', cure: '24 hr', pack: '55 / 30 gal' },
+type CoatingUnits = ReturnType<typeof coatingUnits>
+
+function coatingUnits(edition: PackageEdition) {
+  const metric = edition === 'international'
+  const litresPerGallon = 3.785411784
+  const coverage = (low: number, high: number) => {
+    const format = (value: number) => metric
+      ? String(Number((value * litresPerGallon / 0.9144 ** 2).toFixed(3)))
+      : String(value).replace(/^0\./, '.')
+    return `${format(low)}–${format(high)}`
+  }
+  const temp = (low: number, separator = '–') => metric
+    ? `${Number(((low - 32) * 5 / 9).toFixed(1))}${separator}54.4°C`
+    : `${low}${separator}130°F`
+  const volume = (gallons: number) => metric ? String(Number((gallons * litresPerGallon).toFixed(1))) : String(gallons)
+  const pack = (sizes: number[], textured = false) => `${sizes.map(size => volume(size) + (textured && size === 55 ? '*' : '')).join(' / ')} ${metric ? 'L' : 'gal'}`
+  return { coverage, temp, pack, volume, metric }
+}
+
+const colorCoats = ({ coverage, temp, pack }: CoatingUnits): Product[] => [
+  { name: 'Color', d: 'The standard Acrytech color and finish coat. 100% acrylic latex with self-crosslinking technology and high-quality pigments.', coverage: <>Conc. {coverage(.04, .05)}<br />Tex. {coverage(.06, .07)}</>, temp: temp(34, '-'), dry: '1–3 hr', cure: '24 hr', pack: `Conc. ${pack([55, 30, 5])} · Tex. ${pack([55, 30], true)}` },
+  { name: 'ColorFlex', d: 'Flexible color coat for cushioned systems and overlays, substantial substrate movement and fabric crack repair systems.', coverage: <>Conc. {coverage(.045, .06)}<br />Tex. {coverage(.06, .07)}</>, temp: temp(34), dry: '1–3 hr', cure: '24 hr', pack: `Conc. ${pack([55, 30, 5])} · Tex. ${pack([55, 30], true)}` },
+  { name: 'Urethane Color', d: 'Polyurethane-modified acrylic color for courts with heavy traffic and usage.', coverage: <>Conc. {coverage(.04, .05)}<br />Tex. {coverage(.06, .07)}</>, temp: temp(34), dry: '1–3 hr', cure: '24 hr', pack: `Conc. ${pack([55, 30])} · Tex. ${pack([55, 30], true)}` },
+  { name: 'Color UV+', d: 'Color system with additional UV resistance and microorganism protection.', coverage: <>Conc. {coverage(.04, .05)}<br />Tex. {coverage(.06, .07)}</>, temp: temp(36), dry: '1–3 hr', cure: '24 hr', pack: `Conc. ${pack([55, 30])} · Tex. ${pack([55, 30], true)}` },
+  { name: 'Quick-Dry', d: 'VOC-free coating formulated to dry and cure faster than standard color. Available in ColorFlex coatings only.', coverage: coverage(.04, .05), temp: temp(34), dry: '1–3 hr', cure: '24 hr', pack: pack([55, 30, 5]) },
+  { name: 'CoolGuard', d: 'Textured, flexible acrylic surface technology that reduces surface temperatures by up to 30%.', coverage: coverage(.075, .09), temp: temp(36), dry: '1–3 hr', cure: '24 hr', pack: pack([55, 30]) },
 ]
 
-const SPECIALTY: Product[] = [
-  { name: 'Roller Sports', d: 'Fiber-reinforced, highly abrasion-resistant surface for roller sports. Player’s Choice colors only.', coverage: '.04–.045', temp: '36–130°F', dry: '1–3 hr', cure: '72 hr', pack: '55 / 30 gal' },
-  { name: 'Shuffleboard', d: 'Formulated with select slip agents for an ideal puck slide. Player’s Choice colors only.', coverage: '.06–.07', temp: '50–130°F', dry: '1–3 hr', cure: '48 hr', pack: '55 / 30 gal' },
+const specialtyCoats = ({ coverage, temp, pack }: CoatingUnits): Product[] => [
+  { name: 'Roller Sports', d: 'Fiber-reinforced, highly abrasion-resistant surface for roller sports. Player’s Choice colors only.', coverage: coverage(.04, .045), temp: temp(36), dry: '1–3 hr', cure: '72 hr', pack: pack([55, 30]) },
+  { name: 'Shuffleboard', d: 'Formulated with select slip agents for an ideal puck slide. Player’s Choice colors only.', coverage: coverage(.06, .07), temp: temp(50), dry: '1–3 hr', cure: '48 hr', pack: pack([55, 30]) },
 ]
 
 const PRIMERS: Product[] = [
@@ -366,6 +385,8 @@ function TableNote({ children }: { children: ReactNode }) {
 }
 
 export function ProductLineColorPage({ edition = 'standard' }: { edition?: PackageEdition }) {
+  const units = coatingUnits(edition)
+  const coverageLabel = units.metric ? 'L / m² / coat' : 'Gal / SY / coat'
   const warrantyYears = EDITIONS[edition].acrytechWarranty.years
   return (
     <Page>
@@ -376,15 +397,15 @@ export function ProductLineColorPage({ edition = 'standard' }: { edition?: Packa
       />
       <Body top="2.5in" gap="0.2in">
         <div>
-          <GroupLabel right="Gal / SY / coat">Color &amp; Finish Coats</GroupLabel>
-          <ProductTable rows={COLOR_COATS} dense />
+          <GroupLabel right={coverageLabel}>Color &amp; Finish Coats</GroupLabel>
+          <ProductTable rows={colorCoats(units)} dense />
         </div>
         <div>
-          <GroupLabel right="Gal / SY / coat">Specialty Sport Coatings</GroupLabel>
-          <ProductTable rows={SPECIALTY} dense />
+          <GroupLabel right={coverageLabel}>Specialty Sport Coatings</GroupLabel>
+          <ProductTable rows={specialtyCoats(units)} dense />
         </div>
         <TableNote>
-          All products carry a {warrantyYears}-year limited warranty. *55-gal drums of textured product contain 39 gal. Source: AT Sports
+          All products carry a {warrantyYears}-year limited warranty. {units.metric ? `*${units.volume(55)} L drums of textured product contain ${units.volume(39)} L.` : '*55-gal drums of textured product contain 39 gal.'} Source: AT Sports
           Product Catalog 2026. Full values are given in each product’s Technical Data Sheet (Technical Appendices).
         </TableNote>
       </Body>
